@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "revad.fullname" . }}
+  labels:
+    {{- include "revad.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "revad.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "revad.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 20080
+              protocol: TCP
+          # TODO (SamuAlfageme) - move to values instead:
+          command:
+            - /go/bin/revad
+            - -dev-dir
+            - .
+          workingDir: /go/src/github/cs3org/reva/examples/oc-phoenix
