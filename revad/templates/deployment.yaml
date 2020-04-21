@@ -22,9 +22,17 @@ spec:
             - name: http
               containerPort: 20080
               protocol: TCP
-          # TODO (SamuAlfageme) - move to values instead:
           command:
             - /go/bin/revad
-            - -dev-dir
-            - .
-          workingDir: /go/src/github/cs3org/reva/examples/oc-phoenix
+          args:
+            {{- if .Values.args }}
+{{ toYaml .Values.args | indent 14 }}
+            {{- else }}
+              - "-c"
+              - "/etc/revad/revad.toml"
+              - "-p"
+              - "/var/run/revad.pid"
+            {{- end }}
+          {{- if .Values.workingDir }}
+          workingDir: {{ .Values.workingDir }}
+          {{- end }}
