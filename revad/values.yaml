@@ -1,0 +1,17 @@
+replicaCount: 1
+
+image:
+  repository: cs3org/revad
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 20080
+
+args: []
+workingDir: ""
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount: ""

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "revad.fullname" . }}
+  labels:
+    {{- include "revad.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "revad.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "revad.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 20080
+              protocol: TCP
+          command:
+            - /go/bin/revad
+          args:
+            {{- if .Values.args }}
+{{ toYaml .Values.args | indent 14 }}
+            {{- else }}
+              - "-c"
+              - "/etc/revad/revad.toml"
+              - "-p"
+              - "/var/run/revad.pid"
+            {{- end }}
+          {{- if .Values.workingDir }}
+          workingDir: {{ .Values.workingDir }}
+          {{- end }}
