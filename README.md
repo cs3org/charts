@@ -26,9 +26,3 @@ $ helm search repo cs3org
 NAME        	CHART VERSION	APP VERSION	DESCRIPTION
 cs3org/revad	0.1.0        	0.1.0      	The Reva daemon (revad) helm chart
 ```
-
-### Run the [Phoenix example](https://reva.link/docs/tutorials/phoenix-tutorial/#4-run-reva)
-
-```bash
-helm install revad --set workingDir=/go/src/github/cs3org/reva/examples/oc-phoenix --set args="{-dev-dir,.}" cs3org/revad
-```
