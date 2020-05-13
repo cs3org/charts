@@ -1,0 +1,17 @@
+replicaCount: 1
+
+image:
+  repository: cs3org/wopiserver
+  pullPolicy: IfNotPresent
+  tag: latest
+
+service:
+  type: NodePort
+  port: 8880
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount: ""
+
+# configmap: |

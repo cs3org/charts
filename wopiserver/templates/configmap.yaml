@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "wopiserver.fullname" . }}-config
+  labels:
+    {{- include "wopiserver.labels" . | nindent 4 }}
+data:
+  wopiserver.conf: |-
+    [general]
+    storagetype = cs3
+    wopiurl = https://external-address-wopi-server
+    allowedclients = <reva/phoenix hosts + any whitelisted host>
+    downloadurl = https://external-address-wopi-server/wopi/cbox/download
+    oosurl = https://your-microsoft-online-server
+    codeurl = https://your-collabora-server
+
+    [cs3]
+    revaurl= https://your-reva-server
