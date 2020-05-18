@@ -4,14 +4,24 @@ image:
   repository: cs3org/revad
   pullPolicy: IfNotPresent
 
-service:
-  type: NodePort
-  port: 20080
+http:
+  service:
+    port: 20080
+  # https://reva.link/docs/config/http/services
+  services:
+    prometheus:
+    # helloworld:
+    #   prefix: "/"
+    #   message: "Aloha!"
+
+grpc:
+  service:
+    port: 20099
+  # https://reva.link/docs/config/grpc/services
+
+jwtSecret: mysecret
+
+# extraRevadConfigs: Additional Config Patches
 
 args: []
 workingDir: ""
-
-nameOverride: ""
-fullnameOverride: ""
-
-serviceAccount: ""
