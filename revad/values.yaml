@@ -7,21 +7,24 @@ image:
 http:
   service:
     port: 20080
-  # https://reva.link/docs/config/http/services
-  services:
-    prometheus:
-    # helloworld:
-    #   prefix: "/"
-    #   message: "Aloha!"
 
 grpc:
   service:
     port: 20099
-  # https://reva.link/docs/config/grpc/services
 
-jwtSecret: mysecret
+# https://reva.link/docs/config/
+configFiles:
+  revad.toml: |
+    [shared]
+    jwt_secret = "mysecret"
 
-# extraRevadConfigs: Additional Config Patches
+    [http]
+    address = "0.0.0.0:20080"
+
+    [http.services.prometheus]
+
+    [grpc]
+    address = "0.0.0.0:20099"
 
 args: []
 workingDir: ""

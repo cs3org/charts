@@ -37,11 +37,9 @@ spec:
           workingDir: {{ .Values.workingDir }}
           {{- end }}
           volumeMounts:
-            - name: {{ include "revad.fullname" . }}-config
-              mountPath: /etc/revad/revad.toml
-              subPath: revad.toml
+            - name: {{ include "revad.fullname" . }}-configfiles
+              mountPath: /etc/revad/
       volumes:
-        - name: {{ include "revad.fullname" . }}-config
+        - name: {{ include "revad.fullname" . }}-configfiles
           configMap:
-            name: {{ include "revad.fullname" . }}-configmap
-            defaultMode: 0744
+            name: {{ template "revad.fullname" . }}-config
