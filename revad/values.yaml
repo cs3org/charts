@@ -12,6 +12,14 @@ grpc:
   service:
     port: 20099
 
+gateway:
+  grpc:
+    service:
+      port: 19000
+  datagateway:
+    service:
+      port: 19001
+
 # https://reva.link/docs/config/
 configFiles:
   revad.toml: |
@@ -25,6 +33,22 @@ configFiles:
 
     [grpc]
     address = "0.0.0.0:20099"
+  gateway.toml: |
+    [shared]
+    jwt_secret = "mysecret"
+    gatewaysvc = "localhost:19000"
+
+    [grpc]
+    address = "0.0.0.0:19000"
+
+    [grpc.services.gateway]
+    datagateway = "http://localhost:19001/data"
+
+    [http]
+    address = "0.0.0.0:19001"
+
+    [http.services.datagateway]
+
 
 args: []
 workingDir: ""
