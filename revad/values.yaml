@@ -2,6 +2,7 @@ replicaCount: 1
 
 image:
   repository: cs3org/revad
+  tag: v0.1.0
   pullPolicy: IfNotPresent
 
 http:
