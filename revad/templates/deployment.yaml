@@ -16,11 +16,14 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
               containerPort: 20080
+              protocol: TCP
+            - name: grpc
+              containerPort: 20099
               protocol: TCP
           command:
             - /go/bin/revad
@@ -36,3 +39,32 @@ spec:
           {{- if .Values.workingDir }}
           workingDir: {{ .Values.workingDir }}
           {{- end }}
+          volumeMounts:
+            - name: {{ include "revad.fullname" . }}-configfiles
+              mountPath: /etc/revad/
+        {{- if .Values.gateway }}
+        - name: {{ .Chart.Name }}-gateway
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: gateway
+              containerPort: 19000
+              protocol: TCP
+            - name: datagateway
+              containerPort: 19001
+              protocol: TCP
+          command:
+            - /go/bin/revad
+          args:
+              - "-c"
+              - "/etc/revad/gateway.toml"
+              - "-p"
+              - "/var/run/revad.pid"
+          volumeMounts:
+            - name: {{ include "revad.fullname" . }}-configfiles
+              mountPath: /etc/revad/
+          {{- end }}
+      volumes:
+        - name: {{ include "revad.fullname" . }}-configfiles
+          configMap:
+            name: {{ template "revad.fullname" . }}-config

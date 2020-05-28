@@ -2,16 +2,50 @@ replicaCount: 1
 
 image:
   repository: cs3org/revad
+  tag: v0.1.0
   pullPolicy: IfNotPresent
 
 service:
-  type: NodePort
-  port: 20080
+  type: ClusterIP
+  http:
+    port: 20080
+  grpc:
+    port: 20099
+  gateway:
+    grpc:
+      port: 19000
+    datagateway:
+      port: 19001
+
+# https://reva.link/docs/config/
+configFiles:
+  revad.toml: |
+    [shared]
+    jwt_secret = "mysecret"
+
+    [http]
+    address = "0.0.0.0:20080"
+
+    [http.services.prometheus]
+
+    [grpc]
+    address = "0.0.0.0:20099"
+  gateway.toml: |
+    [shared]
+    jwt_secret = "mysecret"
+    gatewaysvc = "localhost:19000"
+
+    [grpc]
+    address = "0.0.0.0:19000"
+
+    [grpc.services.gateway]
+    datagateway = "http://localhost:19001/data"
+
+    [http]
+    address = "0.0.0.0:19001"
+
+    [http.services.datagateway]
+
 
 args: []
 workingDir: ""
-
-nameOverride: ""
-fullnameOverride: ""
-
-serviceAccount: ""
