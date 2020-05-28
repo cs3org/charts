@@ -5,20 +5,16 @@ image:
   tag: v0.1.0
   pullPolicy: IfNotPresent
 
-http:
-  service:
+service:
+  type: ClusterIP
+  http:
     port: 20080
-
-grpc:
-  service:
-    port: 20099
-
-gateway:
   grpc:
-    service:
+    port: 20099
+  gateway:
+    grpc:
       port: 19000
-  datagateway:
-    service:
+    datagateway:
       port: 19001
 
 # https://reva.link/docs/config/

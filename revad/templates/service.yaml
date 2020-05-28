@@ -5,21 +5,22 @@ metadata:
   labels:
     {{- include "revad.labels" . | nindent 4 }}
 spec:
+  type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.http.service.port }}
+    - port: {{ .Values.service.http.port }}
       targetPort: http
       protocol: TCP
       name: http
-    - port: {{ .Values.grpc.service.port }}
+    - port: {{ .Values.service.grpc.port }}
       targetPort: grpc
       protocol: TCP
       name: grpc
     {{- if .Values.gateway }}
-    - port: {{ .Values.gateway.grpc.service.port }}
+    - port: {{ .Values.service.gateway.grpc.port }}
       targetPort: gateway
       protocol: TCP
       name: gateway
-    - port: {{ .Values.gateway.datagateway.service.port }}
+    - port: {{ .Values.service.gateway.datagateway.port }}
       targetPort: datagateway
       protocol: TCP
       name: datagateway
