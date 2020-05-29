@@ -15,7 +15,7 @@ spec:
       targetPort: grpc
       protocol: TCP
       name: grpc
-    {{- if .Values.gateway }}
+    {{- if .Values.service.gateway }}
     - port: {{ .Values.service.gateway.grpc.port }}
       targetPort: gateway
       protocol: TCP

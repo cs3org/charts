@@ -42,7 +42,7 @@ spec:
           volumeMounts:
             - name: {{ include "revad.fullname" . }}-configfiles
               mountPath: /etc/revad/
-        {{- if .Values.gateway }}
+        {{- if .Values.service.gateway }}
         - name: {{ .Chart.Name }}-gateway
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
