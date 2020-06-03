@@ -11,6 +11,8 @@ service:
     port: 20080
   grpc:
     port: 20099
+  dataprovider:
+    port: 11001
   gateway:
     grpc:
       port: 19000
@@ -45,7 +47,33 @@ configFiles:
     address = "0.0.0.0:19001"
 
     [http.services.datagateway]
+  storage-oc.toml: |
+    [shared]
+    jwt_secret = "mysecret"
+    gatewaysvc = "localhost:19000"
 
+    [grpc]
+    address = "0.0.0.0:11000"
+
+    [grpc.services.storageprovider]
+    driver = "owncloud"
+    mount_path = "/oc"
+    mount_id = "a71054f7-947f-4709-9992-2ad62fe24fa4"
+    expose_data_server = true
+    data_server_url = "http://localhost:11001/data"
+
+    [grpc.services.storageprovider.drivers.owncloud]
+    datadirectory = "/var/tmp/reva/data"
+
+    [http]
+    address = "0.0.0.0:11001"
+
+    [http.services.dataprovider]
+    driver = "owncloud"
+    temp_folder = "/var/tmp/reva/tmp"
+
+    [http.services.dataprovider.drivers.owncloud]
+    datadirectory = "/var/tmp/reva/data"
 
 args: []
 workingDir: ""

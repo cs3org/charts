@@ -20,10 +20,13 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 20080
+              containerPort: {{ .Values.service.http.port }}
               protocol: TCP
             - name: grpc
-              containerPort: 20099
+              containerPort: {{ .Values.service.grpc.port }}
+              protocol: TCP
+            - name: dataprovider
+              containerPort: {{ .Values.service.dataprovider.port }}
               protocol: TCP
           command:
             - /go/bin/revad
