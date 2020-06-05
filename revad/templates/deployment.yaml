@@ -43,7 +43,7 @@ spec:
           workingDir: {{ .Values.workingDir }}
           {{- end }}
           volumeMounts:
-            - name: {{ include "revad.fullname" . }}-configfiles
+            - name: {{ include "revad.fullname" . }}-revad-configfiles
               mountPath: /etc/revad/
         {{- if .Values.service.gateway }}
         - name: {{ .Chart.Name }}-gateway
@@ -64,10 +64,14 @@ spec:
               - "-p"
               - "/var/run/revad.pid"
           volumeMounts:
-            - name: {{ include "revad.fullname" . }}-configfiles
+            - name: {{ include "revad.fullname" . }}-gateway-configfiles
               mountPath: /etc/revad/
           {{- end }}
       volumes:
-        - name: {{ include "revad.fullname" . }}-configfiles
+        {{- range $configMapName, $_ := .Values.configFiles }}
+        - name: "{{ include "revad.fullname" $ }}-{{ $configMapName }}-configfiles"
           configMap:
-            name: {{ template "revad.fullname" . }}-config
+            name: "{{ template "revad.fullname" $ }}-{{ $configMapName }}-config"
+        {{- end }}
+
+

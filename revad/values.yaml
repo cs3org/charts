@@ -21,59 +21,62 @@ service:
 
 # https://reva.link/docs/config/
 configFiles:
-  revad.toml: |
-    [shared]
-    jwt_secret = "mysecret"
+  revad:
+    revad.toml: |
+      [shared]
+      jwt_secret = "mysecret"
 
-    [http]
-    address = "0.0.0.0:20080"
+      [http]
+      address = "0.0.0.0:20080"
 
-    [http.services.prometheus]
+      [http.services.prometheus]
 
-    [grpc]
-    address = "0.0.0.0:20099"
-  gateway.toml: |
-    [shared]
-    jwt_secret = "mysecret"
-    gatewaysvc = "localhost:19000"
+      [grpc]
+      address = "0.0.0.0:20099"
 
-    [grpc]
-    address = "0.0.0.0:19000"
+    storage-oc.toml: |
+      [shared]
+      jwt_secret = "mysecret"
+      gatewaysvc = "localhost:19000"
 
-    [grpc.services.gateway]
-    datagateway = "http://localhost:19001/data"
+      [grpc]
+      address = "0.0.0.0:11000"
 
-    [http]
-    address = "0.0.0.0:19001"
+      [grpc.services.storageprovider]
+      driver = "owncloud"
+      mount_path = "/oc"
+      mount_id = "a71054f7-947f-4709-9992-2ad62fe24fa4"
+      expose_data_server = true
+      data_server_url = "http://localhost:11001/data"
 
-    [http.services.datagateway]
-  storage-oc.toml: |
-    [shared]
-    jwt_secret = "mysecret"
-    gatewaysvc = "localhost:19000"
+      [grpc.services.storageprovider.drivers.owncloud]
+      datadirectory = "/var/tmp/reva/data"
 
-    [grpc]
-    address = "0.0.0.0:11000"
+      [http]
+      address = "0.0.0.0:11001"
 
-    [grpc.services.storageprovider]
-    driver = "owncloud"
-    mount_path = "/oc"
-    mount_id = "a71054f7-947f-4709-9992-2ad62fe24fa4"
-    expose_data_server = true
-    data_server_url = "http://localhost:11001/data"
+      [http.services.dataprovider]
+      driver = "owncloud"
+      temp_folder = "/var/tmp/reva/tmp"
 
-    [grpc.services.storageprovider.drivers.owncloud]
-    datadirectory = "/var/tmp/reva/data"
+      [http.services.dataprovider.drivers.owncloud]
+      datadirectory = "/var/tmp/reva/data"
+  gateway:
+    gateway.toml: |
+      [shared]
+      jwt_secret = "mysecret"
+      gatewaysvc = "localhost:19000"
 
-    [http]
-    address = "0.0.0.0:11001"
+      [grpc]
+      address = "0.0.0.0:19000"
 
-    [http.services.dataprovider]
-    driver = "owncloud"
-    temp_folder = "/var/tmp/reva/tmp"
+      [grpc.services.gateway]
+      datagateway = "http://localhost:19001/data"
 
-    [http.services.dataprovider.drivers.owncloud]
-    datadirectory = "/var/tmp/reva/data"
+      [http]
+      address = "0.0.0.0:19001"
+
+      [http.services.datagateway]
 
 args: []
 workingDir: ""
