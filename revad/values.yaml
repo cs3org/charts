@@ -2,78 +2,29 @@ replicaCount: 1
 
 image:
   repository: cs3org/revad
-  tag: v0.1.0
-  pullPolicy: IfNotPresent
+  tag: latest
+  pullPolicy: Always
 
 service:
   type: ClusterIP
-  http:
-    port: 20080
   grpc:
-    port: 20099
-  dataprovider:
-    port: 11001
-  gateway:
-    grpc:
-      port: 19000
-    datagateway:
-      port: 19001
+    port: 19000
+  http:
+    port: 19001
 
 # https://reva.link/docs/config/
 configFiles:
   revad.toml: |
-    [shared]
-    jwt_secret = "mysecret"
-
-    [http]
-    address = "0.0.0.0:20080"
-
-    [http.services.prometheus]
-
-    [grpc]
-    address = "0.0.0.0:20099"
-  gateway.toml: |
-    [shared]
-    jwt_secret = "mysecret"
-    gatewaysvc = "localhost:19000"
-
-    [grpc]
-    address = "0.0.0.0:19000"
-
     [grpc.services.gateway]
-    datagateway = "http://localhost:19001/data"
-
-    [http]
-    address = "0.0.0.0:19001"
-
-    [http.services.datagateway]
-  storage-oc.toml: |
-    [shared]
-    jwt_secret = "mysecret"
-    gatewaysvc = "localhost:19000"
-
-    [grpc]
-    address = "0.0.0.0:11000"
-
+    [grpc.services.storageregistry]
     [grpc.services.storageprovider]
-    driver = "owncloud"
-    mount_path = "/oc"
-    mount_id = "a71054f7-947f-4709-9992-2ad62fe24fa4"
-    expose_data_server = true
-    data_server_url = "http://localhost:11001/data"
-
-    [grpc.services.storageprovider.drivers.owncloud]
-    datadirectory = "/var/tmp/reva/data"
-
-    [http]
-    address = "0.0.0.0:11001"
+    [grpc.services.authprovider]
+    [grpc.services.authregistry]
+    [grpc.services.userprovider]
+    [grpc.services.usershareprovider]
+    [grpc.services.publicshareprovider]
 
     [http.services.dataprovider]
-    driver = "owncloud"
-    temp_folder = "/var/tmp/reva/tmp"
+    [http.services.prometheus]
 
-    [http.services.dataprovider.drivers.owncloud]
-    datadirectory = "/var/tmp/reva/data"
 
-args: []
-workingDir: ""

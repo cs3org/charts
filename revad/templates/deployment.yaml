@@ -25,48 +25,16 @@ spec:
             - name: grpc
               containerPort: {{ .Values.service.grpc.port }}
               protocol: TCP
-            - name: dataprovider
-              containerPort: {{ .Values.service.dataprovider.port }}
-              protocol: TCP
           command:
             - /go/bin/revad
           args:
-            {{- if .Values.args }}
-{{ toYaml .Values.args | indent 14 }}
-            {{- else }}
               - "-c"
               - "/etc/revad/revad.toml"
               - "-p"
               - "/var/run/revad.pid"
-            {{- end }}
-          {{- if .Values.workingDir }}
-          workingDir: {{ .Values.workingDir }}
-          {{- end }}
           volumeMounts:
             - name: {{ include "revad.fullname" . }}-configfiles
               mountPath: /etc/revad/
-        {{- if .Values.service.gateway }}
-        - name: {{ .Chart.Name }}-gateway
-          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: gateway
-              containerPort: 19000
-              protocol: TCP
-            - name: datagateway
-              containerPort: 19001
-              protocol: TCP
-          command:
-            - /go/bin/revad
-          args:
-              - "-c"
-              - "/etc/revad/gateway.toml"
-              - "-p"
-              - "/var/run/revad.pid"
-          volumeMounts:
-            - name: {{ include "revad.fullname" . }}-configfiles
-              mountPath: /etc/revad/
-          {{- end }}
       volumes:
         - name: {{ include "revad.fullname" . }}-configfiles
           configMap:

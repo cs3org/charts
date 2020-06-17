@@ -15,19 +15,5 @@ spec:
       targetPort: grpc
       protocol: TCP
       name: grpc
-    - port: {{ .Values.service.dataprovider.port }}
-      targetPort: dataprovider
-      protocol: TCP
-      name: dataprovider
-    {{- if .Values.service.gateway }}
-    - port: {{ .Values.service.gateway.grpc.port }}
-      targetPort: gateway
-      protocol: TCP
-      name: gateway
-    - port: {{ .Values.service.gateway.datagateway.port }}
-      targetPort: datagateway
-      protocol: TCP
-      name: datagateway
-    {{- end }}
   selector:
     {{- include "revad.selectorLabels" . | nindent 4 }}
