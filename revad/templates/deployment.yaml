@@ -35,7 +35,12 @@ spec:
           volumeMounts:
             - name: {{ include "revad.fullname" . }}-configfiles
               mountPath: /etc/revad/
+            - name: {{ include "revad.fullname" . }}-datadir
+              mountPath: /var/tmp/reva/data
       volumes:
         - name: {{ include "revad.fullname" . }}-configfiles
           configMap:
             name: {{ template "revad.fullname" . }}-config
+        # TODO(SamuAlfageme): allow PersistentVolmeClaim custom Value
+        - name: {{ include "revad.fullname" . }}-datadir
+          emptyDir: {}
