@@ -36,7 +36,7 @@ spec:
             - name: {{ include "revad.fullname" . }}-configfiles
               mountPath: /etc/revad/
             - name: {{ include "revad.fullname" . }}-datadir
-              mountPath: /var/tmp/reva/data
+              mountPath: /var/tmp/reva/
       volumes:
         - name: {{ include "revad.fullname" . }}-configfiles
           configMap:
