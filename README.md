@@ -24,5 +24,32 @@ cs3org	https://cs3org.github.io/charts/
 
 $ helm search repo cs3org
 NAME        	CHART VERSION	APP VERSION	DESCRIPTION
-cs3org/revad	0.1.0        	0.1.0      	The Reva daemon (revad) helm chart
+cs3org/revad	0.1.4        	0.1.0      	The Reva daemon (revad) helm chart
+```
+
+## Examples
+
+### Deploying REVA with custom config
+
+```console
+$ cat << EOF > custom-values.yaml
+service:
+  http:
+    port: 20001
+configFiles:
+  revad.toml: |
+    [http]
+    address = "0.0.0.0:20001"
+
+    [http.services.helloworld]
+EOF
+
+$ helm install custom-reva cs3org/revad -f custom-values.yaml
+```
+or
+
+```console
+$ helm install custom-reva cs3org/revad \
+  --set service.http.port=20001 \
+  --set-file configFiles.revad\.toml=custom-config.toml
 ```
