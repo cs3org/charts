@@ -2,16 +2,30 @@ replicaCount: 1
 
 image:
   repository: cs3org/wopiserver
-  pullPolicy: IfNotPresent
   tag: latest
+  pullPolicy: Always
 
 service:
   type: NodePort
   port: 8880
 
-nameOverride: ""
-fullnameOverride: ""
+## WOPISERVER's primary configuration
+## TODO(@glpatcern): publish some config reference
+config:
+  appProviders:
+    codimdurl: http://codimd.local
+  cs3:
+    revahost: revad:19000
 
-serviceAccount: ""
-
-# configmap: |
+ingress:
+  enabled: false
+  hostname: wopi.local
+  path: /wopi
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  tls: []
+    # Secrets must be present in the namespace beforehand.
+    # - secretName: wopi-tls
+    #   hosts:
+    #     - wopi.local

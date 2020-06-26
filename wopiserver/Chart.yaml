@@ -3,5 +3,5 @@ name: wopiserver
 description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway for EFSS systems
 type: application
 version: 0.1.0
-appVersion: 5.0.0
+appVersion: v5.0
 source: https://github.com/cs3org/wopiserver

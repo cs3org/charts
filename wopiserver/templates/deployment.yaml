@@ -23,9 +23,15 @@ spec:
               containerPort: 8880
               protocol: TCP
           volumeMounts:
-            - name: {{ include "wopiserver.fullname" . }}-conf
+            - name: {{ include "wopiserver.fullname" . }}-confdir
               mountPath: /etc/wopi/wopiserver.conf
               subPath: wopiserver.conf
+            - name: {{ include "wopiserver.fullname" . }}-confdir
+              mountPath: /etc/wopi/wopisecret
+              subPath: wopisecret
+            - name: {{ include "wopiserver.fullname" . }}-confdir
+              mountPath: /etc/wopi/iopsecret
+              subPath: iopsecret
           livenessProbe:
             httpGet:
               path: /
@@ -35,7 +41,10 @@ spec:
               path: /
               port: http
       volumes:
-        - name: {{ include "wopiserver.fullname" . }}-conf
-          configMap:
-            name: {{ include "wopiserver.fullname" . }}-config
-            defaultMode: 0744
+        - name: {{ include "wopiserver.fullname" . }}-confdir
+          projected:
+            sources:
+              - configMap:
+                  name: {{ template "wopiserver.fullname" . }}-config
+              - secret:
+                  name: {{ template "wopiserver.fullname" . }}-secrets

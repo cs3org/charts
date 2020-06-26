@@ -5,14 +5,38 @@ metadata:
   labels:
     {{- include "wopiserver.labels" . | nindent 4 }}
 data:
+  # TODO: move hardcoded values to fallback values
+  # https://docs.python.org/3/library/configparser.html#fallback-values
   wopiserver.conf: |-
     [general]
     storagetype = cs3
-    wopiurl = https://external-address-wopi-server
-    allowedclients = <reva/phoenix hosts + any whitelisted host>
-    downloadurl = https://external-address-wopi-server/wopi/cbox/download
-    oosurl = https://your-microsoft-online-server
-    codeurl = https://your-collabora-server
+    port = {{ .Values.service.port }}
+    allowedclients = localhost
+
+{{- range $provider, $url := index .Values.config.appProviders }}
+    {{ $provider }} = {{ $url }}
+{{- end }}
+
+    tokenvalidity = 86400
+
+{{- if .Values.ingress.enabled }}
+    wopiurl = {{ .Values.ingress.hostname }}
+    downloadurl = {{ .Values.ingress.hostname }}/wopi/cbox/download
+{{- else }}
+    wopiurl = {{ include "wopiserver.fullname" . }}
+    downloadurl = {{ include "wopiserver.fullname" . }}/wopi/cbox/download
+{{- end }}
+
+    loglevel = Debug
+
+    [security]
+    usehttps = no
+    wopisecretfile = /etc/wopi/wopisecret
+    iopsecretfile = /etc/wopi/iopsecret
 
     [cs3]
-    revaurl= https://your-reva-server
+    revahost = {{ .Values.config.cs3.revahost }}
+    authtokenvalidity = 3600
+
+    [io]
+    chunksize = 4194304
