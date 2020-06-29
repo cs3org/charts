@@ -6,7 +6,7 @@ image:
   pullPolicy: Always
 
 service:
-  type: NodePort
+  type: ClusterIP
   port: 8880
 
 ## WOPISERVER's primary configuration
