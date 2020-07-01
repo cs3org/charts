@@ -12,6 +12,9 @@ service:
   http:
     port: 19001
 
+extraVolumeMounts: []
+extraVolumes: []
+
 # https://reva.link/docs/config/
 configFiles:
   revad.toml: |

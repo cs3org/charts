@@ -40,6 +40,8 @@ The following configurations may be set. It is recommended to use `values.yaml` 
 | `service.http.port`                               | Revad's HTTP Service port. To be set on the `address` under the `[http]` section of the config.  | `19001`                                                                                                                 |
 | `configFiles.revad\.toml`                         | Revad [config file](https://reva.link/docs/config/). Mounted on `/etc/revad/`.                   | [`examples/standalone/standalone.toml`](https://github.com/cs3org/reva/blob/master/examples/standalone/standalone.toml) |
 | `configFiles.users\.json`                         | Revad `users.json` for the `auth_manager` and `userprovider` services. Mounted on `/etc/revad/`. | [`examples/standalone/users.demo.json`](https://github.com/cs3org/reva/blob/master/examples/standalone/users.demo.json) |
+| `extraVolumeMounts` | Array of additional volume mounts | `[]` |
+| `extraVolumes` | Array of additional volumes | `[]` |
 
 ### Deploying REVA with a `custom-config.toml` file
 
