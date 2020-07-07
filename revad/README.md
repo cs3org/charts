@@ -42,6 +42,7 @@ The following configurations may be set. It is recommended to use `values.yaml` 
 | `configFiles.users\.json`                         | Revad `users.json` for the `auth_manager` and `userprovider` services. Mounted on `/etc/revad/`. | [`examples/standalone/users.demo.json`](https://github.com/cs3org/reva/blob/master/examples/standalone/users.demo.json) |
 | `extraVolumeMounts` | Array of additional volume mounts | `[]` |
 | `extraVolumes` | Array of additional volumes | `[]` |
+| `env` | Additional environment variables passed to the container | `[]`
 
 ### Deploying REVA with a `custom-config.toml` file
 
