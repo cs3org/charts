@@ -1,8 +1,9 @@
+
 apiVersion: v2
 name: revad
 description: The Reva daemon (revad) helm chart
 type: application
-version: 0.1.4
+version: 0.1.5
 appVersion: v0.1.0
 icon: https://reva.link/logo.svg
 home: https://reva.link
