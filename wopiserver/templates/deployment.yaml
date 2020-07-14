@@ -32,6 +32,13 @@ spec:
             - name: {{ include "wopiserver.fullname" . }}-confdir
               mountPath: /etc/wopi/iopsecret
               subPath: iopsecret
+            {{- if .Values.extraVolumeMounts }}
+            {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
+            {{- end }}
+          {{- if .Values.env }}
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
+          {{- end }}
           livenessProbe:
             httpGet:
               path: /
@@ -48,3 +55,6 @@ spec:
                   name: {{ template "wopiserver.fullname" . }}-config
               - secret:
                   name: {{ template "wopiserver.fullname" . }}-secrets
+        {{- if .Values.extraVolumes }}
+        {{- toYaml .Values.extraVolumes | nindent 8 }}
+        {{- end }}
