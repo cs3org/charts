@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "wopiserver.fullname" . }}-config
+  labels:
+    {{- include "wopiserver.labels" . | nindent 4 }}
+data:
+  # TODO: move hardcoded values to fallback values
+  # https://docs.python.org/3/library/configparser.html#fallback-values
+  wopiserver.conf: |-
+    [general]
+    storagetype = cs3
+    port = {{ .Values.service.port }}
+
+{{- range $provider, $url := index .Values.config.appProviders }}
+    {{ $provider }} = {{ $url }}
+{{- end }}
+
+    tokenvalidity = 86400
+
+{{- if .Values.ingress.enabled }}
+    wopiurl = http://{{ .Values.ingress.hostname }}
+    downloadurl = http://{{ .Values.ingress.hostname }}/wopi/cbox/download
+{{- else }}
+    wopiurl = http://{{ include "wopiserver.fullname" . }}
+    downloadurl = http://{{ include "wopiserver.fullname" . }}/wopi/cbox/download
+{{- end }}
+
+    loglevel = Debug
+
+    [security]
+    usehttps = no
+    wopisecretfile = /etc/wopi/wopisecret
+    iopsecretfile = /etc/wopi/iopsecret
+
+    [cs3]
+    revahost = {{ .Values.config.cs3.revahost }}
+    authtokenvalidity = 3600
+
+    [io]
+    chunksize = 4194304

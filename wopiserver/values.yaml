@@ -1,0 +1,36 @@
+replicaCount: 1
+
+image:
+  repository: cs3org/wopiserver
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 8880
+
+extraVolumeMounts: []
+extraVolumes: []
+
+env: []
+
+# WOPISERVER's primary configuration
+# - ref: https://github.com/cs3org/wopiserver/blob/master/wopiserver.conf
+config:
+  appProviders:
+    codimdurl: http://codimd.local
+  cs3:
+    revahost: revad:19000
+
+ingress:
+  enabled: false
+  hostname: wopi.local
+  path: /wopi
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  tls: []
+    # Secrets must be present in the namespace beforehand.
+    # - secretName: wopi-tls
+    #   hosts:
+    #     - wopi.local
