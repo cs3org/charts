@@ -15,6 +15,35 @@ service:
 extraVolumeMounts: []
 extraVolumes: []
 
+emptyDir:
+  sizeLimit: ""
+
+persistentVolume:
+  ## If true, revad will create/use a Persistent Volume Claim
+  ## If false, use emptyDir
+  enabled: false
+
+  ## Must match those of existing PV or dynamic provisioner
+  ## Ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+  accessModes:
+    - ReadWriteOnce
+
+  annotations: {}
+
+  ## If defined, PVC MUST be created manually before volume will be bound
+  existingClaim: ""
+
+  mountPath: /var/tmp/reva
+  ## Subdirectory of the PV to mount. If the root directory is not empty
+  subPath: ""
+  size: 2Gi
+
+  ## If set to "-", storageClassName: "": disables dynamic provisioning
+  ## If undefined or null, chooses the default provisioner.
+  # storageClass: "-"
+
+  # volumeBindingMode: ""
+
 env: []
 
 # https://reva.link/docs/config/
@@ -28,9 +57,15 @@ configFiles:
     [grpc.services.userprovider]
     [grpc.services.usershareprovider]
     [grpc.services.publicshareprovider]
+    [grpc.services.ocmcore]
+    [grpc.services.ocmshareprovider]
+    [grpc.services.ocminvitemanager]
+    [grpc.services.ocmproviderauthorizer]
 
+    [http.services.datagateway]
     [http.services.dataprovider]
     [http.services.prometheus]
+    [http.services.ocmd]
 
   users.json: |
     [

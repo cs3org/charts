@@ -11,6 +11,8 @@ spec:
       {{- include "revad.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
         {{- include "revad.selectorLabels" . | nindent 8 }}
     spec:
@@ -36,7 +38,8 @@ spec:
             - name: {{ include "revad.fullname" . }}-configfiles
               mountPath: /etc/revad/
             - name: {{ include "revad.fullname" . }}-datadir
-              mountPath: /var/tmp/reva/
+              mountPath: {{ .Values.persistentVolume.mountPath }}
+              subPath: "{{ .Values.persistentVolume.subPath }}"
             {{- if .Values.extraVolumeMounts }}
               {{ toYaml .Values.extraVolumeMounts | nindent 12 }}
             {{- end }}
@@ -48,9 +51,18 @@ spec:
         - name: {{ include "revad.fullname" . }}-configfiles
           configMap:
             name: {{ template "revad.fullname" . }}-config
-        # TODO(SamuAlfageme): allow PersistentVolmeClaim custom Value
         - name: {{ include "revad.fullname" . }}-datadir
-          emptyDir: {}
+        {{- if .Values.persistentVolume.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ if .Values.persistentVolume.existingClaim }}{{ .Values.persistentVolume.existingClaim }}{{- else }}{{ template "revad.fullname" . }}{{- end }}
+        {{- else }}
+          emptyDir:
+          {{- if .Values.emptyDir.sizeLimit }}
+            sizeLimit: {{ .Values.emptyDir.sizeLimit }}
+          {{- else }}
+            {}
+          {{- end -}}
+        {{- end -}}
         {{- if .Values.extraVolumes }}
-          {{ toYaml .Values.extraVolumes | nindent 8}}
+          {{ toYaml .Values.extraVolumes | nindent 8 }}
         {{- end }}

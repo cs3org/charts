@@ -4,7 +4,7 @@ Kubernetes Charts Repository for CS3ORG
 
 This reposity contains the official charts for CS3Org software, like Reva.
 
-The chart repository is available at [cs3org.github.io/charts](cs3org.github.io/charts).
+The chart repository is available at [https://cs3org.github.io/charts](https://cs3org.github.io/charts).
 
 ## Working with this repo
 
@@ -24,7 +24,7 @@ cs3org	https://cs3org.github.io/charts/
 
 $ helm search repo cs3org
 NAME        	CHART VERSION	APP VERSION	DESCRIPTION
-cs3org/revad	0.1.4        	0.1.0      	The Reva daemon (revad) helm chart
+cs3org/revad	0.1.6        	0.1.0      	The Reva daemon (revad) helm chart
 ```
 
 ## Examples
@@ -51,5 +51,5 @@ or
 ```console
 $ helm install custom-reva cs3org/revad \
   --set service.http.port=20001 \
-  --set-file configFiles.revad\.toml=custom-config.toml
+  --set-file configFiles.revad\\.toml=custom-config.toml
 ```
