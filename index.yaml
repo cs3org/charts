@@ -85,4 +85,16 @@ entries:
     urls:
     - https://github.com/cs3org/charts/releases/download/revad-0.1.0/revad-0.1.0.tgz
     version: 0.1.0
+  wopiserver:
+  - apiVersion: v2
+    appVersion: v5.2
+    created: "2020-07-20T13:22:32.363934991Z"
+    description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway
+      for EFSS systems
+    digest: a2b167bb3e958240b0cae9f091502ecebfe23de8c01081c6bfd74ef447db2d77
+    name: wopiserver
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/wopiserver-0.1.0/wopiserver-0.1.0.tgz
+    version: 0.1.0
 generated: "2020-04-22T08:30:18.974827572Z"
