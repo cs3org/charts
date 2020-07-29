@@ -7,13 +7,17 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
+    {{- if .Values.service.http }}
     - port: {{ .Values.service.http.port }}
       targetPort: http
       protocol: TCP
       name: http
+    {{- end }}
+    {{- if .Values.service.grpc }}
     - port: {{ .Values.service.grpc.port }}
       targetPort: grpc
       protocol: TCP
       name: grpc
+    {{- end }}
   selector:
     {{- include "revad.selectorLabels" . | nindent 4 }}
