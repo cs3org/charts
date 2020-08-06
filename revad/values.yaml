@@ -44,7 +44,30 @@ persistentVolume:
 
   # volumeBindingMode: ""
 
-env: []
+## Environment variables in NAME:VALUE (dict) form
+env: {}
+  # REVA_ENV: value
+
+## Environment variables in {name,value/valueFrom} (list) form
+extraEnv: []
+  # - name: REVA_ENV
+  #   value: value
+  # - name: REVA_ENV_FROM
+  #   valueFrom:
+  #     configMapKeyRef:
+  #       name: configmap
+  #       key: configmap_key
+  # - name: REVA_SECRET_ENV
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: secret
+  #       key: secret_key
+
+envFrom: []
+  # - configMapRef:
+  #     name: reva-envars
+  # - secretRef:
+  #     name: reva-secrets
 
 # https://reva.link/docs/config/
 configFiles:
