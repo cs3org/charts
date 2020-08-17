@@ -52,12 +52,16 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
 {{/*
-Create the name of the service account to use
+Returns the WOPI Server external URL
 */}}
-{{- define "wopiserver.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create -}}
-    {{ default (include "wopiserver.fullname" .) .Values.serviceAccount.name }}
-{{- else -}}
-    {{ default "default" .Values.serviceAccount.name }}
-{{- end -}}
+{{- define "wopiserver.url" -}}
+  {{- if .Values.ingress.hostname }}
+    {{- if .Values.ingress.tls }}
+      https://{{ .Values.ingress.hostname }}
+    {{- else }}
+      http://{{ .Values.ingress.hostname }}
+    {{- end }}
+  {{- else }}
+      http://{{ template "wopiserver.fullname" . }}:{{ .Values.service.port }}
+  {{- end }}
 {{- end -}}

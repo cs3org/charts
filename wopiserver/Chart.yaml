@@ -2,6 +2,6 @@ apiVersion: v2
 name: wopiserver
 description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway for EFSS systems
 type: application
-version: 0.1.0
-appVersion: v5.2
+version: 0.2.0
+appVersion: v5.3
 source: https://github.com/cs3org/wopiserver

@@ -21,6 +21,7 @@ config:
     codimdurl: http://codimd.local
   cs3:
     revahost: revad:19000
+  loglevel: Debug
 
 ingress:
   enabled: false

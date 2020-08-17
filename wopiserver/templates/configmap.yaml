@@ -18,15 +18,10 @@ data:
 
     tokenvalidity = 86400
 
-{{- if .Values.ingress.enabled }}
-    wopiurl = http://{{ .Values.ingress.hostname }}
-    downloadurl = http://{{ .Values.ingress.hostname }}/wopi/cbox/download
-{{- else }}
-    wopiurl = http://{{ include "wopiserver.fullname" . }}
-    downloadurl = http://{{ include "wopiserver.fullname" . }}/wopi/cbox/download
-{{- end }}
+    wopiurl = {{ template "wopiserver.url" . }}
+    downloadurl = {{ template "wopiserver.url" . }}/wopi/cbox/download
 
-    loglevel = Debug
+    loglevel = {{ .Values.config.loglevel }}
 
     [security]
     usehttps = no
