@@ -1,0 +1,53 @@
+{{- with .Values.wopibridge }}
+{{- if .enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "wopiserver.fullname" $ }}-{{ .name }}
+  labels:
+    {{- include "wopibridge.labels" $ | nindent 4 }}
+spec:
+  replicas: {{ .replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "wopibridge.selectorLabels" $ | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "wopibridge.selectorLabels" $ | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .name }}
+          image: "{{ .image.repository }}:{{ .image.tag }}"
+          imagePullPolicy: {{ .image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          {{- if .extraVolumeMounts }}
+          volumeMounts:
+            {{- toYaml .extraVolumeMounts | nindent 12 }}
+          {{- end }}
+          env:
+            - name: WOPIBRIDGE_URL
+              value: {{ template "wopibridge.url" $ }}
+          {{- if .env }}
+            {{- range $name, $value := .env }}
+            - name: "{{ $name }}"
+              value: "{{ $value }}"
+            {{- end }}
+          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+      {{- if .extraVolumes }}
+      volumes:
+      {{- toYaml .extraVolumes | nindent 6 }}
+      {{- end }}
+{{- end }}
+{{- end }}

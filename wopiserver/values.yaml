@@ -35,3 +35,43 @@ ingress:
     # - secretName: wopi-tls
     #   hosts:
     #     - wopi.local
+
+wopibridge:
+  enabled: false
+  name: wopibridge
+  replicaCount: 1
+  image:
+    repository: cs3org/wopibridge
+    tag: latest
+    pullPolicy: Always
+
+  service:
+    type: ClusterIP
+    port: 8000
+
+  extraVolumes: []
+    # - name: image-store
+    #   persistentVolumeClaim:
+    #     claimName: image-store
+
+  extraVolumeMounts: []
+    # - name: image-store
+    #   mountPath: /mnt/codimd_storage
+
+  env: []
+    # CODIMD_INT_URL: http://codimd
+    # CODIMD_EXT_URL: https://codimd.local/path
+    # CODIMD_STORAGE_PATH: /mnt/codimd_storage
+
+  ingress:
+    enabled: false
+    hostname: bridge.local
+    path: /wopibridge
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    tls: []
+      # Secrets must be present in the namespace beforehand.
+      # - secretName: bridge-tls
+      #   hosts:
+      #     - wopi.local

@@ -1,0 +1,19 @@
+{{- with .Values.wopibridge }}
+{{- if .enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "wopiserver.fullname" $ }}-{{ .name }}
+  labels:
+    {{- include "wopibridge.labels" $ | nindent 4 }}
+spec:
+  type: {{ .service.type }}
+  ports:
+    - port: {{ .service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "wopibridge.selectorLabels" $ | nindent 4 }}
+{{- end }}
+{{- end }}
