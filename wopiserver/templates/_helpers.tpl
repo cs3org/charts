@@ -67,27 +67,35 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Returns the WOPI Server external URL
 */}}
 {{- define "wopiserver.url" -}}
-  {{- if .Values.ingress.hostname -}}
-    {{- if .Values.ingress.tls -}}
-      https://{{ .Values.ingress.hostname }}
+  {{- if .Values.wopiserverUrl -}}
+    {{- .Values.wopiserverUrl }}
+  {{- else }}
+    {{- if .Values.ingress.hostname -}}
+      {{- if .Values.ingress.tls -}}
+        https://{{ .Values.ingress.hostname }}
+      {{- else -}}
+        http://{{ .Values.ingress.hostname }}
+      {{- end -}}
     {{- else -}}
-      http://{{ .Values.ingress.hostname }}
+        http://{{ template "wopiserver.fullname" . }}:{{ .Values.service.port }}
     {{- end -}}
-  {{- else -}}
-      http://{{ template "wopiserver.fullname" . }}:{{ .Values.service.port }}
   {{- end -}}
 {{- end -}}
 
 {{- define "wopibridge.url" -}}
 {{- with .Values.wopibridge -}}
-  {{- if .ingress.hostname -}}
-    {{- if .ingress.tls -}}
-    https://{{ .ingress.hostname }}{{ .ingress.path }}
-    {{- else -}}
-    http://{{ .ingress.hostname }}{{ .ingress.path }}
-    {{- end -}}
+  {{- if .bridgeUrl -}}
+    {{- .bridgeUrl }}
   {{- else -}}
-    http://{{ template "wopiserver.fullname" $ }}-{{ .name }}:{{ .service.port }}
+    {{- if .ingress.hostname -}}
+      {{- if .ingress.tls -}}
+      https://{{ .ingress.hostname }}{{ .ingress.path }}
+      {{- else -}}
+      http://{{ .ingress.hostname }}{{ .ingress.path }}
+      {{- end -}}
+    {{- else -}}
+      http://{{ template "wopiserver.fullname" $ }}-{{ .name }}:{{ .service.port }}
+    {{- end -}}
   {{- end -}}
 {{- end -}}
 {{- end -}}

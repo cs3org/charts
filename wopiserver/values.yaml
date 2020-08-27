@@ -9,6 +9,9 @@ service:
   type: ClusterIP
   port: 8880
 
+## Overrides the default URL generation based on the ingress/service values
+# wopiserverUrl: https://wopi.local/
+
 extraVolumeMounts: []
 extraVolumes: []
 
@@ -18,7 +21,7 @@ env: []
 # - ref: https://github.com/cs3org/wopiserver/blob/master/wopiserver.conf
 config:
   appProviders:
-    codimdurl: http://codimd.local
+    codimdurl: http://wopibridge:8000
   cs3:
     revahost: revad:19000
   loglevel: Debug
@@ -48,6 +51,9 @@ wopibridge:
   service:
     type: ClusterIP
     port: 8000
+
+  ## Overrides the default URL generation based on the ingress/service values
+  # bridgeUrl: https://bridge.local/wopibridge
 
   extraVolumes: []
     # - name: image-store
