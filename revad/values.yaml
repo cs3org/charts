@@ -66,6 +66,7 @@ configFiles:
     [http.services.dataprovider]
     [http.services.prometheus]
     [http.services.ocmd]
+    [http.services.ocdav]
 
   users.json: |
     [
