@@ -111,6 +111,17 @@ entries:
     version: 0.1.0
   wopiserver:
   - apiVersion: v2
+    appVersion: v5.4
+    created: "2020-09-01T09:01:48.993414764Z"
+    description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway
+      for EFSS systems
+    digest: 2f2cc1427e664cf6962c5c6353c541db9638168ac9d0a5c68cbea4752c0a83c5
+    name: wopiserver
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/wopiserver-0.2.0/wopiserver-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     appVersion: v5.2
     created: "2020-07-20T13:22:32.363934991Z"
     description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway
