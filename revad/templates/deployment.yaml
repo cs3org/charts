@@ -43,17 +43,19 @@ spec:
             {{- if .Values.extraVolumeMounts }}
               {{ toYaml .Values.extraVolumeMounts | nindent 12 }}
             {{- end }}
-            {{- if or .Values.env .Values.extraEnv }}
-              env:
-                {{ toYaml .Values.extraEnv | indent 14 }}
-              {{- range $name, $value := .Values.env }}
-                - name: "{{ $name }}"
-                  value: "{{ $value }}"
-              {{- end }}
+          {{- if or .Values.env .Values.extraEnv }}
+          env:
+          {{- range $name, $value := .Values.env }}
+            - name: "{{ $name }}"
+              value: "{{ $value }}"
+          {{- end }}
+          {{- if .Values.extraEnv }}
+            {{- toYaml .Values.extraEnv | nindent 12 }}
+          {{- end }}
           {{- end }}
           {{- if .Values.envFrom }}
-              envFrom:
-                {{ toYaml .Values.envFrom | indent 14 }}
+          envFrom:
+            {{ toYaml .Values.envFrom | indent 12 }}
           {{- end }}
       volumes:
         - name: {{ include "revad.fullname" . }}-configfiles
