@@ -1,10 +1,13 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: {{ if .Values.useStatefulSet }}{{ "StatefulSet" }}{{- else }}{{ "Deployment" }}{{- end }}
 metadata:
   name: {{ include "revad.fullname" . }}
   labels:
     {{- include "revad.labels" . | nindent 4 }}
 spec:
+  {{- if .Values.useStatefulSet }}
+  serviceName: {{ include "revad.fullname" . }}
+  {{- end }}
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
@@ -61,18 +64,40 @@ spec:
         - name: {{ include "revad.fullname" . }}-configfiles
           configMap:
             name: {{ template "revad.fullname" . }}-config
+      {{- if .Values.extraVolumes }}
+        {{ toYaml .Values.extraVolumes | nindent 8 }}
+      {{- end }}
+    {{- if .Values.persistentVolume.enabled }}
+      {{- if .Values.useStatefulSet }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ include "revad.fullname" . }}-datadir
+        {{- if .Values.persistentVolume.annotations }}
+        annotations:
+          {{- toYaml .Values.persistentVolume.annotations | indent 10 }}
+        {{- end }}
+      spec:
+        accessModes:
+          {{- toYaml .Values.persistentVolume.accessModes | indent 10 }}
+        resources:
+          requests: 
+            storage: "{{ .Values.persistentVolume.size }}"
+          {{- if (eq "-" .Values.persistentVolume.storageClass) }}
+            storageClassName: ""
+          {{- else }}
+            storageClassName: "{{ .Values.persistentVolume.storageClass }}"
+          {{- end }}
+      {{- else }}
         - name: {{ include "revad.fullname" . }}-datadir
-        {{- if .Values.persistentVolume.enabled }}
           persistentVolumeClaim:
             claimName: {{ if .Values.persistentVolume.existingClaim }}{{ .Values.persistentVolume.existingClaim }}{{- else }}{{ template "revad.fullname" . }}{{- end }}
-        {{- else }}
+      {{- end }}
+    {{- else }}
+        - name: {{ include "revad.fullname" . }}-datadir
           emptyDir:
           {{- if .Values.emptyDir.sizeLimit }}
             sizeLimit: {{ .Values.emptyDir.sizeLimit }}
           {{- else }}
             {}
           {{- end -}}
-        {{- end -}}
-        {{- if .Values.extraVolumes }}
-          {{ toYaml .Values.extraVolumes | nindent 8 }}
-        {{- end }}
+    {{- end }}
