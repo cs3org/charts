@@ -34,7 +34,11 @@ spec:
             - /go/bin/revad
           args:
               - "-c"
+              {{- if .Values.useStatefulSet }}
+              - "/etc/revad/${HOSTNAME}.toml"
+              {{- else }}
               - "/etc/revad/revad.toml"
+              {{- end }}
               - "-p"
               - "/var/run/revad.pid"
           volumeMounts:
