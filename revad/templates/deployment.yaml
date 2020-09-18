@@ -35,7 +35,7 @@ spec:
           args:
               - "-c"
               {{- if .Values.useStatefulSet }}
-              - "/etc/revad/${HOSTNAME}.toml"
+              - "/etc/revad/$(HOSTNAME).toml"
               {{- else }}
               - "/etc/revad/revad.toml"
               {{- end }}
@@ -50,8 +50,14 @@ spec:
             {{- if .Values.extraVolumeMounts }}
               {{ toYaml .Values.extraVolumeMounts | nindent 12 }}
             {{- end }}
-          {{- if or .Values.env .Values.extraEnv }}
+          {{- if or .Values.useStatefulSet (or .Values.env .Values.extraEnv) }}
           env:
+            {{- if .Values.useStatefulSet }}
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            {{- end }}
           {{- range $name, $value := .Values.env }}
             - name: "{{ $name }}"
               value: "{{ $value }}"
@@ -62,7 +68,7 @@ spec:
           {{- end }}
           {{- if .Values.envFrom }}
           envFrom:
-            {{ toYaml .Values.envFrom | indent 12 }}
+            {{- toYaml .Values.envFrom | nindent 12 }}
           {{- end }}
       volumes:
         - name: {{ include "revad.fullname" . }}-configfiles
@@ -78,13 +84,13 @@ spec:
         name: {{ include "revad.fullname" . }}-datadir
         {{- if .Values.persistentVolume.annotations }}
         annotations:
-          {{- toYaml .Values.persistentVolume.annotations | indent 10 }}
+          {{- toYaml .Values.persistentVolume.annotations | nindent 10 }}
         {{- end }}
       spec:
         accessModes:
-          {{- toYaml .Values.persistentVolume.accessModes | indent 10 }}
+          {{- toYaml .Values.persistentVolume.accessModes | nindent 10 }}
         resources:
-          requests: 
+          requests:
             storage: "{{ .Values.persistentVolume.size }}"
           {{- if (eq "-" .Values.persistentVolume.storageClass) }}
             storageClassName: ""
