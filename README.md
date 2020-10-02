@@ -1,5 +1,7 @@
 # CS3ORG Chart Repo
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Release Charts](https://github.com/cs3org/charts/workflows/Release%20Charts/badge.svg) [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/cs3org)](https://artifacthub.io/packages/search?repo=cs3org)
+
 Kubernetes Charts Repository for CS3ORG
 
 This reposity contains the official charts for CS3Org software, like Reva.
@@ -24,11 +26,6 @@ cs3org	https://cs3org.github.io/charts/
 
 $ helm search repo cs3org
 NAME        	CHART VERSION	APP VERSION	DESCRIPTION
-cs3org/revad	0.1.0        	0.1.0      	The Reva daemon (revad) helm chart
+cs3org/revad	1.2.1        	v1.2.0     	The Reva daemon (revad) helm chart
 ```
 
-### Run the [Phoenix example](https://reva.link/docs/tutorials/phoenix-tutorial/#4-run-reva)
-
-```bash
-helm install revad --set workingDir="/go/src/github/cs3org/reva/examples/oc-phoenix" --set args="{"-dev-dir", "."}" cs3org/revad
-```
