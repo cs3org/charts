@@ -1,6 +1,31 @@
 apiVersion: v1
 entries:
   revad:
+  - annotations:
+      artifacthub.io/changes: |
+        - Add chart metadata for artifacthub.io integration
+      artifacthub.io/images: |
+        - name: revad
+          image: cs3org/revad:latest
+    apiVersion: v2
+    appVersion: v1.5.1
+    created: "2021-02-03T11:34:23.43477735Z"
+    description: The Reva daemon (revad) helm chart
+    digest: 3458d03f11b6b646d17abac84a743cbf9d2a5143f6349b0e64f998aa4ee11851
+    home: https://reva.link
+    icon: https://reva.link/logo.svg
+    keywords:
+    - iop
+    - cs3apis
+    - cloud-storage
+    - sync-and-share
+    name: revad
+    sources:
+    - https://github.com/cs3org/reva
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/revad-1.2.2/revad-1.2.2.tgz
+    version: 1.2.2
   - apiVersion: v2
     appVersion: v1.2.0
     created: "2020-09-29T12:34:56.293984141Z"
@@ -122,6 +147,30 @@ entries:
     - https://github.com/cs3org/charts/releases/download/revad-0.1.0/revad-0.1.0.tgz
     version: 0.1.0
   wopiserver:
+  - annotations:
+      artifacthub.io/changes: |
+        - Add chart metadata for artifacthub.io integration
+      artifacthub.io/images: |
+        - name: wopiserver
+          image: cs3org/wopiserver:latest
+        - name: wopibridge
+          image: cs3org/wopibridge:latest
+    apiVersion: v2
+    appVersion: 6.1.2
+    created: "2021-02-03T11:34:23.507015788Z"
+    description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway
+      for EFSS systems
+    digest: 155301970422f01c104b655ee51d07d26b59011372fa2ddf088020d5979326af
+    keywords:
+    - wopi
+    - efss
+    name: wopiserver
+    sources:
+    - https://github.com/cs3org/wopiserver
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/wopiserver-0.2.1/wopiserver-0.2.1.tgz
+    version: 0.2.1
   - apiVersion: v2
     appVersion: v5.4
     created: "2020-09-01T09:01:48.993414764Z"
