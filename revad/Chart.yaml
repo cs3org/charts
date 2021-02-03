@@ -1,10 +1,21 @@
-
 apiVersion: v2
 name: revad
 description: The Reva daemon (revad) helm chart
 type: application
-version: 1.2.1
-appVersion: v1.2.0
+version: 1.2.2
+appVersion: v1.5.1
 icon: https://reva.link/logo.svg
 home: https://reva.link
-source: https://github.com/cs3org/reva
+sources:
+  - https://github.com/cs3org/reva
+keywords:
+  - iop
+  - cs3apis
+  - cloud-storage
+  - sync-and-share
+annotations:
+  artifacthub.io/changes: |
+    - Add chart metadata for artifacthub.io integration
+  artifacthub.io/images: |
+    - name: revad
+      image: cs3org/revad:latest
