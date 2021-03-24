@@ -69,6 +69,9 @@ wopibridge:
     # CODIMD_EXT_URL: https://codimd.local/path
     # CODIMD_STORAGE_PATH: /mnt/codimd_storage
 
+  ## Sets a pre-defined secret instead of auto-generating one
+  # wbsecret: myWopiBridgeSecret
+
   ingress:
     enabled: false
     hostname: bridge.local

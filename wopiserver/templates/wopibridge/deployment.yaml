@@ -24,8 +24,10 @@ spec:
             - name: http
               containerPort: 8000
               protocol: TCP
-          {{- if .extraVolumeMounts }}
           volumeMounts:
+            - name: {{ .name }}-secret
+              mountPath: /var/run/secrets
+          {{- if .extraVolumeMounts }}
             {{- toYaml .extraVolumeMounts | nindent 12 }}
           {{- end }}
           env:
@@ -45,8 +47,11 @@ spec:
             httpGet:
               path: /
               port: http
-      {{- if .extraVolumes }}
       volumes:
+        - name: {{ .name }}-secret
+          secret:
+            secretName: {{ include "wopiserver.fullname" $ }}-{{ .name }}-secret
+      {{- if .extraVolumes }}
       {{- toYaml .extraVolumes | nindent 6 }}
       {{- end }}
 {{- end }}
