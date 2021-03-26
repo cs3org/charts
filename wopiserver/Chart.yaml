@@ -2,18 +2,24 @@ apiVersion: v2
 name: wopiserver
 description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway for EFSS systems
 type: application
-version: 0.2.1
-appVersion: 6.1.2
+version: 0.2.2
+appVersion: 6.3.1
 sources:
   - https://github.com/cs3org/wopiserver
+maintainers:
+  - name: Samuel Alfageme Sainz
+    email: samuel.alfageme.sainz@cern.ch
+  - name: Giuseppe Lo Presti
+    email: giuseppe.lopresti@cern.ch
 keywords:
   - wopi
   - efss
 annotations:
   artifacthub.io/changes: |
-    - Add chart metadata for artifacthub.io integration
+    - Include 'wbsecret'
   artifacthub.io/images: |
     - name: wopiserver
       image: cs3org/wopiserver:latest
     - name: wopibridge
       image: cs3org/wopibridge:latest
+  artifacthub.io/containsSecurityUpdates: "false"
