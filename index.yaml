@@ -149,6 +149,36 @@ entries:
   wopiserver:
   - annotations:
       artifacthub.io/changes: |
+        - Include 'wbsecret'
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/images: |
+        - name: wopiserver
+          image: cs3org/wopiserver:latest
+        - name: wopibridge
+          image: cs3org/wopibridge:latest
+    apiVersion: v2
+    appVersion: 6.3.1
+    created: "2021-03-26T09:10:46.092119625Z"
+    description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway
+      for EFSS systems
+    digest: 1eff83767f178bd6bda935787963cc64ca5714ab4d04cd442a7befda42a2c5ee
+    keywords:
+    - wopi
+    - efss
+    maintainers:
+    - email: samuel.alfageme.sainz@cern.ch
+      name: Samuel Alfageme Sainz
+    - email: giuseppe.lopresti@cern.ch
+      name: Giuseppe Lo Presti
+    name: wopiserver
+    sources:
+    - https://github.com/cs3org/wopiserver
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/wopiserver-0.2.2/wopiserver-0.2.2.tgz
+    version: 0.2.2
+  - annotations:
+      artifacthub.io/changes: |
         - Add chart metadata for artifacthub.io integration
       artifacthub.io/images: |
         - name: wopiserver
