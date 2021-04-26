@@ -2,8 +2,9 @@ apiVersion: v2
 name: wopiserver
 description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway for EFSS systems
 type: application
-version: 0.2.2
-appVersion: 6.3.1
+version: 0.2.3
+appVersion: 6.4.2
+kubeVersion: ">= 1.14.0"
 sources:
   - https://github.com/cs3org/wopiserver
 maintainers:
@@ -16,7 +17,8 @@ keywords:
   - efss
 annotations:
   artifacthub.io/changes: |
-    - Include 'wbsecret'
+    - Bump WOPI Server version to the latest released version
+    - Generate the right 'apiVersion' for ingress resources when using k8s versions >= 1.19
   artifacthub.io/images: |
     - name: wopiserver
       image: cs3org/wopiserver:latest
