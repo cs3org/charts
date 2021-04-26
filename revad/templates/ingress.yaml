@@ -1,0 +1,29 @@
+{{- if .Values.ingress.enabled }}
+{{- range $service, $ingress := .Values.ingress.services }}
+apiVersion: {{ template "revad.ingress.apiVersion" . }}
+kind: Ingress
+metadata:
+  name: {{ template "iop.fullname" $ }}-{{ $service }}
+  labels: {{- include "iop.labels" $ | nindent 4 }}
+  annotations:
+    {{- if $ingress.annotations }}
+{{ toYaml $ingress.annotations | indent 4 }}
+    {{- end }}
+spec:
+  rules:
+    {{- if $ingress.hostname }}
+    - host: {{ $ingress.hostname }}
+      http:
+        paths:
+          - path: {{ $ingress.path }}
+            backend:
+              serviceName: {{ template "iop.fullname" $ }}-gateway
+              servicePort: {{ $service }}
+    {{- end }}
+  {{- if $ingress.tls }}
+  tls:
+{{ toYaml $ingress.tls | indent 4 }}
+  {{- end }}
+---
+{{- end }}
+{{- end }}

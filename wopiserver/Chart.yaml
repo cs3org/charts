@@ -5,12 +5,13 @@ type: application
 version: 0.2.3
 appVersion: 6.4.2
 kubeVersion: ">= 1.14.0"
+home: https://github.com/cs3org/wopiserver
 sources:
   - https://github.com/cs3org/wopiserver
 maintainers:
-  - name: Samuel Alfageme Sainz
+  - name: SamuAlfageme
     email: samuel.alfageme.sainz@cern.ch
-  - name: Giuseppe Lo Presti
+  - name: glpatcern
     email: giuseppe.lopresti@cern.ch
 keywords:
   - wopi
