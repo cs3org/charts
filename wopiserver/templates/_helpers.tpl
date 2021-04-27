@@ -67,11 +67,11 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Return the appropriate apiVersion for ingress.
 */}}
 {{- define "wopiserver.ingress.apiVersion" -}}
-{{- if semverCompare ">=1.14-0, <1.19-0" .Capabilities.KubeVersion.GitVersion -}}
-{{- print "networking.k8s.io/v1beta1" -}}
-{{- else if semverCompare "^1.19-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1" }}
 {{- print "networking.k8s.io/v1" -}}
-{{- end -}}
+{{- else }}
+{{- print "networking.k8s.io/v1beta1" -}}
+{{- end }}
 {{- end -}}
 
 {{/*
