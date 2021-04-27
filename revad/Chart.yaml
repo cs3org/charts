@@ -2,12 +2,19 @@ apiVersion: v2
 name: revad
 description: The Reva daemon (revad) helm chart
 type: application
-version: 1.2.2
-appVersion: v1.5.1
+version: 1.2.3
+appVersion: v1.7.0
 icon: https://reva.link/logo.svg
 home: https://reva.link
 sources:
   - https://github.com/cs3org/reva
+maintainers:
+  - name: SamuAlfageme
+    email: samuel.alfageme.sainz@cern.ch
+  - name: labkode
+    email: hugo.gonzalez.labrador@cern.ch
+  - name: ishank011
+    email: ishank.arora@cern.ch
 keywords:
   - iop
   - cs3apis
@@ -15,7 +22,9 @@ keywords:
   - sync-and-share
 annotations:
   artifacthub.io/changes: |
-    - Add chart metadata for artifacthub.io integration
+    - Enable group support by default, providing some placeholder groups
+    - Inject an empty 'ocm-providers.json' to prevent revad from crashing at startup
+    - Add maintainters to the chart
   artifacthub.io/images: |
     - name: revad
       image: cs3org/revad:latest
