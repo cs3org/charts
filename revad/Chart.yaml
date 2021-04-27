@@ -8,6 +8,13 @@ icon: https://reva.link/logo.svg
 home: https://reva.link
 sources:
   - https://github.com/cs3org/reva
+maintainers:
+  - name: SamuAlfageme
+    email: samuel.alfageme.sainz@cern.ch
+  - name: labkode
+    email: hugo.gonzalez.labrador@cern.ch
+  - name: ishank011
+    email: ishank.arora@cern.ch
 keywords:
   - iop
   - cs3apis
@@ -17,6 +24,7 @@ annotations:
   artifacthub.io/changes: |
     - Enable group support by default, providing some placeholder groups
     - Inject an empty 'ocm-providers.json' to prevent revad from crashing at startup
+    - Add maintainters to the chart
   artifacthub.io/images: |
     - name: revad
       image: cs3org/revad:latest
