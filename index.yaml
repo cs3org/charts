@@ -3,6 +3,40 @@ entries:
   revad:
   - annotations:
       artifacthub.io/changes: |
+        - Enable group support by default, providing some placeholder groups
+        - Inject an empty 'ocm-providers.json' to prevent revad from crashing at startup
+        - Add maintainters to the chart
+      artifacthub.io/images: |
+        - name: revad
+          image: cs3org/revad:latest
+    apiVersion: v2
+    appVersion: v1.7.0
+    created: "2021-04-27T15:10:31.640324422Z"
+    description: The Reva daemon (revad) helm chart
+    digest: 3aceffbfe9cebe1afccd0b7018bb1370e5d05772d1a97cbdb5fb4ce5ee639b7c
+    home: https://reva.link
+    icon: https://reva.link/logo.svg
+    keywords:
+    - iop
+    - cs3apis
+    - cloud-storage
+    - sync-and-share
+    maintainers:
+    - email: samuel.alfageme.sainz@cern.ch
+      name: SamuAlfageme
+    - email: hugo.gonzalez.labrador@cern.ch
+      name: labkode
+    - email: ishank.arora@cern.ch
+      name: ishank011
+    name: revad
+    sources:
+    - https://github.com/cs3org/reva
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/revad-1.2.3/revad-1.2.3.tgz
+    version: 1.2.3
+  - annotations:
+      artifacthub.io/changes: |
         - Add chart metadata for artifacthub.io integration
       artifacthub.io/images: |
         - name: revad
