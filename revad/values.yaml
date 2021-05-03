@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: cs3org/revad
-  tag: latest
+  tag: v1.7.0
   pullPolicy: Always
 
 service:

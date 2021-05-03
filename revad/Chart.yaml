@@ -30,4 +30,4 @@ annotations:
     - Add maintainters to the chart
   artifacthub.io/images: |
     - name: revad
-      image: cs3org/revad:latest
+      image: cs3org/revad:v1.7.0
