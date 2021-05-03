@@ -18,11 +18,11 @@ keywords:
   - efss
 annotations:
   artifacthub.io/changes: |
-    - Fix WOPI Server, Bridge version in Chart.yaml
-    - Rename 'revahost' to 'revagateway' in WOPI Server config
-    - Set 'CODIMD_{INT,EXT}_URL' explicit placeholders to prevent WB CrashLoopBackOff
-    - Add 'codimd_apikey' shared Secret to the WOPI Bridge deployment
-    - Generate the right 'apiVersion' for ingress resources when using k8s versions >= 1.19
+    - "Fix WOPI Server, Bridge version in Chart.yaml"
+    - "Rename 'revahost' to 'revagateway' in WOPI Server config"
+    - "Set 'CODIMD_{INT,EXT}_URL' explicit placeholders to prevent WB CrashLoopBackOff"
+    - "Add 'codimd_apikey' shared Secret to the WOPI Bridge deployment"
+    - "Generate the right 'apiVersion' for ingress resources when using k8s versions >= 1.19"
   artifacthub.io/images: |
     - name: wopiserver
       image: cs3org/wopiserver:v6.5.0
