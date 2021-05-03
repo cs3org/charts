@@ -68,8 +68,10 @@ wopibridge:
     CODIMD_INT_URL: http://codimd
     CODIMD_EXT_URL: https://codimd.local/path
 
-  ## Sets a pre-defined secret instead of auto-generating one
-  # wbsecret: myWopiBridgeSecret
+  ## Sets a pre-defined secrets instead of auto-generating them
+  secrets: {}
+    # wbsecret: myWopiBridgeSecret
+    # codimd_apikey: codimdSharedSecret
 
   ingress:
     enabled: false
