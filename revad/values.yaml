@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: cs3org/revad
-  tag: latest
+  tag: v1.7.0
   pullPolicy: Always
 
 service:
@@ -68,6 +68,32 @@ envFrom: []
   #     name: reva-envars
   # - secretRef:
   #     name: reva-secrets
+
+ingress:
+  enabled: false
+  services:
+    http:
+      hostname: http.revad.local
+      path: /
+      annotations: {}
+        # kubernetes.io/ingress.class: nginx
+        # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      tls: []
+        # Secrets must be present in the namespace beforehand.
+        # - secretName: http-revad-tls
+        #   hosts:
+        #     - http.revad.local
+    grpc:
+      hostname: grpc.revad.local
+      path: /
+      annotations: {}
+        # kubernetes.io/ingress.class: nginx
+        # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        # nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+      tls: []
+        # - secretName: grpc-revad-tls
+        #   hosts:
+        #     - grpc.revad.local
 
 # https://reva.link/docs/config/
 configFiles:

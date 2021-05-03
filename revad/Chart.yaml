@@ -2,8 +2,9 @@ apiVersion: v2
 name: revad
 description: The Reva daemon (revad) helm chart
 type: application
-version: 1.2.3
+version: 1.3.0
 appVersion: v1.7.0
+kubeVersion: ">= 1.14.0"
 icon: https://reva.link/logo.svg
 home: https://reva.link
 sources:
@@ -22,9 +23,11 @@ keywords:
   - sync-and-share
 annotations:
   artifacthub.io/changes: |
-    - Enable group support by default, providing some placeholder groups
-    - Inject an empty 'ocm-providers.json' to prevent revad from crashing at startup
-    - Add maintainters to the chart
+    - "Add the ingress resource templates from sciencemesh/iop"
+    - "Generate the right 'apiVersion' for ingress resources when using k8s versions >= 1.19"
+    - "Explicitly drop support for Kubernetes versions older than 1.14"
+    - "Bump revad's version to v1.7.0"
+    - "Add maintainters to the chart"
   artifacthub.io/images: |
     - name: revad
-      image: cs3org/revad:latest
+      image: cs3org/revad:v1.7.0

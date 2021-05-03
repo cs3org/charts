@@ -29,7 +29,7 @@ data:
     iopsecretfile = /etc/wopi/iopsecret
 
     [cs3]
-    revahost = {{ .Values.config.cs3.revahost }}
+    revagateway = {{ .Values.config.cs3.revahost }}
     authtokenvalidity = 3600
 
     [io]

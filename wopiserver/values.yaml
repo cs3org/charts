@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: cs3org/wopiserver
-  tag: latest
+  tag: v6.5.0
   pullPolicy: Always
 
 service:
@@ -45,7 +45,7 @@ wopibridge:
   replicaCount: 1
   image:
     repository: cs3org/wopibridge
-    tag: latest
+    tag: v3.2.0
     pullPolicy: Always
 
   service:
@@ -64,13 +64,14 @@ wopibridge:
     # - name: image-store
     #   mountPath: /mnt/codimd_storage
 
-  env: []
-    # CODIMD_INT_URL: http://codimd
-    # CODIMD_EXT_URL: https://codimd.local/path
-    # CODIMD_STORAGE_PATH: /mnt/codimd_storage
+  env:
+    CODIMD_INT_URL: http://codimd
+    CODIMD_EXT_URL: https://codimd.local/path
 
-  ## Sets a pre-defined secret instead of auto-generating one
-  # wbsecret: myWopiBridgeSecret
+  ## Sets a pre-defined secrets instead of auto-generating them
+  secrets: {}
+    # wbsecret: myWopiBridgeSecret
+    # codimd_apikey: codimdSharedSecret
 
   ingress:
     enabled: false
