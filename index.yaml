@@ -3,6 +3,43 @@ entries:
   revad:
   - annotations:
       artifacthub.io/changes: |
+        - "Add the ingress resource templates from sciencemesh/iop"
+        - "Generate the right 'apiVersion' for ingress resources when using k8s versions >= 1.19"
+        - "Explicitly drop support for Kubernetes versions older than 1.14"
+        - "Bump revad's version to v1.7.0"
+        - "Add maintainters to the chart"
+      artifacthub.io/images: |
+        - name: revad
+          image: cs3org/revad:v1.7.0
+    apiVersion: v2
+    appVersion: v1.7.0
+    created: "2021-05-03T10:05:29.08127989Z"
+    description: The Reva daemon (revad) helm chart
+    digest: e857d37fdccf744e7e5f40e2f0a50fa3f3629adc17e77b0f1730626c84a6a7ea
+    home: https://reva.link
+    icon: https://reva.link/logo.svg
+    keywords:
+    - iop
+    - cs3apis
+    - cloud-storage
+    - sync-and-share
+    kubeVersion: '>= 1.14.0'
+    maintainers:
+    - email: samuel.alfageme.sainz@cern.ch
+      name: SamuAlfageme
+    - email: hugo.gonzalez.labrador@cern.ch
+      name: labkode
+    - email: ishank.arora@cern.ch
+      name: ishank011
+    name: revad
+    sources:
+    - https://github.com/cs3org/reva
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/revad-1.3.0/revad-1.3.0.tgz
+    version: 1.3.0
+  - annotations:
+      artifacthub.io/changes: |
         - Enable group support by default, providing some placeholder groups
         - Inject an empty 'ocm-providers.json' to prevent revad from crashing at startup
         - Add maintainters to the chart
@@ -181,6 +218,42 @@ entries:
     - https://github.com/cs3org/charts/releases/download/revad-0.1.0/revad-0.1.0.tgz
     version: 0.1.0
   wopiserver:
+  - annotations:
+      artifacthub.io/changes: |
+        - "Fix WOPI Server, Bridge version in Chart.yaml"
+        - "Rename 'revahost' to 'revagateway' in WOPI Server config"
+        - "Set 'CODIMD_{INT,EXT}_URL' explicit placeholders to prevent WB CrashLoopBackOff"
+        - "Add 'codimd_apikey' shared Secret to the WOPI Bridge deployment"
+        - "Generate the right 'apiVersion' for ingress resources when using k8s versions >= 1.19"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/images: |
+        - name: wopiserver
+          image: cs3org/wopiserver:v6.5.0
+        - name: wopibridge
+          image: cs3org/wopibridge:v3.2.0
+    apiVersion: v2
+    appVersion: 6.5.0
+    created: "2021-05-03T10:05:29.159512987Z"
+    description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway
+      for EFSS systems
+    digest: 3aadf86a7361ef1c19e3bd0b6134794cc7734afebff49d9fabb758770ae31ef7
+    home: https://github.com/cs3org/wopiserver
+    keywords:
+    - wopi
+    - efss
+    kubeVersion: '>= 1.14.0'
+    maintainers:
+    - email: samuel.alfageme.sainz@cern.ch
+      name: SamuAlfageme
+    - email: giuseppe.lopresti@cern.ch
+      name: glpatcern
+    name: wopiserver
+    sources:
+    - https://github.com/cs3org/wopiserver
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/wopiserver-0.2.3/wopiserver-0.2.3.tgz
+    version: 0.2.3
   - annotations:
       artifacthub.io/changes: |
         - Include 'wbsecret'
