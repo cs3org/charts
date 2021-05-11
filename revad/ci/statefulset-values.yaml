@@ -1,0 +1,2 @@
+useStatefulSet: true
+replicaCount: 3
