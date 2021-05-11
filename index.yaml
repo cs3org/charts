@@ -3,6 +3,39 @@ entries:
   revad:
   - annotations:
       artifacthub.io/changes: |
+        - "Fix: check for the 'ingress' resource, rather than the API itself"
+      artifacthub.io/images: |
+        - name: revad
+          image: cs3org/revad:v1.7.0
+    apiVersion: v2
+    appVersion: v1.7.0
+    created: "2021-05-11T11:45:32.245856521Z"
+    description: The Reva daemon (revad) helm chart
+    digest: 05aa8ec55e9e3d2a7f2a57b0d1285c2c5b9906fa2ab28dec0783e74b74150c62
+    home: https://reva.link
+    icon: https://reva.link/logo.svg
+    keywords:
+    - iop
+    - cs3apis
+    - cloud-storage
+    - sync-and-share
+    kubeVersion: '>= 1.14.0'
+    maintainers:
+    - email: samuel.alfageme.sainz@cern.ch
+      name: SamuAlfageme
+    - email: hugo.gonzalez.labrador@cern.ch
+      name: labkode
+    - email: ishank.arora@cern.ch
+      name: ishank011
+    name: revad
+    sources:
+    - https://github.com/cs3org/reva
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/revad-1.3.1/revad-1.3.1.tgz
+    version: 1.3.1
+  - annotations:
+      artifacthub.io/changes: |
         - "Add the ingress resource templates from sciencemesh/iop"
         - "Generate the right 'apiVersion' for ingress resources when using k8s versions >= 1.19"
         - "Explicitly drop support for Kubernetes versions older than 1.14"
@@ -218,6 +251,39 @@ entries:
     - https://github.com/cs3org/charts/releases/download/revad-0.1.0/revad-0.1.0.tgz
     version: 0.1.0
   wopiserver:
+  - annotations:
+      artifacthub.io/changes: |
+        - "Fix: check for the 'ingress' resource, rather than the API itself"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/images: |
+        - name: wopiserver
+          image: cs3org/wopiserver:v6.5.0
+        - name: wopibridge
+          image: cs3org/wopibridge:v3.2.0
+    apiVersion: v2
+    appVersion: v6.5.0
+    created: "2021-05-11T11:45:32.39218926Z"
+    description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway
+      for EFSS systems
+    digest: 505d4cc4aa91ffdd431d02323ecb861095e2032adf7c730bc9103efb0a21cfa4
+    home: https://github.com/cs3org/wopiserver
+    keywords:
+    - wopi
+    - efss
+    kubeVersion: '>= 1.14.0'
+    maintainers:
+    - email: samuel.alfageme.sainz@cern.ch
+      name: SamuAlfageme
+    - email: giuseppe.lopresti@cern.ch
+      name: glpatcern
+    name: wopiserver
+    sources:
+    - https://github.com/cs3org/wopiserver
+    - https://github.com/cs3org/wopibridge
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/wopiserver-0.2.4/wopiserver-0.2.4.tgz
+    version: 0.2.4
   - annotations:
       artifacthub.io/changes: |
         - "Fix WOPI Server, Bridge version in Chart.yaml"
