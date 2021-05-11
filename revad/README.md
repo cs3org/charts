@@ -41,6 +41,7 @@ The following configurations may be set. It is recommended to use `values.yaml` 
 | `extraVolumeMounts`                               | Array of additional volume mounts.                                                                           | `[]`                                                                                                                      |
 | `extraVolumes`                                    | Array of additional volumes.                                                                                 | `[]`                                                                                                                      |
 | `emptyDir.sizeLimit`                              | `emptyDir` `sizeLimit` if a Persistent Volume is not used                                                    | `""`                                                                                                                      |
+| `useStatefulSet`                                  | If true, Revad will be deployed using a `StatefulSet` rather than the usual `Deployment`.                    | `false`                                                                                                                   |
 | `persistentVolume.enabled`                        | If true, Revad will create a Persistent Volume Claim.                                                        | `false`                                                                                                                   |
 | `persistentVolume.accessModes`                    | Revad data Persistent Volume access modes.                                                                   | `[ReadWriteOnce]`                                                                                                         |
 | `persistentVolume.annotations`                    | Revad data Persistent Volume annotations.                                                                    | `{}`                                                                                                                      |
@@ -70,4 +71,9 @@ The following configurations may be set. It is recommended to use `values.yaml` 
 ```console
 $ helm install custom-reva cs3org/revad \
   --set-file configFiles.revad\\.toml=custom-config.toml
+```
+
+### Stateful deployment
+
+```console
 ```

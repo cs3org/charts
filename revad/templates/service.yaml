@@ -5,7 +5,11 @@ metadata:
   labels:
     {{- include "revad.labels" . | nindent 4 }}
 spec:
+  {{- if .Values.useStatefulSet }}
+  clusterIP: None
+  {{- else }}
   type: {{ .Values.service.type }}
+  {{- end }}
   ports:
     {{- if .Values.service.http }}
     - port: {{ .Values.service.http.port }}
