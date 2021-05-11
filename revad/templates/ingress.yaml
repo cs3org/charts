@@ -1,6 +1,6 @@
 {{- if .Values.ingress.enabled }}
 {{- range $service, $ingress := .Values.ingress.services }}
-apiVersion: {{ template "revad.ingressapiVersion" $ }}
+apiVersion: {{ template "revad.ingress.apiVersion" $ }}
 kind: Ingress
 metadata:
   name: {{ template "revad.fullname" $ }}-{{ $service }}
