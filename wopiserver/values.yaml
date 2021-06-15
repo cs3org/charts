@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: cs3org/wopiserver
-  tag: v6.5.0
+  tag: v6.7.0
   pullPolicy: Always
 
 service:
@@ -45,7 +45,7 @@ wopibridge:
   replicaCount: 1
   image:
     repository: cs3org/wopibridge
-    tag: v3.2.0
+    tag: v4.0.0
     pullPolicy: Always
 
   service:
