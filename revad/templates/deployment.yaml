@@ -28,7 +28,7 @@ spec:
               containerPort: {{ .Values.service.grpc.port }}
               protocol: TCP
           command:
-            - /go/bin/revad
+            - /usr/bin/revad
           args:
               - "-c"
               - "/etc/revad/revad.toml"
