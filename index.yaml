@@ -286,6 +286,39 @@ entries:
   wopiserver:
   - annotations:
       artifacthub.io/changes: |
+        - "Increase pinned versions to improve compatibility with sciencemes/MeshApps@0.1.0"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/images: |
+        - name: wopiserver
+          image: cs3org/wopiserver:v6.7.0
+        - name: wopibridge
+          image: cs3org/wopibridge:v4.0.0
+    apiVersion: v2
+    appVersion: v6.7.0
+    created: "2021-07-01T11:04:01.037867621Z"
+    description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway
+      for EFSS systems
+    digest: 393c9f42021871b96b8edc2d8e5750bfb89775311ed5c77a53363bfab1d04d96
+    home: https://github.com/cs3org/wopiserver
+    keywords:
+    - wopi
+    - efss
+    kubeVersion: '>= 1.14.0'
+    maintainers:
+    - email: samuel.alfageme.sainz@cern.ch
+      name: SamuAlfageme
+    - email: giuseppe.lopresti@cern.ch
+      name: glpatcern
+    name: wopiserver
+    sources:
+    - https://github.com/cs3org/wopiserver
+    - https://github.com/cs3org/wopibridge
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/wopiserver-0.3.0/wopiserver-0.3.0.tgz
+    version: 0.3.0
+  - annotations:
+      artifacthub.io/changes: |
         - "Fix: check for the 'ingress' resource, rather than the API itself"
       artifacthub.io/containsSecurityUpdates: "false"
       artifacthub.io/images: |
