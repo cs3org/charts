@@ -1,6 +1,7 @@
 # WOPISERVER
 
-A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway for EFSS systems.
+The CS3 Wopiserver is a vendor-neutral implementation for the Web-application Open Platform Interface (WOPI) protocol for CS3 EFSS systems.
+It also includes a bridge extension to support some non-WOPI web editors such as CodiMD.
 
 ## Introduction
 
