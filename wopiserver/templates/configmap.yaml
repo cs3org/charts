@@ -28,6 +28,9 @@ data:
     wopisecretfile = /etc/wopi/wopisecret
     iopsecretfile = /etc/wopi/iopsecret
 
+    [bridge]
+    sslverify = False
+
     [cs3]
     revagateway = {{ .Values.config.cs3.revahost }}
     authtokenvalidity = 3600

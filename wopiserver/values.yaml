@@ -21,7 +21,8 @@ env: []
 # - ref: https://github.com/cs3org/wopiserver/blob/master/wopiserver.conf
 config:
   appProviders:
-    codimdurl: http://wopibridge:8000
+    codimdinturl: http://codimd
+    codimdurl: https://codimd.local/path
   cs3:
     revahost: revad:19000
   loglevel: Debug
@@ -39,49 +40,6 @@ ingress:
     #   hosts:
     #     - wopi.local
 
-wopibridge:
-  enabled: false
-  name: wopibridge
-  replicaCount: 1
-  image:
-    repository: cs3org/wopibridge
-    tag: v4.0.0
-    pullPolicy: Always
-
-  service:
-    type: ClusterIP
-    port: 8000
-
-  ## Overrides the default URL generation based on the ingress/service values
-  # bridgeUrl: https://bridge.local/wopibridge
-
-  extraVolumes: []
-    # - name: image-store
-    #   persistentVolumeClaim:
-    #     claimName: image-store
-
-  extraVolumeMounts: []
-    # - name: image-store
-    #   mountPath: /mnt/codimd_storage
-
-  env:
-    CODIMD_INT_URL: http://codimd
-    CODIMD_EXT_URL: https://codimd.local/path
-
   ## Sets a pre-defined secrets instead of auto-generating them
   secrets: {}
-    # wbsecret: myWopiBridgeSecret
     # codimd_apikey: codimdSharedSecret
-
-  ingress:
-    enabled: false
-    hostname: bridge.local
-    path: /wopibridge
-    annotations: {}
-      # kubernetes.io/ingress.class: nginx
-      # nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    tls: []
-      # Secrets must be present in the namespace beforehand.
-      # - secretName: bridge-tls
-      #   hosts:
-      #     - wopi.local

@@ -43,23 +43,11 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
-{{- define "wopibridge.labels" -}}
-helm.sh/chart: {{ include "wopiserver.chart" . }}
-{{ include "wopibridge.selectorLabels" . }}
-app.kubernetes.io/version: {{ .Values.wopibridge.image.tag | quote }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end -}}
-
 {{/*
 Selector labels
 */}}
 {{- define "wopiserver.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "wopiserver.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end -}}
-
-{{- define "wopibridge.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "wopiserver.name" . }}-{{ .Values.wopibridge.name }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
@@ -91,22 +79,4 @@ Returns the WOPI Server external URL
         http://{{ template "wopiserver.fullname" . }}:{{ .Values.service.port }}
     {{- end -}}
   {{- end -}}
-{{- end -}}
-
-{{- define "wopibridge.url" -}}
-{{- with .Values.wopibridge -}}
-  {{- if .bridgeUrl -}}
-    {{- .bridgeUrl }}
-  {{- else -}}
-    {{- if .ingress.hostname -}}
-      {{- if .ingress.tls -}}
-      https://{{ .ingress.hostname }}{{ .ingress.path }}
-      {{- else -}}
-      http://{{ .ingress.hostname }}{{ .ingress.path }}
-      {{- end -}}
-    {{- else -}}
-      http://{{ template "wopiserver.fullname" $ }}-{{ .name }}:{{ .service.port }}
-    {{- end -}}
-  {{- end -}}
-{{- end -}}
 {{- end -}}
