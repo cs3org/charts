@@ -32,8 +32,9 @@ spec:
             - name: {{ include "wopiserver.fullname" . }}-confdir
               mountPath: /etc/wopi/iopsecret
               subPath: iopsecret
-            - name: {{ include "wopiserver.fullname" . }}-secret
-              mountPath: /var/run/secrets
+            - name: {{ include "wopiserver.fullname" . }}-confdir
+              mountPath: /var/run/secrets/codimd_apikey
+              subPath: codimd_apikey
             {{- if .Values.extraVolumeMounts }}
             {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
             {{- end }}
@@ -57,9 +58,6 @@ spec:
                   name: {{ template "wopiserver.fullname" . }}-config
               - secret:
                   name: {{ template "wopiserver.fullname" . }}-secrets
-        - name: {{ .name }}-secret
-          secret:
-            secretName: {{ include "wopiserver.fullname" $ }}-secret
         {{- if .Values.extraVolumes }}
         {{- toYaml .Values.extraVolumes | nindent 8 }}
         {{- end }}
