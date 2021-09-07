@@ -11,15 +11,10 @@ data:
     [general]
     storagetype = cs3
     port = {{ .Values.service.port }}
-
-{{- range $provider, $url := index .Values.config.appProviders }}
-    {{ $provider }} = {{ $url }}
-{{- end }}
-
     tokenvalidity = 86400
 
     wopiurl = {{ template "wopiserver.url" . }}
-    downloadurl = {{ template "wopiserver.url" . }}/wopi/cbox/download
+    downloadurl = {{ template "wopiserver.url" . }}/wopi/iop/download
 
     loglevel = {{ .Values.config.loglevel }}
 
