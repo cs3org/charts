@@ -2,8 +2,8 @@ apiVersion: v2
 name: revad
 description: The Reva daemon (revad) helm chart
 type: application
-version: 1.3.2
-appVersion: v1.9.0
+version: 1.3.3
+appVersion: v1.17.0
 kubeVersion: ">= 1.14.0"
 icon: https://reva.link/logo.svg
 home: https://reva.link
@@ -23,7 +23,7 @@ keywords:
   - sync-and-share
 annotations:
   artifacthub.io/changes: |
-    - "Update revad image to v1.9.0 and modify the entrypoint accordingly"
+    - "Update revad image to v1.17.0"
   artifacthub.io/images: |
     - name: revad
-      image: cs3org/revad:v1.9.0
+      image: cs3org/revad:v1.17.0
