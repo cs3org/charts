@@ -38,5 +38,5 @@ ingress:
     #     - wopi.local
 
   ## Sets a pre-defined secrets instead of auto-generating them
-  secrets: {}
-    # codimd_apikey: codimdSharedSecret
+secrets: {}
+  # codimd_apikey: codimdSharedSecret
