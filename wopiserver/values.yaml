@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: cs3org/wopiserver
-  tag: v6.7.0
+  tag: v7.2.0
   pullPolicy: Always
 
 service:
