@@ -6,7 +6,7 @@ jobs:
   linter-artifacthub:
     runs-on: ubuntu-20.04
     container:
-      image: artifacthub/ah
+      image: artifacthub/ah:v1.1.1
     steps:
       - name: Checkout code
         uses: actions/checkout@master
