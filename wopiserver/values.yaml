@@ -2,8 +2,8 @@ replicaCount: 1
 
 image:
   repository: cs3org/wopiserver
-  tag: v6.7.0
-  pullPolicy: Always
+  tag: v8.3.2
+  pullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
@@ -17,14 +17,22 @@ extraVolumes: []
 
 env: []
 
-# WOPISERVER's primary configuration
+# WOPI server configuration
 # - ref: https://github.com/cs3org/wopiserver/blob/master/wopiserver.conf
 config:
-  appProviders:
-    codimdurl: http://wopibridge:8000
+  wopiSecret:
+  logLevel: Error
+  token:
+    validity: 86400
+  wopi:
+    lock:
+      expiration: 3600
+  enableRename: False
+  detectExternalLocks: False
   cs3:
-    revahost: revad:19000
-  loglevel: Debug
+    authTokenValidity: 3600
+    gateway: revad:19000
+    sslVerify: True
 
 ingress:
   enabled: false
