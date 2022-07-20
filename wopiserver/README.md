@@ -51,3 +51,7 @@ The following configurations may be set. It is recommended to use `values.yaml` 
 | `config.token.validity`        | WOPI access token expiration time (seconds).                                             | `86400`                                                           |
 | `config.wopi.lock.expiration`  | WOPI lock expiration time (seconds).                                                     | `3600`                                                            |
 | `config.detectExternalLocks`   | Enables detection of external Microsoft Office or LibreOffice locks.                     | `False`                                                           |
+| `resources`                    | Resources to apply to all services.                                                      | `{}`                                                              |
+| `securityContext.fsGroup`      | File system group for all volumes.                                                       | `1000`                                                            |
+| `securityContext.runAsGroup`   | Group ID that all processes within any containers will run with.                         | `1000`                                                            |
+| `securityContext.runAsUser`    | User ID that all processes within any containers will run with.                          | `1000`                                                            |

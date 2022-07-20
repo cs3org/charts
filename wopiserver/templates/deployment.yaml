@@ -16,15 +16,29 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
+      securityContext:
+          fsGroup: {{ $.Values.securityContext.fsGroup }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: {{ $.Values.securityContext.runAsUser }}
+            runAsGroup: {{ $.Values.securityContext.runAsGroup }}
+            readOnlyRootFilesystem: true
+          resources: {{ toYaml $.Values.resources | nindent 12 }}
           ports:
             - name: http
               containerPort: 8880
               protocol: TCP
           volumeMounts:
+            - name: tmp-volume
+              mountPath: /tmp
+            - name: log-volume
+              mountPath: /var/log/wopi/
+            - name: recovery-volume
+              mountPath: /var/spool/wopirecovery/
             - name: {{ include "wopiserver.fullname" . }}-confdir
               mountPath: /etc/wopi/wopiserver.conf
               subPath: wopiserver.conf
@@ -47,6 +61,12 @@ spec:
               path: /
               port: http
       volumes:
+        - name: tmp-volume
+          emptyDir: {}
+        - name: log-volume
+          emptyDir: {}
+        - name: recovery-volume
+          emptyDir: {}
         - name: {{ include "wopiserver.fullname" . }}-confdir
           projected:
             sources:

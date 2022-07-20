@@ -46,3 +46,14 @@ ingress:
     # - secretName: wopi-tls
     #   hosts:
     #     - wopi.local
+
+# Security context options.
+securityContext:
+  # -- File system group for all volumes.
+  fsGroup: 1000
+  # -- User ID that all processes within any containers will run with.
+  runAsUser: 1000
+  # -- Group ID that all processes within any containers will run with.
+  runAsGroup: 1000
+
+resources: {}
