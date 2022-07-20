@@ -51,18 +51,6 @@ app.kubernetes.io/name: {{ include "revad.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
-
-{{/*
-Return the appropriate apiVersion for ingress.
-*/}}
-{{- define "revad.ingress.apiVersion" -}}
-{{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1/ingress" }}
-{{- print "networking.k8s.io/v1" -}}
-{{- else }}
-{{- print "networking.k8s.io/v1beta1" -}}
-{{- end }}
-{{- end -}}
-
 {{/*
 Create the name of the service account to use
 */}}

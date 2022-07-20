@@ -1,5 +1,5 @@
 {{- if .Values.ingress.enabled }}
-apiVersion: {{ template "wopiserver.ingress.apiVersion" . }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ template "wopiserver.fullname" . }}
@@ -16,16 +16,11 @@ spec:
         paths:
           - path: {{ .Values.ingress.path }}
             backend:
-            {{- if $.Capabilities.APIVersions.Has "networking.k8s.io/v1/ingress" }}
               service:
                 name: {{ template "wopiserver.fullname" . }}
                 port:
                   name: http
             pathType: ImplementationSpecific
-            {{- else }}
-              serviceName: {{ template "wopiserver.fullname" . }}
-              servicePort: http
-            {{- end }}
     {{- end }}
   {{- if .Values.ingress.tls }}
   tls:

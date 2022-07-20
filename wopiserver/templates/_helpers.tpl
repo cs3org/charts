@@ -64,17 +64,6 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
 {{/*
-Return the appropriate apiVersion for ingress.
-*/}}
-{{- define "wopiserver.ingress.apiVersion" -}}
-{{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1/ingress" }}
-{{- print "networking.k8s.io/v1" -}}
-{{- else }}
-{{- print "networking.k8s.io/v1beta1" -}}
-{{- end }}
-{{- end -}}
-
-{{/*
 Returns the WOPI Server external URL
 */}}
 {{- define "wopiserver.url" -}}
