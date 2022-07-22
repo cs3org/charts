@@ -16,7 +16,7 @@ To install the chart with the release name `my-reva`:
 ```console
 $ helm install my-reva cs3org/revad
 ```
-Also, you can use `--set EFSS=OWNCLOUD` to config Reva for communication Owncloud  
+Also, you can use `--set EFSS=OWNCLOUD` to config Reva for communication with Owncloud  
 
 ## Uninstalling the Chart
 
