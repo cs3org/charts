@@ -6,8 +6,17 @@ metadata:
   labels:
     {{- include "revad.labels" . | nindent 4 }}
 data:
+{{- $host := .Values.HostURL }}
+{{- $ocHost := .Values.OCURL }}
+{{- $secret := .Values.SharedSecret }}
+{{- $certFile := .Values.CertFile }}
+{{- $certKey := .Values.CertKey }}
 {{- range $filename, $fileContents := .Values.configFiles }}
   {{ $filename }}: |-
-{{ $fileContents | indent 4 }}
+{{ if eq $filename "oc.revad.toml" }}
+  {{ $fileContents | indent 4 | replace "OC_URL" $ocHost | replace "HOST_URL" $host | replace "SHARED_SECRET" $secret | replace "CERT_FILE" $certFile | replace "CERT_KEY" $certKey }}
+{{ else }}  
+  {{ $fileContents | indent 4 }}
+{{ end }}  
 {{- end }}
 {{- end }}

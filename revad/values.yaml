@@ -69,6 +69,11 @@ envFrom: []
   # - secretRef:
   #     name: reva-secrets
 EFSS: ""
+HostURL: "localhost:19000"
+OCURL: "oc.docker"
+SharedSecret: "123456"
+CertFile: "revaoc1.crt"
+CertKey: "revaoc1.key"
 ingress:
   enabled: false
   services:
@@ -120,24 +125,24 @@ configFiles:
     [http.services.ocs]
   oc.revad.toml: |
     [shared]
-    gatewaysvc = "revaoc1.docker:19000"
+    gatewaysvc = "HOST_URL:19000"
 
     [grpc]
     address = "0.0.0.0:19000"
 
     [grpc.services.gateway]
-    authregistrysvc = "revaoc1.docker:19000"
-    appprovidersvc = "revaoc1.docker:19000"
-    appregistry = "revaoc1.docker:19000"
-    storageregistrysvc = "revaoc1.docker:19000"
-    preferencessvc = "revaoc1.docker:19000"
-    userprovidersvc = "revaoc1.docker:19000"
-    usershareprovidersvc = "revaoc1.docker:19000"
-    publicshareprovidersvc = "revaoc1.docker:19000"
-    ocmcoresvc = "revaoc1.docker:19000"
-    ocmshareprovidersvc = "revaoc1.docker:19000"
-    ocminvitemanagersvc = "revaoc1.docker:19000"
-    ocmproviderauthorizersvc = "revaoc1.docker:19000"
+    authregistrysvc = "HOST_URL:19000"
+    appprovidersvc = "HOST_URL:19000"
+    appregistry = "HOST_URL:19000"
+    storageregistrysvc = "HOST_URL:19000"
+    preferencessvc = "HOST_URL:19000"
+    userprovidersvc = "HOST_URL:19000"
+    usershareprovidersvc = "HOST_URL:19000"
+    publicshareprovidersvc = "HOST_URL:19000"
+    ocmcoresvc = "HOST_URL:19000"
+    ocmshareprovidersvc = "HOST_URL:19000"
+    ocminvitemanagersvc = "HOST_URL:19000"
+    ocmproviderauthorizersvc = "HOST_URL:19000"
     commit_share_to_storage_grant = false
     datagateway = "http://localhost/data"
     transfer_expires = 6 # give it a moment
@@ -146,7 +151,7 @@ configFiles:
     driver = "static"
 
     [grpc.services.authregistry.drivers.static.rules]
-    basic = "revaoc1.docker:19000"
+    basic = "HOST_URL:19000"
 
     [grpc.services.storageregistry]
     driver = "static"
@@ -155,8 +160,8 @@ configFiles:
     home_provider = "/home"
 
     [grpc.services.storageregistry.drivers.static.rules]
-    "/home" = {"address" = "revaoc1.docker:19000"}
-    "123e4567-e89b-12d3-a456-426655440000" = {"address" = "revaoc1.docker:19000"}
+    "/home" = {"address" = "HOST_URL:19000"}
+    "123e4567-e89b-12d3-a456-426655440000" = {"address" = "HOST_URL:19000"}
 
     [grpc.services.usershareprovider]
     driver = "memory"
@@ -165,8 +170,8 @@ configFiles:
     driver = "nextcloud"
 
     [grpc.services.ocmcore.drivers.nextcloud]
-    endpoint = "https://oc1.docker/index.php/apps/sciencemesh/"
-    shared_secret = "shared-secret-1"
+    endpoint = "https://OC_URL/index.php/apps/sciencemesh/"
+    shared_secret = "SHARED_SECRET"
     mock_http = false
 
     [grpc.services.ocminvitemanager]
@@ -176,8 +181,8 @@ configFiles:
     driver = "nextcloud"
 
     [grpc.services.ocmshareprovider.drivers.nextcloud]
-    endpoint = "https://oc1.docker/index.php/apps/sciencemesh/"
-    shared_secret = "shared-secret-1"
+    endpoint = "https://OC_URL/index.php/apps/sciencemesh/"
+    shared_secret = "SHARED_SECRET"
     mock_http = false
 
     [grpc.services.ocmproviderauthorizer]
@@ -200,43 +205,43 @@ configFiles:
     driver = "static"
 
     [grpc.services.appregistry.static.rules]
-    "text/plain" = "revaoc1.docker:19000"
-    "text/markdown" = "revaoc1.docker:19000"
-    "application/compressed-markdown" = "revaoc1.docker:19000"
-    "application/vnd.oasis.opendocument.text" = "revaoc1.docker:19000"
-    "application/vnd.oasis.opendocument.spreadsheet" = "revaoc1.docker:19000"
-    "application/vnd.oasis.opendocument.presentation" = "revaoc1.docker:19000"
+    "text/plain" = "HOST_URL:19000"
+    "text/markdown" = "HOST_URL:19000"
+    "application/compressed-markdown" = "HOST_URL:19000"
+    "application/vnd.oasis.opendocument.text" = "HOST_URL:19000"
+    "application/vnd.oasis.opendocument.spreadsheet" = "HOST_URL:19000"
+    "application/vnd.oasis.opendocument.presentation" = "HOST_URL:19000"
 
     [grpc.services.storageprovider]
     driver = "nextcloud"
 
     [grpc.services.storageprovider.drivers.nextcloud]
-    endpoint = "https://oc1.docker/index.php/apps/sciencemesh/"
-    shared_secret = "shared-secret-1"
+    endpoint = "https://OC_URL/index.php/apps/sciencemesh/"
+    shared_secret = "SHARED_SECRET"
     mock_http = false
 
     [grpc.services.authprovider]
     auth_manager = "nextcloud"
 
     [grpc.services.authprovider.auth_managers.nextcloud]
-    endpoint = "https://oc1.docker/index.php/apps/sciencemesh/"
-    shared_secret = "shared-secret-1"
+    endpoint = "https://OC_URL/index.php/apps/sciencemesh/"
+    shared_secret = "SHARED_SECRET"
     mock_http = false
 
     [grpc.services.userprovider]
     driver = "nextcloud"
 
     [grpc.services.userprovider.drivers.nextcloud]
-    endpoint = "https://oc1.docker/index.php/apps/sciencemesh/"
-    shared_secret = "shared-secret-1"
+    endpoint = "https://OC_URL/index.php/apps/sciencemesh/"
+    shared_secret = "SHARED_SECRET"
     mock_http = false
 
     [http]
     enabled_services = ["ocmd"]
     enabled_middlewares = ["providerauthorizer", "cors"]
     address = "0.0.0.0:443"
-    certfile = "/etc/revad/tls/revaoc1.crt"
-    keyfile = "/etc/revad/tls/revaoc1.key"
+    certfile = "/etc/revad/tls/CERT_FILE"
+    keyfile = "/etc/revad/tls/CERT_KEY"
 
     [http.services.dataprovider]
     driver = "localhome"
@@ -251,7 +256,7 @@ configFiles:
     prefix = "ocm"
 
     [http.services.ocmd.config]
-    host = "revaoc1.docker"
+    host = "HOST_URL"
     provider = "test-revaoc1"
 
     [http.middlewares.providerauthorizer]

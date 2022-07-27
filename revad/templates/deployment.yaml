@@ -35,7 +35,7 @@ spec:
                   {{- "/etc/revad/oc.revad.toml" }}
                 {{ else }}
                   {{- "/etc/revad/revad.toml" }}
-                {{end}}
+                {{ end }}
               - "-p"
               - "/var/run/revad.pid"
           volumeMounts:
