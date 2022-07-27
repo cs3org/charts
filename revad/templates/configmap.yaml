@@ -11,12 +11,9 @@ data:
 {{- $secret := .Values.SharedSecret }}
 {{- $certFile := .Values.CertFile }}
 {{- $certKey := .Values.CertKey }}
+{{- $port := .Values.HostPort }}
 {{- range $filename, $fileContents := .Values.configFiles }}
   {{ $filename }}: |-
-{{ if eq $filename "oc.revad.toml" }}
-  {{ $fileContents | indent 4 | replace "OC_URL" $ocHost | replace "HOST_URL" $host | replace "SHARED_SECRET" $secret | replace "CERT_FILE" $certFile | replace "CERT_KEY" $certKey }}
-{{ else }}  
-  {{ $fileContents | indent 4 }}
-{{ end }}  
+{{ $fileContents | replace "OC_URL" $ocHost | replace "HOST_URL" $host | replace "HOST_PORT" $port | replace "SHARED_SECRET" $secret | replace "CERT_FILE" $certFile | replace "CERT_KEY" $certKey |  indent 4 }} 
 {{- end }}
 {{- end }}

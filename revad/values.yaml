@@ -8,7 +8,7 @@ image:
 service:
   type: ClusterIP
   grpc:
-    port: 19000
+    port: HOST_PORT
   http:
     port: 19001
 
@@ -69,7 +69,8 @@ envFrom: []
   # - secretRef:
   #     name: reva-secrets
 EFSS: ""
-HostURL: "localhost:19000"
+HostURL: "localhost"
+HostPort: "19000"
 OCURL: "oc.docker"
 SharedSecret: "123456"
 CertFile: "revaoc1.crt"
@@ -125,24 +126,24 @@ configFiles:
     [http.services.ocs]
   oc.revad.toml: |
     [shared]
-    gatewaysvc = "HOST_URL:19000"
+    gatewaysvc = "HOST_URL:HOST_PORT"
 
     [grpc]
-    address = "0.0.0.0:19000"
+    address = "0.0.0.0:HOST_PORT"
 
     [grpc.services.gateway]
-    authregistrysvc = "HOST_URL:19000"
-    appprovidersvc = "HOST_URL:19000"
-    appregistry = "HOST_URL:19000"
-    storageregistrysvc = "HOST_URL:19000"
-    preferencessvc = "HOST_URL:19000"
-    userprovidersvc = "HOST_URL:19000"
-    usershareprovidersvc = "HOST_URL:19000"
-    publicshareprovidersvc = "HOST_URL:19000"
-    ocmcoresvc = "HOST_URL:19000"
-    ocmshareprovidersvc = "HOST_URL:19000"
-    ocminvitemanagersvc = "HOST_URL:19000"
-    ocmproviderauthorizersvc = "HOST_URL:19000"
+    authregistrysvc = "HOST_URL:HOST_PORT"
+    appprovidersvc = "HOST_URL:HOST_PORT"
+    appregistry = "HOST_URL:HOST_PORT"
+    storageregistrysvc = "HOST_URL:HOST_PORT"
+    preferencessvc = "HOST_URL:HOST_PORT"
+    userprovidersvc = "HOST_URL:HOST_PORT"
+    usershareprovidersvc = "HOST_URL:HOST_PORT"
+    publicshareprovidersvc = "HOST_URL:HOST_PORT"
+    ocmcoresvc = "HOST_URL:HOST_PORT"
+    ocmshareprovidersvc = "HOST_URL:HOST_PORT"
+    ocminvitemanagersvc = "HOST_URL:HOST_PORT"
+    ocmproviderauthorizersvc = "HOST_URL:HOST_PORT"
     commit_share_to_storage_grant = false
     datagateway = "http://localhost/data"
     transfer_expires = 6 # give it a moment
@@ -151,7 +152,7 @@ configFiles:
     driver = "static"
 
     [grpc.services.authregistry.drivers.static.rules]
-    basic = "HOST_URL:19000"
+    basic = "HOST_URL:HOST_PORT"
 
     [grpc.services.storageregistry]
     driver = "static"
@@ -160,8 +161,8 @@ configFiles:
     home_provider = "/home"
 
     [grpc.services.storageregistry.drivers.static.rules]
-    "/home" = {"address" = "HOST_URL:19000"}
-    "123e4567-e89b-12d3-a456-426655440000" = {"address" = "HOST_URL:19000"}
+    "/home" = {"address" = "HOST_URL:HOST_PORT"}
+    "123e4567-e89b-12d3-a456-426655440000" = {"address" = "HOST_URL:HOST_PORT"}
 
     [grpc.services.usershareprovider]
     driver = "memory"
@@ -205,12 +206,12 @@ configFiles:
     driver = "static"
 
     [grpc.services.appregistry.static.rules]
-    "text/plain" = "HOST_URL:19000"
-    "text/markdown" = "HOST_URL:19000"
-    "application/compressed-markdown" = "HOST_URL:19000"
-    "application/vnd.oasis.opendocument.text" = "HOST_URL:19000"
-    "application/vnd.oasis.opendocument.spreadsheet" = "HOST_URL:19000"
-    "application/vnd.oasis.opendocument.presentation" = "HOST_URL:19000"
+    "text/plain" = "HOST_URL:HOST_PORT"
+    "text/markdown" = "HOST_URL:HOST_PORT"
+    "application/compressed-markdown" = "HOST_URL:HOST_PORT"
+    "application/vnd.oasis.opendocument.text" = "HOST_URL:HOST_PORT"
+    "application/vnd.oasis.opendocument.spreadsheet" = "HOST_URL:HOST_PORT"
+    "application/vnd.oasis.opendocument.presentation" = "HOST_URL:HOST_PORT"
 
     [grpc.services.storageprovider]
     driver = "nextcloud"
@@ -277,7 +278,7 @@ configFiles:
       {
         "id": {
           "opaque_id": "4c510ada-c86b-4815-8820-42cdf82c3d51",
-          "idp": "localhost:19000"
+          "idp": "HOST_URL:HOST_PORT"
         },
         "username": "einstein",
         "secret": "relativity",
@@ -288,7 +289,7 @@ configFiles:
       {
         "id": {
           "opaque_id": "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c",
-          "idp": "localhost:19000"
+          "idp": "HOST_URL:HOST_PORT"
         },
         "username": "marie",
         "secret": "radioactivity",
@@ -299,7 +300,7 @@ configFiles:
       {
         "id": {
           "opaque_id": "932b4540-8d16-481e-8ef4-588e4b6b151c",
-          "idp": "localhost:19000"
+          "idp": "HOST_URL:HOST_PORT"
         },
         "username": "richard",
         "secret": "superfluidity",
@@ -314,7 +315,7 @@ configFiles:
       {
         "id": {
           "opaque_id": "sailing-lovers",
-          "idp": "localhost:19000"
+          "idp": "HOST_URL:HOST_PORT"
         },
         "group_name": "sailing-lovers",
         "mail": "sailing-lovers@example.org",
@@ -324,7 +325,7 @@ configFiles:
           {
             "id": {
               "opaque_id": "4c510ada-c86b-4815-8820-42cdf82c3d51",
-              "idp": "localhost:19000"
+              "idp": "HOST_URL:HOST_PORT"
             }
           }
         ]
@@ -332,7 +333,7 @@ configFiles:
       {
         "id": {
           "opaque_id": "violin-haters",
-          "idp": "localhost:19000"
+          "idp": "HOST_URL:HOST_PORT"
         },
         "group_name": "violin-haters",
         "mail": "violin-haters@example.org",
@@ -342,7 +343,7 @@ configFiles:
           {
             "id": {
               "opaque_id": "4c510ada-c86b-4815-8820-42cdf82c3d51",
-              "idp": "localhost:19000"
+              "idp": "HOST_URL:HOST_PORT"
             }
           }
         ]
@@ -350,7 +351,7 @@ configFiles:
       {
         "id": {
           "opaque_id": "radium-lovers",
-          "idp": "localhost:19000"
+          "idp": "HOST_URL:HOST_PORT"
         },
         "group_name": "radium-lovers",
         "mail": "radium-lovers@example.org",
@@ -360,7 +361,7 @@ configFiles:
           {
             "id": {
               "opaque_id": "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c",
-              "idp": "localhost:19000"
+              "idp": "HOST_URL:HOST_PORT"
             }
           }
         ]
@@ -368,7 +369,7 @@ configFiles:
       {
         "id": {
           "opaque_id": "polonium-lovers",
-          "idp": "localhost:19000"
+          "idp": "HOST_URL:HOST_PORT"
         },
         "group_name": "polonium-lovers",
         "mail": "polonium-lovers@example.org",
@@ -378,7 +379,7 @@ configFiles:
           {
             "id": {
               "opaque_id": "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c",
-              "idp": "localhost:19000"
+              "idp": "HOST_URL:HOST_PORT"
             }
           }
         ]
@@ -386,7 +387,7 @@ configFiles:
       {
         "id": {
           "opaque_id": "quantum-lovers",
-          "idp": "localhost:19000"
+          "idp": "HOST_URL:HOST_PORT"
         },
         "group_name": "quantum-lovers",
         "mail": "quantum-lovers@example.org",
@@ -396,7 +397,7 @@ configFiles:
           {
             "id": {
               "opaque_id": "932b4540-8d16-481e-8ef4-588e4b6b151c",
-              "idp": "localhost:19000"
+              "idp": "HOST_URL:HOST_PORT"
             }
           }
         ]
@@ -404,7 +405,7 @@ configFiles:
       {
         "id": {
           "opaque_id": "philosophy-haters",
-          "idp": "localhost:19000"
+          "idp": "HOST_URL:HOST_PORT"
         },
         "group_name": "philosophy-haters",
         "mail": "philosophy-haters@example.org",
@@ -414,7 +415,7 @@ configFiles:
           {
             "id": {
               "opaque_id": "932b4540-8d16-481e-8ef4-588e4b6b151c",
-              "idp": "localhost:19000"
+              "idp": "HOST_URL:HOST_PORT"
             }
           }
         ]
@@ -422,7 +423,7 @@ configFiles:
       {
         "id": {
           "opaque_id": "physics-lovers",
-          "idp": "localhost:19000"
+          "idp": "HOST_URL:HOST_PORT"
         },
         "group_name": "physics-lovers",
         "mail": "physics-lovers@example.org",
@@ -432,19 +433,19 @@ configFiles:
           {
             "id": {
               "opaque_id": "4c510ada-c86b-4815-8820-42cdf82c3d51",
-              "idp": "localhost:19000"
+              "idp": "HOST_URL:HOST_PORT"
             }
           },
           {
             "id": {
               "opaque_id": "f7fbf8c8-139b-4376-b307-cf0a8c2d0d9c",
-              "idp": "localhost:19000"
+              "idp": "HOST_URL:HOST_PORT"
             }
           },
           {
             "id": {
               "opaque_id": "932b4540-8d16-481e-8ef4-588e4b6b151c",
-              "idp": "localhost:19000"
+              "idp": "HOST_URL:HOST_PORT"
             }
           }
         ]
