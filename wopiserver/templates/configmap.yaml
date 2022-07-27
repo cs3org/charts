@@ -78,9 +78,9 @@ data:
     [security]
     # Location of the secret files. Requires a restart of the
     # WOPI server when either the files or their content change.
-    wopisecretfile = /etc/wopi/wopisecret
+    wopisecretfile = /var/run/secrets/wopisecret
     # iop secret is not used for cs3 storage type
-    #iopsecretfile = /etc/wopi/iopsecret
+    #iopsecretfile = /var/run/secrets/iopsecret
 
     # Use https as opposed to http (requires certificate)
     usehttps = no

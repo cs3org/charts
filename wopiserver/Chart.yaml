@@ -19,6 +19,7 @@ keywords:
 annotations:
   artifacthub.io/changes: |
     - "Switch to newer CS3org WOPI server version."
+    - "Revamp configuration options."
   artifacthub.io/images: |
     - name: wopiserver
       image: cs3org/wopiserver:v8.3.2

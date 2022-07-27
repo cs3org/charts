@@ -12,15 +12,16 @@ service:
 ## Overrides the default URL generation based on the ingress/service values
 # wopiserverUrl: https://wopi.local/
 
-extraVolumeMounts: []
-extraVolumes: []
-
-env: []
-
 # WOPI server configuration
 # - ref: https://github.com/cs3org/wopiserver/blob/master/wopiserver.conf
-config:
+
+# secretRef allows one to use an already existing secret instead of configuring the secrets below
+secretsRef:
+# secrets are only used if "secretRef" is not set or empty
+secrets:
   wopiSecret:
+
+config:
   logLevel: Error
   token:
     validity: 86400
@@ -56,4 +57,15 @@ securityContext:
   # -- Group ID that all processes within any containers will run with.
   runAsGroup: 1000
 
+# -- Resources to apply to all services.
 resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# Include arbitrary resources, eg. config maps or secrets.
+# -- Extra resources to be included.
+extraResources: []
