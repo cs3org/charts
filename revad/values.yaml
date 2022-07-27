@@ -8,7 +8,7 @@ image:
 service:
   type: ClusterIP
   grpc:
-    port: HOST_PORT
+    port: 19000
   http:
     port: 19001
 
