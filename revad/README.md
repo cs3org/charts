@@ -21,8 +21,6 @@ Also, you can use `--set EFSS=OWNCLOUD` to config Reva for communication with Op
  **Below parameters can be provided when you are trying start reva communicate with OpenCloud Mesh**
 | Parameter | Default value | Description |
 |---|---|---|
-|HostURL |localhost| the host name that revad is hosted on|
-|HostPort|19000|The port that revad is litening on|
 |OCURL|oc.docker|The URL of OpenCloud mesh provider|
 |SharedSecret|123456| The secret that is shared with sciencemesh application|
 |CertFile|revaoc1.crt| Name of ssl certificate file|

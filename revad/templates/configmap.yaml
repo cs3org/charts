@@ -14,6 +14,6 @@ data:
 {{- $port := toString .Values.HostPort }}
 {{- range $filename, $fileContents := .Values.configFiles }}
   {{ $filename }}: |-
-{{ $fileContents | replace "OC_URL" $ocHost | replace "HOST_URL" $host | replace "HOST_PORT" $port | replace "SHARED_SECRET" $secret | replace "CERT_FILE" $certFile | replace "CERT_KEY" $certKey |  indent 4 }} 
+{{ $fileContents | replace "OC_URL" $ocHost | replace "SHARED_SECRET" $secret | replace "CERT_FILE" $certFile | replace "CERT_KEY" $certKey |  indent 4 }} 
 {{- end }}
 {{- end }}
