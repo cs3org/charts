@@ -31,6 +31,7 @@ The following configurations may be set. It is recommended to use `values.yaml` 
 | `config.cs3.authTokenValidity` | Reva/gRPC authentication token expiration time (seconds).                                | `3600`                                                            |
 | `config.cs3.gateway`           | The GRPC endpoint of the REVA gateway service.                                           | `revad:19000`                                                     |
 | `config.cs3.sslVerify`         | Enables certificate checking for downloads from the REVA datagateway.                    | `True`                                                            |
+| `config.bridge.sslVerify`      | Enables certificate checking for the connected apps.                                     | `True`                                                            |
 | `config.detectExternalLocks`   | Enables detection of external Microsoft Office or LibreOffice locks.                     | `False`                                                           |
 | `config.loglevel`              | Log level. Values, in order of severity: `Critical`, `Error`, `Warning`, `Info` `Debug`. | `Debug`                                                           |
 | `config.token.validity`        | WOPI access token expiration time (seconds).                                             | `86400`                                                           |

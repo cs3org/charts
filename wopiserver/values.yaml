@@ -34,6 +34,8 @@ config:
     authTokenValidity: 3600
     gateway: revad:19000
     sslVerify: True
+  bridge:
+    sslVerify: True
 
 ingress:
   enabled: false
