@@ -352,6 +352,37 @@ entries:
   wopiserver:
   - annotations:
       artifacthub.io/changes: |
+        - "Switch to newer CS3org WOPI server version."
+        - "Revamp configuration options."
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/images: |
+        - name: wopiserver
+          image: cs3org/wopiserver:v8.3.2
+    apiVersion: v2
+    appVersion: v8.3.2
+    created: "2022-07-30T06:57:30.123865759Z"
+    description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway
+      for EFSS systems
+    digest: f7c28de430bb4e9ac217c9518f1138bd6721edcbf8f15d25759109c739b9c314
+    home: https://github.com/cs3org/wopiserver
+    keywords:
+    - wopi
+    - efss
+    kubeVersion: '>= 1.19.0'
+    maintainers:
+    - email: samuel.alfageme.sainz@cern.ch
+      name: SamuAlfageme
+    - email: giuseppe.lopresti@cern.ch
+      name: glpatcern
+    name: wopiserver
+    sources:
+    - https://github.com/cs3org/wopiserver
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/wopiserver-0.5.0/wopiserver-0.5.0.tgz
+    version: 0.5.0
+  - annotations:
+      artifacthub.io/changes: |
         - "Increase pinned versions to improve compatibility with sciencemes/MeshApps@0.1.0"
       artifacthub.io/containsSecurityUpdates: "false"
       artifacthub.io/images: |
