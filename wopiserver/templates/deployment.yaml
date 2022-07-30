@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "wopiserver.fullname" . }}
+  name: {{ template "wopiserver.fullname" . }}
   labels:
     {{- include "wopiserver.labels" . | nindent 4 }}
 spec:
@@ -13,32 +13,40 @@ spec:
     metadata:
       labels:
         {{- include "wopiserver.selectorLabels" . | nindent 8 }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
+      securityContext:
+          fsGroup: {{ $.Values.securityContext.fsGroup }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: {{ $.Values.securityContext.runAsUser }}
+            runAsGroup: {{ $.Values.securityContext.runAsGroup }}
+            readOnlyRootFilesystem: true
+          resources: {{ toYaml $.Values.resources | nindent 12 }}
           ports:
             - name: http
               containerPort: 8880
               protocol: TCP
           volumeMounts:
-            - name: {{ include "wopiserver.fullname" . }}-confdir
+            - name: tmp-volume
+              mountPath: /tmp
+            - name: log-volume
+              mountPath: /var/log/wopi/
+            - name: recovery-volume
+              mountPath: /var/spool/wopirecovery/
+            # config
+            - name: config
               mountPath: /etc/wopi/wopiserver.conf
               subPath: wopiserver.conf
-            - name: {{ include "wopiserver.fullname" . }}-confdir
-              mountPath: /etc/wopi/wopisecret
+            # secrets
+            - name: secrets
+              mountPath: /var/run/secrets/wopisecret
               subPath: wopisecret
-            - name: {{ include "wopiserver.fullname" . }}-confdir
-              mountPath: /etc/wopi/iopsecret
-              subPath: iopsecret
-            {{- if .Values.extraVolumeMounts }}
-            {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
-            {{- end }}
-          {{- if .Values.env }}
-          env:
-            {{- toYaml .Values.env | nindent 12 }}
-          {{- end }}
           livenessProbe:
             httpGet:
               path: /
@@ -48,13 +56,19 @@ spec:
               path: /
               port: http
       volumes:
-        - name: {{ include "wopiserver.fullname" . }}-confdir
-          projected:
-            sources:
-              - configMap:
-                  name: {{ template "wopiserver.fullname" . }}-config
-              - secret:
-                  name: {{ template "wopiserver.fullname" . }}-secrets
-        {{- if .Values.extraVolumes }}
-        {{- toYaml .Values.extraVolumes | nindent 8 }}
-        {{- end }}
+        - name: tmp-volume
+          emptyDir: {}
+        - name: log-volume
+          emptyDir: {}
+        - name: recovery-volume
+          emptyDir: {}
+        - name: config
+          configMap:
+            name: {{ template "wopiserver.fullname" . }}-config
+        - name: secrets
+          secret:
+            {{ if .Values.secretsRef }}
+            secretName: {{ .Values.secretsRef }}
+            {{ else }}
+            secretName: {{ template "wopiserver.fullname" . }}-secrets
+            {{ end }}

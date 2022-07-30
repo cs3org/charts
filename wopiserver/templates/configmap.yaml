@@ -5,32 +5,120 @@ metadata:
   labels:
     {{- include "wopiserver.labels" . | nindent 4 }}
 data:
-  # TODO: move hardcoded values to fallback values
-  # https://docs.python.org/3/library/configparser.html#fallback-values
   wopiserver.conf: |-
+    # This config is based on https://github.com/cs3org/wopiserver/blob/master/wopiserver.conf
+
     [general]
+    # Storage access layer to be loaded in order to operate this WOPI server
     storagetype = cs3
+
+    # Port where to listen for WOPI requests
     port = {{ .Values.service.port }}
 
-{{- range $provider, $url := index .Values.config.appProviders }}
-    {{ $provider }} = {{ $url }}
-{{- end }}
+    # Logging level.
+    # Valid values are: Debug, Info, Warning, Error.
+    loglevel = {{ .Values.config.logLevel }}
 
-    tokenvalidity = 86400
-
+    # URL of your WOPI server or your HA proxy in front of it
     wopiurl = {{ template "wopiserver.url" . }}
-    downloadurl = {{ template "wopiserver.url" . }}/wopi/cbox/download
 
-    loglevel = {{ .Values.config.loglevel }}
+    # URL for direct download of files. The complete URL that is sent
+    # to clients will include the access_token argument
+    downloadurl = {{ template "wopiserver.url" . }}/wopi/iop/download
+
+    # The internal server engine to use (defaults to flask).
+    # Set to waitress for production installations.
+    internalserver = waitress
+
+    # List of file extensions deemed incompatible with LibreOffice:
+    # interoperable locking will be disabled for such files
+    nonofficetypes = .md .zmd .txt .epd
+
+    # List of file extensions to be supported by Collabora (deprecated)
+    codeofficetypes = .odt .ott .ods .ots .odp .otp .odg .otg .doc .dot .xls .xlt .xlm .ppt .pot .pps .vsd .dxf .wmf .cdr .pages .number .key
+
+    # WOPI access token expiration time [seconds]
+    tokenvalidity = {{ .Values.config.token.validity }}
+
+    # WOPI lock expiration time [seconds]
+    wopilockexpiration = {{ .Values.config.wopi.lock.expiration }}
+
+    # WOPI lock strict check: if True, WOPI locks will be compared according to specs,
+    # that is their representation must match. False (default) allows for a more relaxed
+    # comparison, which compensates incorrect lock requests from Microsoft Office Online
+    # on-premise setups.
+    wopilockstrictcheck = False
+
+    # Enable support of rename operations from WOPI apps. This is currently
+    # disabled by default as it has been observed that both MS Office and Collabora
+    # Online do not play well with this feature.
+    enablerename = {{ .Values.config.enableRename }}
+
+    # Detection of external Microsoft Office or LibreOffice locks. By default, lock files
+    # compatible with Office for Desktop applications are detected, assuming that the
+    # underlying storage can be mounted as a remote filesystem: in this case, WOPI GetLock
+    # and SetLock operations return such locks and prevent online apps from entering edit mode.
+    # This feature can be disabled in order to operate a pure WOPI server for online apps.
+    detectexternallocks = {{ .Values.config.detectExternalLocks }}
+
+    # Location of the webconflict files. By default, such files are stored in the same path
+    # as the original file. If that fails (e.g. because of missing permissions),
+    # an attempt is made to store such files in this path if specified, otherwise
+    # the system falls back to the recovery space (cf. io|recoverypath).
+    # The keywords <user_initial> and <username> are replaced with the actual username's
+    # initial letter and the actual username, respectively, so you can use e.g.
+    # /your_storage/home/user_initial/username
+    #conflictpath = /
+
+    # ownCloud's WOPI proxy configuration. Disabled by default.
+    #wopiproxy = https://external-wopi-proxy.com
+    #wopiproxysecretfile = /path/to/your/shared-key-file
+    #proxiedappname = Name of your proxied app
 
     [security]
-    usehttps = no
-    wopisecretfile = /etc/wopi/wopisecret
-    iopsecretfile = /etc/wopi/iopsecret
+    # Location of the secret files. Requires a restart of the
+    # WOPI server when either the files or their content change.
+    wopisecretfile = /var/run/secrets/wopisecret
+    # iop secret is not used for cs3 storage type
+    #iopsecretfile = /var/run/secrets/iopsecret
 
-    [cs3]
-    revagateway = {{ .Values.config.cs3.revahost }}
-    authtokenvalidity = 3600
+    # Use https as opposed to http (requires certificate)
+    usehttps = no
+
+    # Certificate and key for https. Requires a restart
+    # to apply a change.
+    wopicert = /etc/grid-security/host.crt
+    wopikey = /etc/grid-security/host.key
+
+    [bridge]
+    # SSL certificate check for the connected apps
+    sslverify = {{ .Values.config.bridge.sslVerify }}
+
+    # Minimal time interval between two consecutive save operations [seconds]
+    #saveinterval = 200
+
+    # Minimal time interval before a closed file is WOPI-unlocked [seconds]
+    #unlockinterval = 90
+
+    # CodiMD: disable creating zipped bundles when files contain pictures
+    #disablezip = False
 
     [io]
+    # Size used for buffered reads [bytes]
     chunksize = 4194304
+
+    # Path to a recovery space in case of I/O errors when reaching to the remote storage.
+    # This is expected to be a local path, and it is provided in order to ease user support.
+    # Defaults to the indicated spool folder.
+    #recoverypath = /var/spool/wopirecovery
+
+    [cs3]
+    # Host and port of the Reva(-like) CS3-compliant GRPC gateway endpoint
+    revagateway = {{ .Values.config.cs3.gateway }}
+
+    # Reva/gRPC authentication token expiration time [seconds]
+    # The default value matches Reva's default
+    authtokenvalidity = {{ .Values.config.cs3.authTokenValidity }}
+
+    # SSL certificate check for Reva
+    sslverify = {{ .Values.config.cs3.sslVerify }}
