@@ -307,7 +307,6 @@ configFiles:
         "groups": ["quantum-lovers", "philosophy-haters", "physics-lovers"]
       }
     ]
-
   groups.json: |
     [
       {
@@ -449,7 +448,6 @@ configFiles:
         ]
       }
     ]
-
   ocm-providers.json: |
     [
       {
