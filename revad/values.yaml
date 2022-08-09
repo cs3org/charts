@@ -188,7 +188,7 @@ configFiles:
     driver = "json"
 
     [grpc.services.ocmproviderauthorizer.drivers.json]
-    providers = "ocm-providers.json"
+    providers = "/etc/revad/ocm-providers.json"
     verify_request_hostname = true
 
     [grpc.services.publicshareprovider]
@@ -262,7 +262,7 @@ configFiles:
     driver = "json"
 
     [http.middlewares.providerauthorizer.drivers.json]
-    providers = "ocm-providers.json"
+    providers = "/etc/revad/ocm-providers.json"
 
     [http.services.ocs]
     prefix = "ocs"
