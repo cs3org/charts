@@ -6,7 +6,7 @@ image:
   pullPolicy: Always
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   grpc:
     port: 19000
   http:
