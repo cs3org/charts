@@ -9,6 +9,9 @@ Reva is an open source platform with two purposes:
 
 This chart creates a Reva deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
+See also [configuring an iop deployment](https://developer.sciencemesh.io/docs/technical-documentation/iop/deployment/kubernetes/#configuring-an-iop-deployment).
+
+
 ## Install
 
 To install the chart with the release name `my-reva`:
