@@ -4,8 +4,6 @@ Kubernetes Charts Repository for CS3ORG
 
 This reposity contains the official charts for CS3Org software, like Reva.
 
-See also [configuring an iop deployment](https://developer.sciencemesh.io/docs/technical-documentation/iop/deployment/kubernetes/#configuring-an-iop-deployment).
-
 The chart repository is available at [https://cs3org.github.io/charts](https://cs3org.github.io/charts).
 
 ## Working with this repo
@@ -55,3 +53,5 @@ $ helm install custom-reva cs3org/revad \
   --set service.http.port=20001 \
   --set-file configFiles.revad\\.toml=custom-config.toml
 ```
+
+See also [configuring an iop deployment](https://developer.sciencemesh.io/docs/technical-documentation/iop/deployment/kubernetes/#configuring-an-iop-deployment).
