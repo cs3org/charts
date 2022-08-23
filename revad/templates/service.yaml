@@ -9,13 +9,13 @@ spec:
   ports:
     {{- if .Values.service.http }}
     - port: {{ .Values.service.http.port }}
-      targetPort: 8050
+      targetPort: http
       protocol: TCP
       name: http
     {{- end }}
     {{- if .Values.service.grpc }}
     - port: {{ .Values.service.grpc.port }}
-      targetPort: 8053
+      targetPort: grpc
       protocol: TCP
       name: grpc
     {{- end }}
