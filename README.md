@@ -29,3 +29,5 @@ NAME        	CHART VERSION	APP VERSION	DESCRIPTION
 cs3org/revad	1.2.1        	v1.2.0     	The Reva daemon (revad) helm chart
 ```
 
+Github chart repository: https://github.com/cs3org/charts
+
