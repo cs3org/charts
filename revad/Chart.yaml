@@ -3,7 +3,7 @@ name: revad
 description: The Reva daemon (revad) helm chart
 type: application
 version: 1.4.0
-appVersion: v1.18.0
+appVersion: v1.19.0
 kubeVersion: ">= 1.19.0"
 icon: https://reva.link/logo.svg
 home: https://reva.link
@@ -23,7 +23,7 @@ keywords:
   - sync-and-share
 annotations:
   artifacthub.io/changes: |
-    - "Update revad image to v1.18.0"
+    - "Update revad image to v1.19.0"
   artifacthub.io/images: |
     - name: revad
-      image: cs3org/revad:v1.18.0
+      image: cs3org/revad:v1.19.0

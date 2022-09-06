@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: cs3org/revad
-  tag: v1.18.0
+  tag: v2.7.0
   pullPolicy: Always
 
 service:
@@ -68,16 +68,22 @@ envFrom: []
   #     name: reva-envars
   # - secretRef:
   #     name: reva-secrets
-
+EFSS: ""
+OCURL: "oc.docker"
+SharedSecret: "123456"
+HostDomain : "mesh.pondersource.org"
 ingress:
   enabled: false
   services:
     http:
       hostname: http.revad.local
-      path: /
-      annotations: {}
-        # kubernetes.io/ingress.class: nginx
-        # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      path: /iop(/|$)(.*)
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/use-regex: "true"
+        nginx.ingress.kubernetes.io/rewrite-target: /$2
+        nginx.ingress.kubernetes.io/proxy-body-size: 200m
       tls: []
         # Secrets must be present in the namespace beforehand.
         # - secretName: http-revad-tls
@@ -86,10 +92,10 @@ ingress:
     grpc:
       hostname: grpc.revad.local
       path: /
-      annotations: {}
-        # kubernetes.io/ingress.class: nginx
-        # nginx.ingress.kubernetes.io/ssl-redirect: "true"
-        # nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+      annotations: 
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
       tls: []
         # - secretName: grpc-revad-tls
         #   hosts:
@@ -118,7 +124,146 @@ configFiles:
     [http.services.ocmd]
     [http.services.ocdav]
     [http.services.ocs]
+  oc.revad.toml: |
+    [shared]
+    gatewaysvc = "SERVICE_NAME:19000"
 
+    [grpc]
+    address = "0.0.0.0:19000"
+
+    [grpc.services.gateway]
+    authregistrysvc = "SERVICE_NAME:19000"
+    appprovidersvc = "SERVICE_NAME:19000"
+    appregistry = "SERVICE_NAME:19000"
+    storageregistrysvc = "SERVICE_NAME:19000"
+    preferencessvc = "SERVICE_NAME:19000"
+    userprovidersvc = "SERVICE_NAME:19000"
+    usershareprovidersvc = "SERVICE_NAME:19000"
+    publicshareprovidersvc = "SERVICE_NAME:19000"
+    ocmcoresvc = "SERVICE_NAME:19000"
+    ocmshareprovidersvc = "SERVICE_NAME:19000"
+    ocminvitemanagersvc = "SERVICE_NAME:19000"
+    ocmproviderauthorizersvc = "SERVICE_NAME:19000"
+    commit_share_to_storage_grant = false
+    datagateway = "http://HOST_DOMAIN/data"
+    transfer_expires = 6 # give it a moment
+
+    [grpc.services.authregistry]
+    driver = "static"
+
+    [grpc.services.authregistry.drivers.static.rules]
+    basic = "SERVICE_NAME:19000"
+
+    [grpc.services.storageregistry]
+    driver = "static"
+
+    [grpc.services.storageregistry.drivers.static]
+    home_provider = "/home"
+
+    [grpc.services.storageregistry.drivers.static.rules]
+    "/home" = {"address" = "localhost:19000"}
+    "123e4567-e89b-12d3-a456-426655440000" = {"address" = "localhost:19000"}
+
+    [grpc.services.usershareprovider]
+    driver = "memory"
+
+    [grpc.services.ocmcore]
+    driver = "nextcloud"
+
+    [grpc.services.ocmcore.drivers.nextcloud]
+    endpoint = "https://OC_URL/index.php/apps/sciencemesh/"
+    shared_secret = "SHARED_SECRET"
+    mock_http = false
+
+    [grpc.services.ocminvitemanager]
+    driver = "json"
+
+    [grpc.services.ocmshareprovider]
+    driver = "nextcloud"
+
+    [grpc.services.ocmshareprovider.drivers.nextcloud]
+    endpoint = "https://OC_URL/index.php/apps/sciencemesh/"
+    shared_secret = "SHARED_SECRET"
+    mock_http = false
+
+    [grpc.services.ocmproviderauthorizer]
+    driver = "open"
+
+    [grpc.services.publicshareprovider]
+    driver = "memory"
+
+    [grpc.services.appprovider]
+    driver = "demo"
+    iopsecret = "testsecret"
+    wopiurl = "http://0.0.0.0:8880/"
+    wopibridgeurl = "http://localhost:8000/wopib"
+
+    [grpc.services.appregistry]
+    driver = "static"
+
+    [grpc.services.appregistry.static.rules]
+    "text/plain" = "SERVICE_NAME:19000"
+    "text/markdown" = "SERVICE_NAME:19000"
+    "application/compressed-markdown" = "SERVICE_NAME:19000"
+    "application/vnd.oasis.opendocument.text" = "SERVICE_NAME:19000"
+    "application/vnd.oasis.opendocument.spreadsheet" = "SERVICE_NAME:19000"
+    "application/vnd.oasis.opendocument.presentation" = "SERVICE_NAME:19000"
+
+    [grpc.services.storageprovider]
+    driver = "nextcloud"
+
+    [grpc.services.storageprovider.drivers.nextcloud]
+    endpoint = "https://OC_URL/index.php/apps/sciencemesh/"
+    shared_secret = "SHARED_SECRET"
+    mock_http = false
+
+    [grpc.services.authprovider]
+    auth_manager = "nextcloud"
+
+    [grpc.services.authprovider.auth_managers.nextcloud]
+    endpoint = "https://OC_URL/index.php/apps/sciencemesh/"
+    shared_secret = "SHARED_SECRET"
+    mock_http = false
+
+    [grpc.services.userprovider]
+    driver = "nextcloud"
+
+    [grpc.services.userprovider.drivers.nextcloud]
+    endpoint = "https://OC_URL/index.php/apps/sciencemesh/"
+    shared_secret = "SHARED_SECRET"
+    mock_http = false
+
+    [http]
+    enabled_services = ["ocmd"]
+    enabled_middlewares = ["providerauthorizer", "cors"]
+    address = "0.0.0.0:80"
+
+    [http.services.dataprovider]
+    driver = "localhome"
+
+    [http.services.prometheus]
+    [http.services.sysinfo]
+
+    [http.services.dataprovider.drivers.localhome]
+    user_layout = "{{.Username}}"
+
+    [http.services.ocmd]
+    prefix = "ocm"
+
+    [http.services.ocmd.config]
+    host = "localhost"
+    provider = "test-revaoc1"
+
+    [http.middlewares.providerauthorizer]
+    driver = "open"
+
+    [http.services.ocs]
+    prefix = "ocs"
+
+    [http.services.ocdav]
+    prefix = "ocdav"
+
+    [http.middlewares.cors]
   users.json: |
     [
       {
@@ -155,7 +300,6 @@ configFiles:
         "groups": ["quantum-lovers", "philosophy-haters", "physics-lovers"]
       }
     ]
-
   groups.json: |
     [
       {
@@ -297,6 +441,252 @@ configFiles:
         ]
       }
     ]
-
   ocm-providers.json: |
-    []
+    [
+      {
+        "name": "cernbox",
+        "full_name": "CERNBox",
+        "organization": "CERN",
+        "domain": "cernbox.cern.ch",
+        "homepage": "https://cernbox.web.cern.ch",
+        "description": "CERNBox provides cloud data storage to all CERN users.",
+        "services": [
+          {
+            "endpoint": {
+              "type": {
+                "name": "OCM",
+                "description": "CERNBox Open Cloud Mesh API"
+              },
+              "name": "CERNBox - OCM API",
+              "path": "http://127.0.0.1:19001/ocm/",
+              "is_monitored": true
+            },
+            "api_version": "0.0.1",
+            "host": "http://127.0.0.1:19001/"
+          },
+          {
+            "endpoint": {
+              "type": {
+                "name": "Webdav",
+                "description": "CERNBox Webdav API"
+              },
+              "name": "CERNBox - Webdav API",
+              "path": "http://127.0.0.1:19001/remote.php/webdav/",
+              "is_monitored": true
+            },
+            "api_version": "0.0.1",
+            "host": "http://127.0.0.1:19001/"
+          },
+          {
+            "endpoint": {
+              "type": {
+                "name": "Gateway",
+                "description": "CERNBox GRPC Gateway"
+              },
+              "name": "CERNBox - GRPC Gateway",
+              "path": "127.0.0.1:19000",
+              "is_monitored": true
+            },
+            "api_version": "0.0.1",
+            "host": "127.0.0.1:19000"
+          }
+        ]
+      },
+      {
+        "name": "oc-cesnet",
+        "full_name": "ownCloud@CESNET",
+        "organization": "CESNET",
+        "domain": "cesnet.cz",
+        "homepage": "https://owncloud.cesnet.cz",
+        "description": "OwnCloud has been designed for individual users.",
+        "services": [
+          {
+            "endpoint": {
+              "type": {
+                "name": "OCM",
+                "description": "CESNET Open Cloud Mesh API"
+              },
+              "name": "CESNET - OCM API",
+              "path": "http://127.0.0.1:17001/ocm/",
+              "is_monitored": true
+            },
+            "api_version": "0.0.1",
+            "host": "http://127.0.0.1:17001/"
+          },
+          {
+            "endpoint": {
+              "type": {
+                "name": "Webdav",
+                "description": "CESNET Webdav API"
+              },
+              "name": "CESNET - Webdav API",
+              "path": "http://127.0.0.1:17001/remote.php/webdav/",
+              "is_monitored": true
+            },
+            "api_version": "0.0.1",
+            "host": "http://127.0.0.1:17001/"
+          },
+          {
+            "endpoint": {
+              "type": {
+                "name": "Gateway",
+                "description": "CESNET GRPC Gateway"
+              },
+              "name": "CESNET - GRPC Gateway",
+              "path": "127.0.0.1:17000",
+              "is_monitored": true
+            },
+            "api_version": "0.0.1",
+            "host": "127.0.0.1:17000"
+          }
+        ]
+      },
+      {
+        "name": "example",
+        "full_name": "ownCloud@Example",
+        "organization": "Example",
+        "domain": "example.org",
+        "homepage": "http://example.org",
+        "description": "Example cloud storage.",
+        "services": [
+          {
+            "endpoint": {
+              "type": {
+                "name": "OCM",
+                "description": "Example Open Cloud Mesh API"
+              },
+              "name": "Example - OCM API",
+              "path": "http://127.0.0.1:19001/ocm/",
+              "is_monitored": true
+            },
+            "api_version": "0.0.1",
+            "host": "http://127.0.0.1:19001/"
+          },
+          {
+            "endpoint": {
+              "type": {
+                "name": "Webdav",
+                "description": "Example Webdav API"
+              },
+              "name": "Example - Webdav API",
+              "path": "http://127.0.0.1:19001/remote.php/webdav/",
+              "is_monitored": true
+            },
+            "api_version": "0.0.1",
+            "host": "http://127.0.0.1:19001/"
+          },
+          {
+            "endpoint": {
+              "type": {
+                "name": "Gateway",
+                "description": "Example GRPC Gateway"
+              },
+              "name": "Example - GRPC Gateway",
+              "path": "127.0.0.1:19000",
+              "is_monitored": true
+            },
+            "api_version": "0.0.1",
+            "host": "127.0.0.1:19000"
+          }
+        ]
+      },
+      {
+        "name": "test",
+        "full_name": "ownCloud@Test",
+        "organization": "Test",
+        "domain": "test.org",
+        "homepage": "http://test.org",
+        "description": "Test cloud storage.",
+        "services": [
+          {
+            "endpoint": {
+              "type": {
+                "name": "OCM",
+                "description": "Test Open Cloud Mesh API"
+              },
+              "name": "Test - OCM API",
+              "path": "http://127.0.0.1:19001/ocm/",
+              "is_monitored": true
+            },
+            "api_version": "0.0.1",
+            "host": "http://127.0.0.1:19001/"
+          },
+          {
+            "endpoint": {
+              "type": {
+                "name": "Webdav",
+                "description": "Test Webdav API"
+              },
+              "name": "Test - Webdav API",
+              "path": "http://127.0.0.1:19001/remote.php/webdav/",
+              "is_monitored": true
+            },
+            "api_version": "0.0.1",
+            "host": "http://127.0.0.1:19001/"
+          },
+          {
+            "endpoint": {
+              "type": {
+                "name": "Gateway",
+                "description": "Test GRPC Gateway"
+              },
+              "name": "Test - GRPC Gateway",
+              "path": "127.0.0.1:19000",
+              "is_monitored": true
+            },
+            "api_version": "0.0.1",
+            "host": "127.0.0.1:19000"
+          }
+        ]
+      },
+      {
+        "name": "localhost",
+        "full_name": "localhost",
+        "organization": "Example",
+        "domain": "localhost",
+        "homepage": "http://example.org",
+        "description": "Example cloud storage.",
+        "services": [
+          {
+            "endpoint": {
+              "type": {
+                "name": "OCM",
+                "description": "Example Open Cloud Mesh API"
+              },
+              "name": "Example - OCM API",
+              "path": "http://127.0.0.1:19001/ocm/",
+              "is_monitored": true
+            },
+            "api_version": "0.0.1",
+            "host": "http://127.0.0.1:19001/"
+          },
+          {
+            "endpoint": {
+              "type": {
+                "name": "Webdav",
+                "description": "Example Webdav API"
+              },
+              "name": "Example - Webdav API",
+              "path": "http://127.0.0.1:19001/remote.php/webdav/",
+              "is_monitored": true
+            },
+            "api_version": "0.0.1",
+            "host": "http://127.0.0.1:19001/"
+          },
+          {
+            "endpoint": {
+              "type": {
+                "name": "Gateway",
+                "description": "Example GRPC Gateway"
+              },
+              "name": "Example - GRPC Gateway",
+              "path": "127.0.0.1:19000",
+              "is_monitored": true
+            },
+            "api_version": "0.0.1",
+            "host": "127.0.0.1:19000"
+          }
+        ]
+      }
+    ]
+

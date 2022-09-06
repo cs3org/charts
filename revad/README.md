@@ -16,6 +16,15 @@ To install the chart with the release name `my-reva`:
 ```console
 $ helm install my-reva cs3org/revad
 ```
+Also, you can use `--set EFSS=OWNCLOUD` to config Reva for communication with OpenCloud Mesh  
+
+ **Below parameters can be provided when you are trying start reva communicate with OpenCloud Mesh**
+| Parameter | Default value | Description |
+|---|---|---|
+|OCURL|oc.docker|The URL of OpenCloud mesh provider|
+|SharedSecret|123456| The secret that is shared with sciencemesh application|
+|CertFile|revaoc1.crt| Name of ssl certificate file|
+|CertKey|revaoc1.key| Name of ssl certificate key file|
 
 ## Uninstalling the Chart
 

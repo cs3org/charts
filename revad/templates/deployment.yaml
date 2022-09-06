@@ -31,7 +31,11 @@ spec:
             - /usr/bin/revad
           args:
               - "-c"
-              - "/etc/revad/revad.toml"
+              - {{ if eq .Values.EFSS "OWNCLOUD" }}
+                  {{- "/etc/revad/oc.revad.toml" }}
+                {{ else }}
+                  {{- "/etc/revad/revad.toml" }}
+                {{ end }}
               - "-p"
               - "/var/run/revad.pid"
           volumeMounts:
