@@ -9,11 +9,11 @@ data:
 {{- $host := .Values.HostURL }}
 {{- $ocHost := .Values.OCURL }}
 {{- $secret := .Values.SharedSecret }}
-{{- $certFile := .Values.CertFile }}
-{{- $certKey := .Values.CertKey }}
 {{- $port := toString .Values.HostPort }}
+{{- $serviceName := include "revad.fullname" .  }}
+{{- $hostDomain := toString .Values.HostDomain }}
 {{- range $filename, $fileContents := .Values.configFiles }}
   {{ $filename }}: |-
-{{ $fileContents | replace "OC_URL" $ocHost | replace "SHARED_SECRET" $secret | replace "CERT_FILE" $certFile | replace "CERT_KEY" $certKey |  indent 4 }} 
+{{ $fileContents | replace "OC_URL" $ocHost | replace "SHARED_SECRET" $secret | replace "SERVICE_NAME" $serviceName | replace "HOST_DOMAIN" $hostDomain | indent 4 }} 
 {{- end }}
 {{- end }}

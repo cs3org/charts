@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: cs3org/revad
-  tag: v1.18.0
+  tag: v2.7.0
   pullPolicy: Always
 
 service:
@@ -71,17 +71,19 @@ envFrom: []
 EFSS: ""
 OCURL: "oc.docker"
 SharedSecret: "123456"
-CertFile: "revaoc1.crt"
-CertKey: "revaoc1.key"
+HostDomain : "mesh.pondersource.org"
 ingress:
   enabled: false
   services:
     http:
       hostname: http.revad.local
-      path: /
-      annotations: {}
-        # kubernetes.io/ingress.class: nginx
-        # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      path: /iop(/|$)(.*)
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/use-regex: "true"
+        nginx.ingress.kubernetes.io/rewrite-target: /$2
+        nginx.ingress.kubernetes.io/proxy-body-size: 200m
       tls: []
         # Secrets must be present in the namespace beforehand.
         # - secretName: http-revad-tls
@@ -90,10 +92,10 @@ ingress:
     grpc:
       hostname: grpc.revad.local
       path: /
-      annotations: {}
-        # kubernetes.io/ingress.class: nginx
-        # nginx.ingress.kubernetes.io/ssl-redirect: "true"
-        # nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+      annotations: 
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
       tls: []
         # - secretName: grpc-revad-tls
         #   hosts:
@@ -124,33 +126,33 @@ configFiles:
     [http.services.ocs]
   oc.revad.toml: |
     [shared]
-    gatewaysvc = "localhost:19000"
+    gatewaysvc = "SERVICE_NAME:19000"
 
     [grpc]
     address = "0.0.0.0:19000"
 
     [grpc.services.gateway]
-    authregistrysvc = "localhost:19000"
-    appprovidersvc = "localhost:19000"
-    appregistry = "localhost:19000"
-    storageregistrysvc = "localhost:19000"
-    preferencessvc = "localhost:19000"
-    userprovidersvc = "localhost:19000"
-    usershareprovidersvc = "localhost:19000"
-    publicshareprovidersvc = "localhost:19000"
-    ocmcoresvc = "localhost:19000"
-    ocmshareprovidersvc = "localhost:19000"
-    ocminvitemanagersvc = "localhost:19000"
-    ocmproviderauthorizersvc = "localhost:19000"
+    authregistrysvc = "SERVICE_NAME:19000"
+    appprovidersvc = "SERVICE_NAME:19000"
+    appregistry = "SERVICE_NAME:19000"
+    storageregistrysvc = "SERVICE_NAME:19000"
+    preferencessvc = "SERVICE_NAME:19000"
+    userprovidersvc = "SERVICE_NAME:19000"
+    usershareprovidersvc = "SERVICE_NAME:19000"
+    publicshareprovidersvc = "SERVICE_NAME:19000"
+    ocmcoresvc = "SERVICE_NAME:19000"
+    ocmshareprovidersvc = "SERVICE_NAME:19000"
+    ocminvitemanagersvc = "SERVICE_NAME:19000"
+    ocmproviderauthorizersvc = "SERVICE_NAME:19000"
     commit_share_to_storage_grant = false
-    datagateway = "http://localhost/data"
+    datagateway = "http://HOST_DOMAIN/data"
     transfer_expires = 6 # give it a moment
 
     [grpc.services.authregistry]
     driver = "static"
 
     [grpc.services.authregistry.drivers.static.rules]
-    basic = "localhost:19000"
+    basic = "SERVICE_NAME:19000"
 
     [grpc.services.storageregistry]
     driver = "static"
@@ -185,11 +187,7 @@ configFiles:
     mock_http = false
 
     [grpc.services.ocmproviderauthorizer]
-    driver = "json"
-
-    [grpc.services.ocmproviderauthorizer.drivers.json]
-    providers = "/etc/revad/ocm-providers.json"
-    verify_request_hostname = true
+    driver = "open"
 
     [grpc.services.publicshareprovider]
     driver = "memory"
@@ -204,12 +202,12 @@ configFiles:
     driver = "static"
 
     [grpc.services.appregistry.static.rules]
-    "text/plain" = "localhost:19000"
-    "text/markdown" = "localhost:19000"
-    "application/compressed-markdown" = "localhost:19000"
-    "application/vnd.oasis.opendocument.text" = "localhost:19000"
-    "application/vnd.oasis.opendocument.spreadsheet" = "localhost:19000"
-    "application/vnd.oasis.opendocument.presentation" = "localhost:19000"
+    "text/plain" = "SERVICE_NAME:19000"
+    "text/markdown" = "SERVICE_NAME:19000"
+    "application/compressed-markdown" = "SERVICE_NAME:19000"
+    "application/vnd.oasis.opendocument.text" = "SERVICE_NAME:19000"
+    "application/vnd.oasis.opendocument.spreadsheet" = "SERVICE_NAME:19000"
+    "application/vnd.oasis.opendocument.presentation" = "SERVICE_NAME:19000"
 
     [grpc.services.storageprovider]
     driver = "nextcloud"
@@ -238,9 +236,7 @@ configFiles:
     [http]
     enabled_services = ["ocmd"]
     enabled_middlewares = ["providerauthorizer", "cors"]
-    address = "0.0.0.0:443"
-    certfile = "/etc/revad/tls/CERT_FILE"
-    keyfile = "/etc/revad/tls/CERT_KEY"
+    address = "0.0.0.0:80"
 
     [http.services.dataprovider]
     driver = "localhome"
@@ -259,10 +255,7 @@ configFiles:
     provider = "test-revaoc1"
 
     [http.middlewares.providerauthorizer]
-    driver = "json"
-
-    [http.middlewares.providerauthorizer.drivers.json]
-    providers = "/etc/revad/ocm-providers.json"
+    driver = "open"
 
     [http.services.ocs]
     prefix = "ocs"
