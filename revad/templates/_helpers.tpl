@@ -61,3 +61,18 @@ Create the name of the service account to use
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Name of the configMap storing the revad configuration
+Returns:
+  - the name of the configMap passed as .Values.cfgmapName
+  - "<release_fullname>-config" by default.
+If the configMap does not exist, the pod will hang due to missing mount.
+*/}}
+{{- define "revad.cfgmapName" -}}
+{{- if .Values.cfgmapName }}
+{{- printf "%s" .Values.cfgmapName }}
+{{- else }}
+{{- printf "%s%s" (include "revad.fullname" .) "-config" }}
+{{- end }}
+{{- end }}
