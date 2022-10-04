@@ -1,5 +1,4 @@
-{{- if not .Values.cfgmapName }}
-{{- if .Values.configFiles }}
+{{- if and .Values.configFiles (not .Values.cfgmapName) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -10,6 +9,5 @@ data:
 {{- range $filename, $fileContents := .Values.configFiles }}
   {{ $filename }}: |-
 {{ $fileContents | indent 4 }}
-{{- end }}
 {{- end }}
 {{- end }}
