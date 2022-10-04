@@ -60,7 +60,7 @@ spec:
       volumes:
         - name: {{ include "revad.fullname" . }}-configfiles
           configMap:
-            name: {{ template "revad.fullname" . }}-config
+            name: {{ include "revad.cfgmapName" . }}
         - name: {{ include "revad.fullname" . }}-datadir
         {{- if .Values.persistentVolume.enabled }}
           persistentVolumeClaim:
