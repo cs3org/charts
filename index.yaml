@@ -9,6 +9,39 @@ entries:
           image: cs3org/revad:v1.18.0
     apiVersion: v2
     appVersion: v1.18.0
+    created: "2022-10-04T14:29:53.046462051Z"
+    description: The Reva daemon (revad) helm chart
+    digest: 8338d26d023773cc7b5440f2857bba6bed80f3fb6d55f706d09097386a65862e
+    home: https://reva.link
+    icon: https://reva.link/logo.svg
+    keywords:
+    - iop
+    - cs3apis
+    - cloud-storage
+    - sync-and-share
+    kubeVersion: '>= 1.19.0'
+    maintainers:
+    - email: samuel.alfageme.sainz@cern.ch
+      name: SamuAlfageme
+    - email: hugo.gonzalez.labrador@cern.ch
+      name: labkode
+    - email: ishank.arora@cern.ch
+      name: ishank011
+    name: revad
+    sources:
+    - https://github.com/cs3org/reva
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/revad-1.4.1/revad-1.4.1.tgz
+    version: 1.4.1
+  - annotations:
+      artifacthub.io/changes: |
+        - "Update revad image to v1.18.0"
+      artifacthub.io/images: |
+        - name: revad
+          image: cs3org/revad:v1.18.0
+    apiVersion: v2
+    appVersion: v1.18.0
     created: "2022-07-20T07:11:59.906389033Z"
     description: The Reva daemon (revad) helm chart
     digest: 9d51af4acd6281882c198be385a560d35e7dfda471f0ed609fa7ec8d7ebf397f
