@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "idp.fullname" . }}
+  labels:
+    {{- include "idp.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "idp.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      labels:
+        {{- include "idp.selectorLabels" . | nindent 8 }}
+    spec:
+      securityContext:
+          fsGroup: {{ $.Values.securityContext.fsGroup }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: {{ $.Values.securityContext.runAsUser }}
+            runAsGroup: {{ $.Values.securityContext.runAsGroup }}
+            readOnlyRootFilesystem: true
+          resources: {{ toYaml $.Values.resources | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /.well-known/openid-configuration
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /.well-known/openid-configuration
+              port: http
+          command:
+            - /usr/bin/ocis
+          args:
+              - "idp"
+              - "server"
+          volumeMounts:
+            - name: {{ include "idp.fullname" . }}-config-tmp
+              # we mount that volume only to apply fsGroup to that path
+              mountPath: /etc/ocis
+            - name: {{ include "idp.fullname" . }}-data-tmp
+              # we mount that volume to apply fsGroup to that path, so that the idp can write the temporary idp/tmp/identifier-registration.yaml file
+              mountPath: /var/lib/ocis 
+            - name: {{ include "idp.fullname" . }}-configfiles
+              mountPath: /etc/ocis/idp
+              readOnly: true
+            - name: {{ include "idp.fullname" . }}-secrets
+              mountPath: /etc/ocis/idp/encryption.key
+              subPath: encryption.key
+              readOnly: true
+            - name: {{ include "idp.fullname" . }}-secrets
+              mountPath: /etc/ocis/idp/private-key.pem
+              subPath: private-key.pem
+              readOnly: true
+            {{- if .Values.extraVolumeMounts }}
+              {{ toYaml .Values.extraVolumeMounts | nindent 12 }}
+            {{- end }}
+          env:
+            - name: IDP_MACHINE_AUTH_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  {{ if .Values.secretsRef }}
+                  name: {{ .Values.secretsRef }}
+                  {{ else }}
+                  name: {{ template "idp.fullname" . }}-secrets
+                  {{ end }}
+                  key: machineAuthApiKey
+          {{- if .Values.extraEnv }}
+            {{- toYaml .Values.extraEnv | nindent 12 }}
+          {{- end }}
+          {{- if .Values.envFrom }}
+          envFrom:
+            {{ toYaml .Values.envFrom | indent 12 }}
+          {{- end }}
+      volumes:
+        - name: {{ include "idp.fullname" . }}-configfiles
+          secret:
+            secretName: {{ include "idp.cfgmapName" . }}
+        - name: {{ include "idp.fullname" . }}-config-tmp
+          emptyDir:
+            medium: Memory
+          {{- if .Values.emptyDir.sizeLimit }}
+            sizeLimit: {{ .Values.emptyDir.sizeLimit }}
+          {{- else }}
+            sizeLimit: 6Mi
+          {{- end -}}
+        - name: {{ include "idp.fullname" . }}-data-tmp
+          emptyDir:
+            medium: Memory
+            {{- if .Values.emptyDir.sizeLimit }}
+            sizeLimit: {{ .Values.emptyDir.sizeLimit }}
+            {{- else }}
+            sizeLimit: 6Mi
+            {{- end -}}
+        - name: {{ include "idp.fullname" . }}-secrets
+          secret:
+            {{ if .Values.secretsRef }}
+            secretName: {{ .Values.secretsRef }}
+            {{ else }}
+            secretName: {{ template "idp.fullname" . }}-secrets
+            {{ end }}
+        {{- if .Values.extraVolumes }}
+          {{ toYaml .Values.extraVolumes | nindent 8 }}
+        {{- end }}
