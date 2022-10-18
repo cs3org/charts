@@ -72,8 +72,8 @@ If the Secret config does not exist, the pod will hang due to missing mount.
 Returns the WOPI Server external URL
 */}}
 {{- define "idp.url" -}}
-  {{- if .Values.idp.issuerURI -}}
-    {{- .Values.idp.issuerURI }}
+  {{- if .Values.config.idp.issuerURI -}}
+    {{- .Values.config.idp.issuerURI }}
   {{- else }}
     {{- if .Values.ingress.hostname -}}
       {{- if .Values.ingress.tls -}}
