@@ -9,7 +9,7 @@ home: https://github.com/owncloud/ocis
 sources:
   - https://github.com/owncloud/ocis
 maintainers:
-  - name: Miroslav Bauer
+  - name: mirekys
     email: bauer@cesnet.cz
 keywords:
   - oidc
