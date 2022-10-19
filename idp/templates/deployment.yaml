@@ -94,7 +94,7 @@ spec:
             sizeLimit: {{ .Values.emptyDir.sizeLimit }}
           {{- else }}
             sizeLimit: 6Mi
-          {{- end -}}
+          {{- end }}
         - name: {{ include "idp.fullname" . }}-data-tmp
           emptyDir:
             medium: Memory
@@ -102,7 +102,7 @@ spec:
             sizeLimit: {{ .Values.emptyDir.sizeLimit }}
             {{- else }}
             sizeLimit: 6Mi
-            {{- end -}}
+            {{- end }}
         - name: {{ include "idp.fullname" . }}-secrets
           secret:
             {{ if .Values.secretsRef }}
