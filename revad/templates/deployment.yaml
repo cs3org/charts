@@ -20,6 +20,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          
           ports:
             - name: http
               containerPort: {{ .Values.service.http.port }}
@@ -57,6 +58,12 @@ spec:
           envFrom:
             {{ toYaml .Values.envFrom | indent 12 }}
           {{- end }}
+      {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range (default .Values.image.pullSecrets) }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
       volumes:
         - name: {{ include "revad.fullname" . }}-configfiles
           configMap:
