@@ -3,6 +3,39 @@ entries:
   revad:
   - annotations:
       artifacthub.io/changes: |
+        - "Add imagePullSecrets to deployment"
+      artifacthub.io/images: |
+        - name: revad
+          image: cs3org/revad:v1.18.0
+    apiVersion: v2
+    appVersion: v1.18.0
+    created: "2022-10-31T10:55:15.843752435Z"
+    description: The Reva daemon (revad) helm chart
+    digest: 3938405f2a0411add7af8be88fc44ce47585350827f0a63569e3b240bbb0cfd1
+    home: https://reva.link
+    icon: https://reva.link/logo.svg
+    keywords:
+    - iop
+    - cs3apis
+    - cloud-storage
+    - sync-and-share
+    kubeVersion: '>= 1.19.0'
+    maintainers:
+    - email: samuel.alfageme.sainz@cern.ch
+      name: SamuAlfageme
+    - email: hugo.gonzalez.labrador@cern.ch
+      name: labkode
+    - email: ishank.arora@cern.ch
+      name: ishank011
+    name: revad
+    sources:
+    - https://github.com/cs3org/reva
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/revad-1.4.2/revad-1.4.2.tgz
+    version: 1.4.2
+  - annotations:
+      artifacthub.io/changes: |
         - "Update revad image to v1.18.0"
       artifacthub.io/images: |
         - name: revad
@@ -383,6 +416,36 @@ entries:
     - https://github.com/cs3org/charts/releases/download/revad-0.1.0/revad-0.1.0.tgz
     version: 0.1.0
   wopiserver:
+  - annotations:
+      artifacthub.io/changes: |
+        - "Add imagePullSecrets to deployment"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/images: |
+        - name: wopiserver
+          image: cs3org/wopiserver:v8.3.3
+    apiVersion: v2
+    appVersion: v8.3.3
+    created: "2022-10-31T10:55:15.941810245Z"
+    description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway
+      for EFSS systems
+    digest: 11199f63988bd3adcd2fd209f0ec439e662a4d57c16b1abbbaed54be51fee475
+    home: https://github.com/cs3org/wopiserver
+    keywords:
+    - wopi
+    - efss
+    kubeVersion: '>= 1.19.0'
+    maintainers:
+    - email: samuel.alfageme.sainz@cern.ch
+      name: SamuAlfageme
+    - email: giuseppe.lopresti@cern.ch
+      name: glpatcern
+    name: wopiserver
+    sources:
+    - https://github.com/cs3org/wopiserver
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/wopiserver-0.5.2/wopiserver-0.5.2.tgz
+    version: 0.5.2
   - annotations:
       artifacthub.io/changes: |
         - "update image to cs3org/wopiserver:v8.3.3"
