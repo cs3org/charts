@@ -4,7 +4,8 @@ image:
   repository: cs3org/revad
   tag: v1.18.0
   pullPolicy: Always
-  pullSecrets: []
+  pullSecrets:
+    []
 
 service:
   type: ClusterIP

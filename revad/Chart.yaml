@@ -24,7 +24,6 @@ keywords:
 annotations:
   artifacthub.io/changes: |
     - "Add imagePullSecrets to deployment"
-    - "Update revad image to v1.18.0"
   artifacthub.io/images: |
     - name: revad
       image: cs3org/revad:v1.18.0
