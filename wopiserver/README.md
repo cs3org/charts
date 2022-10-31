@@ -40,6 +40,7 @@ The following configurations may be set. It is recommended to use `values.yaml` 
 | `image.pullPolicy`             | The kubernetes image pull policy.                                                        | `IfNotPresent`                                                    |
 | `image.repository`             | Name of the image to run, without the tag.                                               | [`cs3org/wopiserver`](https://hub.docker.com/r/cs3org/wopiserver) |
 | `image.tag`                    | The image tag to use.                                                                    | `v8.3.2`                                                          |
+| `image.pullSecrets`            | List of names of secrets containing container image registry access keys.                | `[]`                                                              |
 | `ingress.annotations`          | Ingress annotations.                                                                     | `{}`                                                              |
 | `ingress.enabled`              | Whether to create an Ingress resource to access the wopiserver.                          | `false`                                                           |
 | `ingress.hostname`             | The ingress hostname.                                                                    | `wopi.local`                                                      |

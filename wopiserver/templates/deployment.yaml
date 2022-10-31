@@ -55,6 +55,12 @@ spec:
             httpGet:
               path: /
               port: http
+      {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range (default .Values.image.pullSecrets) }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
       volumes:
         - name: tmp-volume
           emptyDir: {}

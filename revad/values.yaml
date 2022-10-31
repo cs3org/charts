@@ -4,6 +4,8 @@ image:
   repository: cs3org/revad
   tag: v1.18.0
   pullPolicy: Always
+  pullSecrets:
+    []
 
 service:
   type: ClusterIP
@@ -16,7 +18,7 @@ extraVolumeMounts: []
 extraVolumes: []
 
 emptyDir:
-  sizeLimit: ""
+  sizeLimit: ''
 
 persistentVolume:
   ## If true, revad will create/use a Persistent Volume Claim
@@ -31,25 +33,26 @@ persistentVolume:
   annotations: {}
 
   ## If defined, PVC MUST be created manually before volume will be bound
-  existingClaim: ""
+  existingClaim: ''
 
   mountPath: /var/tmp/reva
   ## Subdirectory of the PV to mount. If the root directory is not empty
-  subPath: ""
+  subPath: ''
   size: 2Gi
 
   ## If set to "-", storageClassName: "": disables dynamic provisioning
   ## If undefined or null, chooses the default provisioner.
   # storageClass: "-"
-
   # volumeBindingMode: ""
 
 ## Environment variables in NAME:VALUE (dict) form
-env: {}
+env:
+  {}
   # REVA_ENV: value
 
 ## Environment variables in {name,value/valueFrom} (list) form
-extraEnv: []
+extraEnv:
+  []
   # - name: REVA_ENV
   #   value: value
   # - name: REVA_ENV_FROM
@@ -63,7 +66,8 @@ extraEnv: []
   #       name: secret
   #       key: secret_key
 
-envFrom: []
+envFrom:
+  []
   # - configMapRef:
   #     name: reva-envars
   # - secretRef:
@@ -75,10 +79,12 @@ ingress:
     http:
       hostname: http.revad.local
       path: /
-      annotations: {}
+      annotations:
+        {}
         # kubernetes.io/ingress.class: nginx
         # nginx.ingress.kubernetes.io/ssl-redirect: "true"
-      tls: []
+      tls:
+        []
         # Secrets must be present in the namespace beforehand.
         # - secretName: http-revad-tls
         #   hosts:
@@ -86,11 +92,13 @@ ingress:
     grpc:
       hostname: grpc.revad.local
       path: /
-      annotations: {}
+      annotations:
+        {}
         # kubernetes.io/ingress.class: nginx
         # nginx.ingress.kubernetes.io/ssl-redirect: "true"
         # nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
-      tls: []
+      tls:
+        []
         # - secretName: grpc-revad-tls
         #   hosts:
         #     - grpc.revad.local
