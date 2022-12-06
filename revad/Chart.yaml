@@ -2,8 +2,8 @@ apiVersion: v2
 name: revad
 description: The Reva daemon (revad) helm chart
 type: application
-version: 1.4.2
-appVersion: v1.18.0
+version: 1.5.0
+appVersion: v1.21.0
 kubeVersion: '>= 1.19.0'
 icon: https://reva.link/logo.svg
 home: https://reva.link
@@ -14,8 +14,8 @@ maintainers:
     email: samuel.alfageme.sainz@cern.ch
   - name: labkode
     email: hugo.gonzalez.labrador@cern.ch
-  - name: ishank011
-    email: ishank.arora@cern.ch
+  - name: gmgigi96
+    email: Gianmaria.Del.Monte@cern.ch
 keywords:
   - iop
   - cs3apis
@@ -23,7 +23,7 @@ keywords:
   - sync-and-share
 annotations:
   artifacthub.io/changes: |
-    - "Add imagePullSecrets to deployment"
+    - "Bump revad version to contain [reva#3524](https://github.com/cs3org/reva/pull/3524)"
   artifacthub.io/images: |
     - name: revad
-      image: cs3org/revad:v1.18.0
+      image: cs3org/revad:v1.21.0
