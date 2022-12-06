@@ -23,7 +23,11 @@ keywords:
   - sync-and-share
 annotations:
   artifacthub.io/changes: |
-    - "Bump revad version to contain [reva#3524](https://github.com/cs3org/reva/pull/3524)"
+    - kind: changed
+      description: Bump revad version to v.1.21.0
+      links:
+        - name: cs3org/reva#3524
+          url: https://github.com/cs3org/reva/pull/3524
   artifacthub.io/images: |
     - name: revad
       image: cs3org/revad:v1.21.0
