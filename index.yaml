@@ -3,6 +3,43 @@ entries:
   revad:
   - annotations:
       artifacthub.io/changes: |
+        - kind: changed
+          description: Bump revad version to v.1.21.0
+          links:
+            - name: cs3org/reva#3524
+              url: https://github.com/cs3org/reva/pull/3524
+      artifacthub.io/images: |
+        - name: revad
+          image: cs3org/revad:v1.21.0
+    apiVersion: v2
+    appVersion: v1.21.0
+    created: "2022-12-18T14:56:01.65429836Z"
+    description: The Reva daemon (revad) helm chart
+    digest: a98ac8b6ef24de0d38317919123c703ff2eaf8ddf5f24723d181a9bbd65aa3dd
+    home: https://reva.link
+    icon: https://reva.link/logo.svg
+    keywords:
+    - iop
+    - cs3apis
+    - cloud-storage
+    - sync-and-share
+    kubeVersion: '>= 1.19.0'
+    maintainers:
+    - email: samuel.alfageme.sainz@cern.ch
+      name: SamuAlfageme
+    - email: hugo.gonzalez.labrador@cern.ch
+      name: labkode
+    - email: Gianmaria.Del.Monte@cern.ch
+      name: gmgigi96
+    name: revad
+    sources:
+    - https://github.com/cs3org/reva
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/revad-1.5.0/revad-1.5.0.tgz
+    version: 1.5.0
+  - annotations:
+      artifacthub.io/changes: |
         - "Add imagePullSecrets to deployment"
       artifacthub.io/images: |
         - name: revad
