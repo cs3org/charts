@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: cs3org/wopiserver
-  tag: v9.3.2
+  tag: v9.4.0
   pullPolicy: IfNotPresent
   pullSecrets:
     []
