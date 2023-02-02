@@ -455,6 +455,36 @@ entries:
   wopiserver:
   - annotations:
       artifacthub.io/changes: |
+        - "Update wopiserver to v9.4.0"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/images: |
+        - name: wopiserver
+          image: cs3org/wopiserver:v9.4.0
+    apiVersion: v2
+    appVersion: v9.4.0
+    created: "2023-02-02T15:27:05.860549531Z"
+    description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway
+      for EFSS systems
+    digest: 8e4c97485ac1e5f060f7b10ac69fe6066210bc2cfa182431c0717d26eed5d67e
+    home: https://github.com/cs3org/wopiserver
+    keywords:
+    - wopi
+    - efss
+    kubeVersion: '>= 1.19.0'
+    maintainers:
+    - email: samuel.alfageme.sainz@cern.ch
+      name: SamuAlfageme
+    - email: giuseppe.lopresti@cern.ch
+      name: glpatcern
+    name: wopiserver
+    sources:
+    - https://github.com/cs3org/wopiserver
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/wopiserver-0.6.0/wopiserver-0.6.0.tgz
+    version: 0.6.0
+  - annotations:
+      artifacthub.io/changes: |
         - "Add imagePullSecrets to deployment"
       artifacthub.io/containsSecurityUpdates: "false"
       artifacthub.io/images: |
