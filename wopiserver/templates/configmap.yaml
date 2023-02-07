@@ -17,7 +17,16 @@ data:
 
     # Logging level.
     # Valid values are: Debug, Info, Warning, Error.
-    loglevel = {{ .Values.config.logLevel }}
+    loglevel = {{ .Values.config.log.level }}
+
+    # Logging handler. Sets the log handler to use.
+    # Valid values are: file, stream.
+    loghandler = {{ .Values.config.log.handler }}
+
+    # Logging destination.
+    # Valid values if 'loghandler = file' are: any existing file path.
+    # Valid values if 'loghandler = stream' are: stdout, stderr.
+    logdest = {{ .Values.config.log.destination }}
 
     # URL of your WOPI server or your HA proxy in front of it
     wopiurl = {{ template "wopiserver.url" . }}

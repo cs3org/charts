@@ -23,7 +23,15 @@ secrets:
   wopiSecret:
 
 config:
-  logLevel: Error
+  log:
+    # log level: Debug, Info, Warning or Error
+    level: Error
+    # handler for logs: "stream" or "file"
+    handler: stream
+    # destination for logs
+    # if "handler" == "stream": "stdout" or "stderr"
+    # if "handler" == "file": any existing file path in the container.
+    destination: stdout
   token:
     validity: 86400
   wopi:
