@@ -8,6 +8,6 @@ metadata:
 data:
 {{- range $filename, $fileContents := .Values.configFiles }}
   {{ $filename }}: |-
-{{ $fileContents | indent 4 }}
+{{ tpl $fileContents $ | indent 4 }}
 {{- end }}
 {{- end }}

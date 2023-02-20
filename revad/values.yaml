@@ -4,8 +4,7 @@ image:
   repository: cs3org/revad
   tag: v1.21.0
   pullPolicy: Always
-  pullSecrets:
-    []
+  pullSecrets: []
 
 service:
   type: ClusterIP
@@ -73,6 +72,38 @@ envFrom:
   # - secretRef:
   #     name: reva-secrets
 
+## Main Reva configuration compiled into revad.toml file
+config:
+  shared:
+    jwt_secret: CHANGE-ME!!!
+  grpc:
+    services:
+      appprovider: {}
+      appregistry: {}
+      authregistry: {}
+      gateway: {}
+      ocmcore: {}
+      ocminvitemanager: {}
+      ocmproviderauthorizer: {}
+      ocmshareprovider: {}
+      preferences: {}
+      publicshareprovider: {}
+      storageregistry: {}
+      userprovider: {}
+      usershareprovider: {}
+  http:
+    services:
+      datagateway: {}
+      dataprovider: {}
+      prometheus: {}
+      ocmd: {}
+      ocdav: {}
+      ocs: {}
+      providerauthorizer: {}
+    middlewares:
+      - providerauthorizer
+      - cors
+
 ingress:
   enabled: false
   services:
@@ -105,27 +136,8 @@ ingress:
 
 # https://reva.link/docs/config/
 configFiles:
-  revad.toml: |
-    [grpc.services.gateway]
-    [grpc.services.storageregistry]
-    [grpc.services.storageprovider]
-    [grpc.services.authprovider]
-    [grpc.services.authregistry]
-    [grpc.services.userprovider]
-    [grpc.services.groupprovider]
-    [grpc.services.usershareprovider]
-    [grpc.services.publicshareprovider]
-    [grpc.services.ocmcore]
-    [grpc.services.ocmshareprovider]
-    [grpc.services.ocminvitemanager]
-    [grpc.services.ocmproviderauthorizer]
-
-    [http.services.datagateway]
-    [http.services.dataprovider]
-    [http.services.prometheus]
-    [http.services.ocmd]
-    [http.services.ocdav]
-    [http.services.ocs]
+  revad.toml: |-
+    {{ tpl (.Files.Get "files/revad.toml.tpl") $ }}
 
   users.json: |
     [
