@@ -100,9 +100,6 @@ config:
       ocmd: {}
       ocdav: {}
       ocs: {}
-    middlewares:
-      - providerauthorizer
-      - cors
 
 ingress:
   enabled: false
