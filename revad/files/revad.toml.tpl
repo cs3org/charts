@@ -5,8 +5,7 @@
 
 {{- /* Computed defaults for shared section */ -}}
 {{- $sharedDefaults := dict "gatewaysvc" (printf "%s:%d" $gatewaySvcHost ($grpcPort | int)) -}}
-{{- $sharedOptions := merge .config.shared $sharedDefaults -}}
-
+{{- $_ := set .config "shared" (merge (.config.shared | default $sharedDefaults) $sharedDefaults) -}}
 {{- toToml .config -}}
 
 {{- end -}}

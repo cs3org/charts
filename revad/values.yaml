@@ -74,20 +74,21 @@ envFrom:
 
 ## Main Reva configuration compiled into revad.toml file
 config:
-  shared:
-    jwt_secret: CHANGE-ME!!!
   grpc:
     services:
       appprovider: {}
       appregistry: {}
+      authprovider: {}
       authregistry: {}
       gateway: {}
+      groupprovider: {}
       ocmcore: {}
       ocminvitemanager: {}
       ocmproviderauthorizer: {}
       ocmshareprovider: {}
       preferences: {}
       publicshareprovider: {}
+      storageprovider: {}
       storageregistry: {}
       userprovider: {}
       usershareprovider: {}
@@ -99,7 +100,6 @@ config:
       ocmd: {}
       ocdav: {}
       ocs: {}
-      providerauthorizer: {}
     middlewares:
       - providerauthorizer
       - cors
