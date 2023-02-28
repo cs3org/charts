@@ -2,8 +2,8 @@ apiVersion: v2
 name: wopiserver
 description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway for EFSS systems
 type: application
-version: 0.7.0
-appVersion: v9.4.0
+version: 0.8.0
+appVersion: v9.4.2
 kubeVersion: '>= 1.19.0'
 home: https://github.com/cs3org/wopiserver
 sources:
@@ -18,9 +18,8 @@ keywords:
   - efss
 annotations:
   artifacthub.io/changes: |
-    - "Add more log related settings"
-    - "Log to stdout by default"
+    - "Update the wopiserver to version 9.4.2"
   artifacthub.io/images: |
     - name: wopiserver
-      image: cs3org/wopiserver:v9.4.0
+      image: cs3org/wopiserver:v9.4.2
   artifacthub.io/containsSecurityUpdates: 'false'
