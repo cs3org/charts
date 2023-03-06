@@ -2,7 +2,7 @@ apiVersion: v2
 name: wopiserver
 description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway for EFSS systems
 type: application
-version: 0.8.0
+version: 0.8.1
 appVersion: v9.4.2
 kubeVersion: '>= 1.19.0'
 home: https://github.com/cs3org/wopiserver
@@ -18,8 +18,12 @@ keywords:
   - efss
 annotations:
   artifacthub.io/changes: |
-    - "Update the wopiserver to version 9.4.2"
+    - kind: changed
+      description: Sign the charts with PGP
   artifacthub.io/images: |
     - name: wopiserver
       image: cs3org/wopiserver:v9.4.2
   artifacthub.io/containsSecurityUpdates: 'false'
+  artifacthub.io/signKey: |
+    fingerprint: 655F3553ADB323E2D57BCB1BAD0A76D5622F273A
+    url: https://keys.openpgp.org/vks/v1/by-fingerprint/655F3553ADB323E2D57BCB1BAD0A76D5622F273A
