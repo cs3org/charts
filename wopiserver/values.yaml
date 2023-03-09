@@ -22,6 +22,11 @@ secretsRef:
 secrets:
   wopiSecret:
 
+# Enable this to configure wopiserver for CodiMD
+codimd:
+  enabled: False
+  inturl: http://codimd-internal-url
+
 config:
   log:
     # log level: Debug, Info, Warning or Error
@@ -34,11 +39,9 @@ config:
     destination: stdout
   token:
     validity: 86400
-  wopi:
-    lock:
-      expiration: 3600
-  enableRename: False
   detectExternalLocks: False
+  io:
+    recoveryPath: /var/spool/wopirecovery
   cs3:
     authTokenValidity: 3600
     gateway: revad:19000

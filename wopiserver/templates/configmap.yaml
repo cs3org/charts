@@ -35,6 +35,12 @@ data:
     # to clients will include the access_token argument
     downloadurl = {{ template "wopiserver.url" . }}/wopi/iop/download
 
+    # URLs for the user-facing and internal CodiMD service
+    {{ if .Values.codimd.enabled }}
+    codimdurl = https://{{ .Values.ingress.hostname }}/codimd
+    codimdinturl = http://{{ .Values.codimd.inturl }}
+    {{ end }}
+
     # The internal server engine to use (defaults to flask).
     # Set to waitress for production installations.
     internalserver = waitress
@@ -49,8 +55,8 @@ data:
     # WOPI access token expiration time [seconds]
     tokenvalidity = {{ .Values.config.token.validity }}
 
-    # WOPI lock expiration time [seconds]
-    wopilockexpiration = {{ .Values.config.wopi.lock.expiration }}
+    # WOPI lock expiration time [seconds]. Microsoft requires this to be 30 minutes.
+    wopilockexpiration = 1800
 
     # WOPI lock strict check: if True, WOPI locks will be compared according to specs,
     # that is their representation must match. False (default) allows for a more relaxed
@@ -61,7 +67,7 @@ data:
     # Enable support of rename operations from WOPI apps. This is currently
     # disabled by default as it has been observed that both MS Office and Collabora
     # Online do not play well with this feature.
-    enablerename = {{ .Values.config.enableRename }}
+    enablerename = False
 
     # Detection of external Microsoft Office or LibreOffice locks. By default, lock files
     # compatible with Office for Desktop applications are detected, assuming that the
@@ -70,14 +76,16 @@ data:
     # This feature can be disabled in order to operate a pure WOPI server for online apps.
     detectexternallocks = {{ .Values.config.detectExternalLocks }}
 
-    # Location of the webconflict files. By default, such files are stored in the same path
-    # as the original file. If that fails (e.g. because of missing permissions),
+    # Location of the user's personal space, used as a fall back location when storing
+    # PutRelative targets or webconflict files. Normally, such files are stored in the same
+    # path as the original file. If that fails (e.g. because of missing permissions),
     # an attempt is made to store such files in this path if specified, otherwise
-    # the system falls back to the recovery space (cf. io|recoverypath).
+    # the system falls back to the recovery space (cf. io|recoverypath) for web conflicts
+    # whereas PutRelative operations are just failed.
     # The keywords <user_initial> and <username> are replaced with the actual username's
     # initial letter and the actual username, respectively, so you can use e.g.
     # /your_storage/home/user_initial/username
-    #conflictpath = /
+    #homepath = /home/username
 
     # ownCloud's WOPI proxy configuration. Disabled by default.
     #wopiproxy = https://external-wopi-proxy.com
@@ -113,6 +121,9 @@ data:
     #disablezip = False
 
     [io]
+    # path used as buffer to recover unsaved files
+    recoverypath = {{ .Values.config.io.recoveryPath }}
+
     # Size used for buffered reads [bytes]
     chunksize = 4194304
 
