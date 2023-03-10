@@ -2,8 +2,8 @@ apiVersion: v2
 name: revad
 description: The Reva daemon (revad) helm chart
 type: application
-version: 1.5.0
-appVersion: v1.21.0
+version: 1.6.0
+appVersion: v1.23.0
 kubeVersion: '>= 1.19.0'
 icon: https://reva.link/logo.svg
 home: https://reva.link
@@ -23,11 +23,161 @@ keywords:
   - sync-and-share
 annotations:
   artifacthub.io/changes: |
-    - kind: changed
-      description: Bump revad version to v.1.21.0
+    - kind: fixed
+      description: Use 2700 as permission when creating EOS home folder
       links:
-        - name: cs3org/reva#3524
-          url: https://github.com/cs3org/reva/pull/3524
+        - name: cs3org/reva#3621
+          url: https://github.com/cs3org/reva/pull/3621
+    - kind: fixed
+      description: Fixes implementation omission of #3526
+      links:
+        - name: cs3org/reva#3551
+          url: https://github.com/cs3org/reva/pull/3551
+    - kind: fixed
+      description: Fix revad-eos docker image which was failing to build
+      links:
+        - name: cs3org/reva#3706
+          url: https://github.com/cs3org/reva/pull/3706
+    - kind: fixed
+      description: Fix open in app for lightweight accounts
+      links:
+        - name: cs3org/reva#3626
+          url: https://github.com/cs3org/reva/pull/3626
+    - kind: fixed
+      description: Use subject from oidc userinfo when quering the user provider
+      links:
+        - name: cs3org/reva#3613
+          url: https://github.com/cs3org/reva/pull/3613
+    - kind: fixed
+      description: Fix litmus and acceptance tests in GitHub Actions
+      links:
+        - name: cs3org/reva#3633
+          url: https://github.com/cs3org/reva/pull/3633
+    - kind: fixed
+      description: Updated public links URLs and users' display names in WOPI apps
+      links:
+        - name: cs3org/reva#3694
+          url: https://github.com/cs3org/reva/pull/3694
+    - kind: changed
+      description: Rename PullTransfer to CreateTransfer
+      links:
+        - name: cs3org/reva#3553
+          url: https://github.com/cs3org/reva/pull/3553
+    - kind: changed
+      description: Bump the Copyright date to 2023
+      links:
+        - name: cs3org/reva#3584
+          url: https://github.com/cs3org/reva/pull/3584
+    - kind: changed
+      description: Migrate acceptance tests from Drone to GitHub Actions
+      links:
+        - name: cs3org/reva#3640
+          url: https://github.com/cs3org/reva/pull/3640
+    - kind: changed
+      description: Use cs3org/behat:latest docker image for tests
+      links:
+        - name: cs3org/reva#3629
+          url: https://github.com/cs3org/reva/pull/3629
+    - kind: added
+      description: Add Golang test coverage report for Codacy
+      links:
+        - name: cs3org/reva#3608
+          url: https://github.com/cs3org/reva/pull/3608
+    - kind: changed
+      description: Add latest tag to revad Docker image with GitHub Actions
+      links:
+        - name: cs3org/reva#3599
+          url: https://github.com/cs3org/reva/pull/3599
+    - kind: changed
+      description: Streamline EOS SSS and UNIX modes
+      links:
+        - name: cs3org/reva#3713
+          url: https://github.com/cs3org/reva/pull/3713
+    - kind: changed
+      description: Migrate the litmusOcisSpacesDav test from Drone to GitHub Actions
+      links:
+        - name: cs3org/reva#3566
+          url: https://github.com/cs3org/reva/pull/3566
+    - kind: changed
+      description: Improve Docker build speed and Docker Compose test speed
+      links:
+        - name: cs3org/reva#3712
+          url: https://github.com/cs3org/reva/pull/3712
+    - kind: changed
+      description: Migrate the virtualViews test from Drone to GitHub Actions
+      links:
+        - name: cs3org/reva#3630
+          url: https://github.com/cs3org/reva/pull/3630
+    - kind: deprecated
+      description: Cleanup unused configs in OCM HTTP service
+      links:
+        - name: cs3org/reva#3675
+          url: https://github.com/cs3org/reva/pull/3675
+    - kind: changed
+      description: Create and list OCM shares in OCS layer
+      links:
+        - name: cs3org/reva#3692
+          url: https://github.com/cs3org/reva/pull/3692
+    - kind: added
+      description: Search OCM accepted users
+      links:
+        - name: cs3org/reva#3666
+          url: https://github.com/cs3org/reva/pull/3666
+    - kind: added
+      description: List valid OCM invite tokens
+      links:
+        - name: cs3org/reva#3665
+          url: https://github.com/cs3org/reva/pull/3665
+    - kind: added
+      description: SQL driver for OCM invitation manager
+      links:
+        - name: cs3org/reva#3617
+          url: https://github.com/cs3org/reva/pull/3617
+    - kind: added
+      description: List OCM providers
+      links:
+        - name: cs3org/reva#3667
+          url: https://github.com/cs3org/reva/pull/3667
+    - kind: changed
+      description: Expose OCM received shares as a local mount
+      links:
+        - name: cs3org/reva#3668
+          url: https://github.com/cs3org/reva/pull/3668
+    - kind: added
+      description: Remote open in app in OCM
+      links:
+        - name: cs3org/reva#3683
+          url: https://github.com/cs3org/reva/pull/3683
+    - kind: added
+      description: SQL driver for OCM shares
+      links:
+        - name: cs3org/reva#3654
+          url: https://github.com/cs3org/reva/pull/3654
+    - kind: changed
+      description: Update OCM shares to last version of CS3APIs
+      links:
+        - name: cs3org/reva#3646
+          url: https://github.com/cs3org/reva/pull/3646
+    - kind: added
+      description: Specify recipient as a query param when sending OCM token by email
+      links:
+        - name: cs3org/reva#3687
+          url: https://github.com/cs3org/reva/pull/3687
+    - kind: added
+      description: Add OCM scope and webdav endpoint
+      links:
+        - name: cs3org/reva#3691
+          url: https://github.com/cs3org/reva/pull/3691
+    - kind: changed
+      description: Revamp OCM invitation workflow
+      links:
+        - name: cs3org/reva#3611
+          url: https://github.com/cs3org/reva/pull/3611
+    - kind: security
+      description: Bump reva(d) base image to alpine 3.17
+      links:
+        - name: cs3org/reva#3703
+          url: https://github.com/cs3org/reva/pull/3703
   artifacthub.io/images: |
     - name: revad
-      image: cs3org/revad:v1.21.0
+      image: cs3org/revad:v1.23.0
