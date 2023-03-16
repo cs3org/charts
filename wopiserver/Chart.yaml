@@ -4,7 +4,7 @@ description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gat
 type: application
 version: 0.8.0
 appVersion: v9.4.2
-kubeVersion: '>= 1.19.0'
+kubeVersion: '>= 1.19.0-0'
 home: https://github.com/cs3org/wopiserver
 sources:
   - https://github.com/cs3org/wopiserver
