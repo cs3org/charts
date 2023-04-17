@@ -47,9 +47,6 @@ spec:
             - name: secrets
               mountPath: /var/run/secrets/wopisecret
               subPath: wopisecret
-            - name: {{ include "wopiserver.fullname" . }}-confdir
-              mountPath: /etc/wopi/iopsecret
-              subPath: iopsecret
           livenessProbe:
             httpGet:
               path: /
