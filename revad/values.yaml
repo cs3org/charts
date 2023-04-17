@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: cs3org/revad
-  tag: v1.23.0
+  tag: v1.24.0
   pullPolicy: Always
   pullSecrets:
     []
