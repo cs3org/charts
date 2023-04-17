@@ -3,7 +3,7 @@ name: wopiserver
 description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway for EFSS systems
 type: application
 version: 0.9.0
-appVersion: v9.5.1
+appVersion: v9.5.3
 kubeVersion: '>= 1.19.0-0'
 home: https://github.com/cs3org/wopiserver
 sources:
@@ -22,5 +22,5 @@ annotations:
     - "Config cleanup"
   artifacthub.io/images: |
     - name: wopiserver
-      image: cs3org/wopiserver:v9.5.1
+      image: cs3org/wopiserver:v9.5.3
   artifacthub.io/containsSecurityUpdates: 'false'

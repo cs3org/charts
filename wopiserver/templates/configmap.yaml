@@ -76,6 +76,13 @@ data:
     # This feature can be disabled in order to operate a pure WOPI server for online apps.
     detectexternallocks = {{ .Values.config.detectExternalLocks }}
 
+    # Detection of external modifications to locked files. By default, on PutFile operations
+    # the system checks against a previously set extended attribute, and if missing or older
+    # than the current file's mtime, PutFile is failed. This allows to operate on shared
+    # storage systems that do not honour WOPI locks. Similarly to the above, this
+    # feature can be disabled for storages where WOPI locking is fully honoured.
+    detectexternalmodifications = {{ .Values.config.detectExternalMods }}
+
     # Location of the user's personal space, used as a fall back location when storing
     # PutRelative targets or webconflict files. Normally, such files are stored in the same
     # path as the original file. If that fails (e.g. because of missing permissions),
