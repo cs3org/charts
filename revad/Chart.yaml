@@ -90,4 +90,4 @@ annotations:
           url: https://github.com/cs3org/reva/pull/3703
   artifacthub.io/images: |
     - name: revad
-      image: cs3org/revad:v1.23.0
+      image: cs3org/revad:v1.24.0
