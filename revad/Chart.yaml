@@ -23,7 +23,7 @@ keywords:
   - sync-and-share
 annotations:
   artifacthub.io/changes: |
-    - kind: changed
+    - kind: added
       description: Incorporated support for OCM shares
       links:
         - name: cs3org/reva#3692
