@@ -24,7 +24,7 @@ keywords:
 annotations:
   artifacthub.io/changes: |
     - kind: changed
-      description: Create and list OCM shares in OCS layer
+      description: Incorporated support for OCM shares
       links:
         - name: cs3org/reva#3692
           url: https://github.com/cs3org/reva/pull/3692
