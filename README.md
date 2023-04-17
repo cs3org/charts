@@ -53,3 +53,5 @@ $ helm install custom-reva cs3org/revad \
   --set service.http.port=20001 \
   --set-file configFiles.revad\\.toml=custom-config.toml
 ```
+
+See also [configuring an iop deployment](https://developer.sciencemesh.io/docs/technical-documentation/iop/deployment/kubernetes/#configuring-an-iop-deployment).
