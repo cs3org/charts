@@ -50,9 +50,6 @@ spec:
             - name: {{ include "wopiserver.fullname" . }}-confdir
               mountPath: /etc/wopi/iopsecret
               subPath: iopsecret
-            {{- if .Values.extraVolumeMounts }}
-            {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
-            {{- end }}
           livenessProbe:
             httpGet:
               path: /
