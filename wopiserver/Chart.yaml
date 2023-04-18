@@ -19,7 +19,7 @@ keywords:
   - apps
 annotations:
   artifacthub.io/changes: |
-    - "Config cleanup"
+    - "Config refresh + update to latest wopiserver tag"
   artifacthub.io/images: |
     - name: wopiserver
       image: cs3org/wopiserver:v9.5.3
