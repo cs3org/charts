@@ -2,7 +2,7 @@ apiVersion: v2
 name: revad
 description: The Reva daemon (revad) helm chart
 type: application
-version: 1.5.0
+version: 1.6.0
 appVersion: v1.21.0
 kubeVersion: '>= 1.19.0-0'
 icon: https://reva.link/logo.svg
@@ -24,10 +24,10 @@ keywords:
 annotations:
   artifacthub.io/changes: |
     - kind: changed
-      description: Bump revad version to v.1.21.0
+      description: Generate reva configuration file from chart Values
       links:
-        - name: cs3org/reva#3524
-          url: https://github.com/cs3org/reva/pull/3524
+        - name: cs3org/charts#48
+          url: https://github.com/cs3org/charts/pull/48
   artifacthub.io/images: |
     - name: revad
       image: cs3org/revad:v1.21.0
