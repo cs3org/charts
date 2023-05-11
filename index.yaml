@@ -20,6 +20,50 @@ entries:
           image: cs3org/revad:v1.24.0
     apiVersion: v2
     appVersion: v1.24.0
+    created: "2023-05-11T16:10:33.537923564Z"
+    description: The Reva daemon (revad) helm chart
+    digest: f32515f00e5e30bce8435296fcd8c627d9cf07bc2b6ffd18f1ed66c7ede34297
+    home: https://reva.link
+    icon: https://reva.link/logo.svg
+    keywords:
+    - iop
+    - cs3apis
+    - cloud-storage
+    - sync-and-share
+    kubeVersion: '>= 1.19.0-0'
+    maintainers:
+    - email: hugo.gonzalez.labrador@cern.ch
+      name: labkode
+    - email: Gianmaria.Del.Monte@cern.ch
+      name: gmgigi96
+    - email: Giuseppe.LoPresti@cern.ch
+      name: glpatcern
+    name: revad
+    sources:
+    - https://github.com/cs3org/reva
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/revad-1.6.1/revad-1.6.1.tgz
+    version: 1.6.1
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: Incorporated support for OCM shares
+          links:
+            - name: cs3org/reva#3692
+              url: https://github.com/cs3org/reva/pull/3692
+            - name: cs3org/reva#3611
+              url: https://github.com/cs3org/reva/pull/3611
+        - kind: security
+          description: Bump reva(d) base image to alpine 3.17
+          links:
+            - name: cs3org/reva#3703
+              url: https://github.com/cs3org/reva/pull/3703
+      artifacthub.io/images: |
+        - name: revad
+          image: cs3org/revad:v1.24.0
+    apiVersion: v2
+    appVersion: v1.24.0
     created: "2023-05-11T15:49:40.487818618Z"
     description: The Reva daemon (revad) helm chart
     digest: b88d546662f3f4fdda28152a23ffacb457dc63dd0bd516cbdf9a38dbd47ef362
