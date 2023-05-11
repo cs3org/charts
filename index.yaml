@@ -3,6 +3,50 @@ entries:
   revad:
   - annotations:
       artifacthub.io/changes: |
+        - kind: added
+          description: Incorporated support for OCM shares
+          links:
+            - name: cs3org/reva#3692
+              url: https://github.com/cs3org/reva/pull/3692
+            - name: cs3org/reva#3611
+              url: https://github.com/cs3org/reva/pull/3611
+        - kind: security
+          description: Bump reva(d) base image to alpine 3.17
+          links:
+            - name: cs3org/reva#3703
+              url: https://github.com/cs3org/reva/pull/3703
+      artifacthub.io/images: |
+        - name: revad
+          image: cs3org/revad:v1.24.0
+    apiVersion: v2
+    appVersion: v1.24.0
+    created: "2023-05-11T15:49:40.487818618Z"
+    description: The Reva daemon (revad) helm chart
+    digest: b88d546662f3f4fdda28152a23ffacb457dc63dd0bd516cbdf9a38dbd47ef362
+    home: https://reva.link
+    icon: https://reva.link/logo.svg
+    keywords:
+    - iop
+    - cs3apis
+    - cloud-storage
+    - sync-and-share
+    kubeVersion: '>= 1.19.0-0'
+    maintainers:
+    - email: samuel.alfageme.sainz@cern.ch
+      name: SamuAlfageme
+    - email: hugo.gonzalez.labrador@cern.ch
+      name: labkode
+    - email: Gianmaria.Del.Monte@cern.ch
+      name: gmgigi96
+    name: revad
+    sources:
+    - https://github.com/cs3org/reva
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/revad-1.6.0/revad-1.6.0.tgz
+    version: 1.6.0
+  - annotations:
+      artifacthub.io/changes: |
         - kind: changed
           description: Bump revad version to v.1.21.0
           links:
@@ -453,6 +497,37 @@ entries:
     - https://github.com/cs3org/charts/releases/download/revad-0.1.0/revad-0.1.0.tgz
     version: 0.1.0
   wopiserver:
+  - annotations:
+      artifacthub.io/changes: |
+        - "Config refresh + update to latest wopiserver tag"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/images: |
+        - name: wopiserver
+          image: cs3org/wopiserver:v9.5.3
+    apiVersion: v2
+    appVersion: v9.5.3
+    created: "2023-05-11T15:49:40.614383495Z"
+    description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway
+      for EFSS systems
+    digest: f3c298338592854072881a09b055ddfda10766e055450ae1824782d4fa710bc7
+    home: https://github.com/cs3org/wopiserver
+    keywords:
+    - wopi
+    - efss
+    - apps
+    kubeVersion: '>= 1.19.0-0'
+    maintainers:
+    - email: samuel.alfageme.sainz@cern.ch
+      name: SamuAlfageme
+    - email: giuseppe.lopresti@cern.ch
+      name: glpatcern
+    name: wopiserver
+    sources:
+    - https://github.com/cs3org/wopiserver
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/wopiserver-0.9.0/wopiserver-0.9.0.tgz
+    version: 0.9.0
   - annotations:
       artifacthub.io/changes: |
         - "Update the wopiserver to version 9.4.2"
