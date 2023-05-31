@@ -58,15 +58,13 @@ data:
     # WOPI lock expiration time [seconds]. Microsoft requires this to be 30 minutes.
     wopilockexpiration = 1800
 
-    # WOPI lock strict check: if True, WOPI locks will be compared according to specs,
-    # that is their representation must match. False (default) allows for a more relaxed
-    # comparison, which compensates incorrect lock requests from Microsoft Office Online
-    # on-premise setups.
-    wopilockstrictcheck = False
+    # WOPI lock strict check. Must be set to True (default). False allows for a more relaxed
+    # comparison, which compensates incorrect lock requests from early versions of Microsoft
+    # Office Online on-premise setups.
+    wopilockstrictcheck = True
 
-    # Enable support of rename operations from WOPI apps. This is currently
-    # disabled by default as it has been observed that both MS Office and Collabora
-    # Online do not play well with this feature.
+    # Enable support of rename operations from WOPI apps (experimental). Must be set
+    # to False (default).
     enablerename = False
 
     # Detection of external Microsoft Office or LibreOffice locks. By default, lock files
