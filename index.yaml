@@ -543,6 +543,38 @@ entries:
   wopiserver:
   - annotations:
       artifacthub.io/changes: |
+        - "Reverted some options in wopiserver.conf"
+        - "Updated to latest wopiserver tag"
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/images: |
+        - name: wopiserver
+          image: cs3org/wopiserver:v10.0.0
+    apiVersion: v2
+    appVersion: v10.0.0
+    created: "2023-05-31T13:40:28.720033392Z"
+    description: A Vendor-neutral Web-application Open Platform Interface (WOPI) gateway
+      for EFSS systems
+    digest: 800afaddf24bab5d088fa7aa1b4d719e840d213159db0463cf955ca9aaea2b08
+    home: https://github.com/cs3org/wopiserver
+    keywords:
+    - wopi
+    - efss
+    - apps
+    kubeVersion: '>= 1.19.0-0'
+    maintainers:
+    - email: samuel.alfageme.sainz@cern.ch
+      name: SamuAlfageme
+    - email: giuseppe.lopresti@cern.ch
+      name: glpatcern
+    name: wopiserver
+    sources:
+    - https://github.com/cs3org/wopiserver
+    type: application
+    urls:
+    - https://github.com/cs3org/charts/releases/download/wopiserver-0.9.2/wopiserver-0.9.2.tgz
+    version: 0.9.2
+  - annotations:
+      artifacthub.io/changes: |
         - "Config refresh + update to latest wopiserver tag"
       artifacthub.io/containsSecurityUpdates: "false"
       artifacthub.io/images: |
