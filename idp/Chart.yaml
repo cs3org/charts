@@ -1,0 +1,24 @@
+apiVersion: v2
+name: idp
+description: CS3 APIs compatible OIDC Identity provider based on OCIS
+type: application
+version: 0.1.0
+appVersion: v2.0.0-beta.8
+kubeVersion: '>= 1.19.0'
+home: https://github.com/owncloud/ocis
+sources:
+  - https://github.com/owncloud/ocis
+maintainers:
+  - name: mirekys
+    email: bauer@cesnet.cz
+keywords:
+  - oidc
+  - idp
+  - identity
+  - provider
+  - cs3
+annotations:
+  artifacthub.io/images: |
+    - name: ocis
+      image: owncloud/ocis:2.0.0-beta.8
+  artifacthub.io/containsSecurityUpdates: 'false'

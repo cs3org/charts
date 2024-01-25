@@ -1,0 +1,112 @@
+replicaCount: 1
+
+image:
+  repository: owncloud/ocis
+  tag: 2.0.0-beta.8
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 9130
+
+# IDP service configuration reference
+# - ref: https://owncloud.dev/services/idp/
+extraEnv: {}
+config:
+  log:
+    level: error
+    color: false
+    pretty: false
+  cs3:
+    gateway: revad:19000
+  idp:
+    # External url of the IDP service, used in token issuer field
+    # issuerURI: https://external-idp-url.example
+    accessTokenValidity: 86400
+    idTokenValidity: 3600
+    refreshTokenValidity: 94608000
+    # List of OIDC clients allowed to use the IDP service
+    clients:
+      # NOTE: After you add your own clients, you can safely remove this one.
+      # It is here because IDP service refuses to boot without any registered clients.
+      - id: xdXOt13JKxym1B1QcEncf2XDkLAexMBFwiT9j6EfhhHFJhs2KM9jbjTmf8JBXE69
+        name: ownCloud desktop app
+        trusted: false
+        secret: UBntmLjC2yYCeHwsyj73Uwo9TAaecAetRwMw0xYcvNL9yRdLSUi0hUAHfvCHFeFh
+        redirect_uris:
+          - http://127.0.0.1
+          - http://localhost
+        origins: []
+        application_type: native
+    # NOTE: Before you can use your IDP service with the ScienceMesh proxy IDP
+    # portal, you first need to obtain your <client-id> and <client-secret> from
+    # the portal administrators @ CESNET.
+    #
+    # - id: <client-id>
+    #   name: ScienceMesh proxy IDP portal
+    #   trusted: true
+    #   secret: <client-secret>
+    #   insecure: false
+    #   redirect_uris:
+    #     - https://aai-demo.sciencemesh.cesnet.cz/callback
+    #   origins: []
+    #   application_type: ''
+
+# secretRef allows one to use an already existing secret instead of configuring the secrets below
+secretsRef:
+# secrets are only used if "secretRef" is not set or empty
+secrets:
+  {}
+  # machineAuthApiKey:
+  # NOTE: example generation command: `tr -cd '[a-zA-Z0-9],.' < /dev/urandom | fold -w 50 | head -n 1 | tr -d '\n' | base64`
+  #
+  # encryptionKey: random 32-byte long, base64 encoded string
+  # NOTE: example generation command: `openssl rand 32 | base64`
+  #
+  # privateKey: /path/to/private-key.pem
+  # how to generate: base64 encode a private key (eg. RSA, ensure that you use reasonable long key size)
+  # example generation command: `openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:4096 2> /dev/null > private-key.pem`
+
+# Security context options.
+securityContext:
+  # -- File system group for all volumes.
+  fsGroup: 1000
+  # -- User ID that all processes within any containers will run with.
+  runAsUser: 1000
+  # -- Group ID that all processes within any containers will run with.
+  runAsGroup: 1000
+
+ingress:
+  enabled: false
+  hostname: idp.local
+  path: /
+  annotations:
+    {}
+    # kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  tls:
+    []
+    # Secrets must be present in the namespace beforehand.
+    # - secretName: idp-tls
+    #   hosts:
+    #     - idp.local
+
+# -- Resources to apply to all services.
+resources:
+  {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# Include arbitrary resources, eg. config maps or secrets.
+# -- Extra resources to be included.
+extraResources: []
+
+# Mount arbitrary volumes to the pod.
+# -- Extra volume mounts to be used.
+extraVolumeMounts: {}
+
+emptyDir: {}
